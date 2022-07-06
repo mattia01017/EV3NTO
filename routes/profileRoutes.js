@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const multer = require('multer')
+const accountControllers = require('../controllers/accountControllers')
 
 const upload = multer({dest : 'uploads/'})
 
+router.use(accountControllers.checkIfLogged)
 
 router.get('/profilo', (req,res) => {
     res.redirect('profilo/miei')
 })
 
-router.get('/profilo/miei', (req,res) => {
-    res.render('mypage.ejs')
-})
+router.get('/profilo/miei', accountControllers.setNameHeader)
 
 router.get('/profilo/partecipazioni', (req,res) => {
     res.render('mypage.ejs')

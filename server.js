@@ -1,14 +1,22 @@
 const bodyParser = require('body-parser')
 const express = require('express')
+const session = require('express-session')
+const accController = require('./controllers/accountControllers')
 
 // routers
 const profileRoutes = require('./routes/profileRoutes')
 
 const app = express()
 
+app.use(session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: false
+}))
+app.set('view engine', 'ejs')
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 // home
 app.get('/', (req, res) => {
@@ -19,6 +27,8 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login.ejs')
 })
+
+app.post('/login', accController.login);
 
 // sign in
 app.get('/signin', (req, res) => {

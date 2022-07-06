@@ -12,17 +12,17 @@
     <div class="card border-0 mb-3 mt-5 start-50 translate-middle-x" style="max-width: 450px;">
       <h1 class="card-header bg-light text-black display-6">Accedi</h1> 
       <div class="card-body bg-dark">
-          <form action="">
+          <form action="/login" method="post">
               <div class="mb-3 row">
                 <label for="user" class="col-sm col-form-label">Username</label>
                 <div class="col-sm">
-                  <input required type="text" class="form-control bg-black text-white" id="user">
+                  <input required type="text" class="form-control bg-black text-white" id="user" name="user">
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="password" class="col-sm col-form-label">Password</label>
                 <div class="col-sm">
-                  <input required type="password" class="form-control bg-black text-white" id="password">
+                  <input required type="password" class="form-control bg-black text-white" id="password" name="password">
                 </div>
               </div>
               <input type="submit" value="Accedi" class="btn btn-light  position-relative start-50 bottom-0 translate-middle-x mt-1">
