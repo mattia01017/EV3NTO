@@ -35,7 +35,7 @@ app.use(profileRoutes)
 
 // pagina inesistente
 app.all('*', (req,res) => {
-    res.sendStatus(404)
+    res.status(404).render('404.ejs')
 })
 
 app.listen(3000)
