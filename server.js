@@ -1,8 +1,9 @@
 const bodyParser = require('body-parser')
 const express = require('express')
-const multer = require('multer')
 
-const upload = multer({dest : 'uploads/'})
+// routers
+const profileRoutes = require('./routes/profileRoutes')
+
 const app = express()
 
 app.use(express.static('public'))
@@ -24,34 +25,13 @@ app.get('/signin', (req, res) => {
     res.render('signin.ejs')
 })
 
-
-// pagine dell'account
-app.get('/profilo', (req,res) => {
-    res.redirect('profilo/miei')
-})
-
-app.get('/profilo/miei', (req,res) => {
-    res.render('mypage.ejs')
-})
-
-app.get('/profilo/partecipazioni', (req,res) => {
-    res.render('mypage.ejs')
-})
-
-app.get('/profilo/aggiungi', (req,res) => {
-    res.render('addevent.ejs')
-})
-
-app.post('/profilo/aggiungi', upload.single('image'), (req,res) => {
-    console.log(req.body)
-    res.redirect('/profilo/miei')
-})
-
 // ricerca
 app.get('/search', (req,res) => {
     res.render('search.ejs')
 })
 
+// profilo
+app.use(profileRoutes)
 
 // pagina inesistente
 app.all('*', (req,res) => {
