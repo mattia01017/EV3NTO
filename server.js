@@ -1,6 +1,8 @@
 const bodyParser = require('body-parser')
 const express = require('express')
+const multer = require('multer')
 
+const upload = multer({dest : 'uploads/'})
 const app = express()
 
 app.use(express.static('public'))
@@ -11,7 +13,6 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
    res.render('index.ejs')
 })
-
 
 // login
 app.get('/login', (req, res) => {
@@ -24,7 +25,7 @@ app.get('/signin', (req, res) => {
 })
 
 
-// pagina dell'account
+// pagine dell'account
 app.get('/profilo', (req,res) => {
     res.redirect('profilo/miei')
 })
@@ -41,14 +42,16 @@ app.get('/profilo/aggiungi', (req,res) => {
     res.render('addevent.ejs')
 })
 
+app.post('/profilo/aggiungi', upload.single('image'), (req,res) => {
+    console.log(req.body)
+    res.redirect('/profilo/miei')
+})
+
+// ricerca
 app.get('/search', (req,res) => {
     res.render('search.ejs')
 })
 
-app.post('/profilo/miei', (req,res) => {
-    console.log(req.body)
-    res.redirect('/profilo/miei')
-})
 
 // pagina inesistente
 app.all('*', (req,res) => {
