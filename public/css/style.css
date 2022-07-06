@@ -1,0 +1,15 @@
+.car-img{
+	object-fit: cover;
+	filter: brightness(0.6);	
+}
+
+.img-acc{
+	height: 300px; 
+	width: 600px; 
+	object-fit: cover;
+}
+
+.navbar{
+	position: sticky;
+	top: 0;
+}

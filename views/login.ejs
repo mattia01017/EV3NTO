@@ -8,8 +8,9 @@
     <title>Accedi a EV3NTO</title>
 </head>
 <body class="text-white bg-black">
-    <%- head %>
+    <%- include('./partials/head.html') %>
     <div class="container-sm position-absolute start-50 translate-middle-x mt-5">
+      <h2 class="display-6 text-center">Crea un nuovo account o accedi</h2>
         <div class="row mt-5">
             <div class="col-lg-5">
                 <div class="card border-0 mb-3">
@@ -19,16 +20,16 @@
                             <div class="mb-3 row">
                                 <label for="user" class="col col-form-label">Username</label>
                                 <div class="col">
-                                  <input type="text" class="form-control bg-black text-white" id="user">
+                                  <input required type="text" class="form-control bg-black text-white" id="user">
                                 </div>
                               </div>
                               <div class="mb-3 row">
                                 <label for="password" class="col col-form-label">Password</label>
                                 <div class="col">
-                                  <input type="password" class="form-control bg-black text-white" id="password">
+                                  <input required type="password" class="form-control bg-black text-white" id="password">
                                 </div>
                               </div>
-                              <input type="submit" value="Accedi" class="btn btn-light btn-lg position-relative start-50 bottom-0 translate-middle-x mt-1">
+                              <input required type="submit" value="Accedi" class="btn btn-light  position-relative start-50 bottom-0 translate-middle-x mt-1">
                         </form>
                     </div>
                 </div>
@@ -41,28 +42,28 @@
                             <div class="mb-3 row">
                                 <label for="email" class="col col-form-label">Email</label>
                                 <div class="col">
-                                  <input type="email" class="form-control bg-black text-white" id="email">
+                                  <input required type="email" class="form-control bg-black text-white" id="email">
                                 </div>
                               </div>
                             <div class="mb-3 row">
                                 <label for="user" class="col col-form-label">Username</label>
                                 <div class="col">
-                                  <input type="text" class="form-control bg-black text-white" id="user">
+                                  <input required type="text" class="form-control bg-black text-white" id="user">
                                 </div>
                               </div>
                               <div class="mb-2 row">
                                 <label for="password" class="col col-form-label">Password</label>
                                 <div class="col">
-                                  <input type="password" class="form-control bg-black text-white" id="password">
+                                  <input required type="password" class="form-control bg-black text-white" id="password">
                                 </div>
                               </div>
-                              <div class="mb-2 row">
+                              <div class="mb-3 row">
                                 <label for="password2" class="col col-form-label">Ripeti password</label>
                                 <div class="col">
-                                  <input type="password" class="form-control bg-black text-white" id="password2">
+                                  <input required type="password" class="form-control bg-black text-white" id="password2">
                                 </div>
-                              </div>
-                              <input type="submit" value="Registrati" class="btn btn-light btn-lg position-relative start-50 bottom-0 translate-middle-x mt-1">
+                              </div>                              
+                              <input required type="submit" value="Registrati" class="btn btn-light  position-relative start-50 bottom-0 translate-middle-x mt-1">
                         </form>
                     </div>
                 </div>

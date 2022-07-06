@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Il mio account - EV3NTO</title>
+</head>
+<body class="text-white bg-black">
+    <%- include('./partials/head.html') %>
+    <div class="container-lg mt-3">
+        <h2 class="display-5">Nome cognome</h2>
+        <div class="card text-center border-0">
+            <div class="card-header bg-black">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active bg-dark text-white border-dark" aria-current="true" href="#">I miei eventi</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-light" href="#">Eventi a cui partecipo</a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body bg-dark">
+                <div class="card mb-3 border-0 bg-black mb-3">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <img src="assets/images/c1.jpg" class="img-fluid d-block img-acc" alt="Sample">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Nome evento</h4>
+                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small>Data</small></p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="card mb-3 border-0 bg-black mb-3">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <img src="assets/images/c2.jpg" class="img-fluid d-block img-acc" alt="Sample">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Nome evento</h4>
+                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small>Data</small></p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="card mb-3 border-0 bg-black mb-3">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <img src="assets/images/c3.jpg" class="img-fluid d-block img-acc" alt="Sample">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h4 class="card-title">Nome evento</h4>
+                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small>Data</small></p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        <a href="#" class="btn btn-outline-danger position-relative start-50 translate-middle-x mt-5 mb-3">Elimina il mio account</a>
+    </div>
+</body>
+</html>
