@@ -10,9 +10,15 @@
 <body class="text-white bg-black">
     <%- include('./partials/head.html') %>
     <div class="card border-0 mb-3 mt-5 start-50 translate-middle-x" style="max-width: 450px;">
-      <h1 class="card-header bg-light text-black display-6">Accedi</h1> 
+      <h1 class="card-header bg-light text-black display-6">Registrati</h1> 
       <div class="card-body bg-dark">
           <form action="">
+            <div class="mb-3 row">
+                <label for="user" class="col-sm col-form-label">Email</label>
+                <div class="col-sm">
+                  <input required type="email" class="form-control bg-black text-white" id="user">
+                </div>
+              </div>
               <div class="mb-3 row">
                 <label for="user" class="col-sm col-form-label">Username</label>
                 <div class="col-sm">
@@ -25,10 +31,16 @@
                   <input required type="password" class="form-control bg-black text-white" id="password">
                 </div>
               </div>
-              <input type="submit" value="Accedi" class="btn btn-light  position-relative start-50 bottom-0 translate-middle-x mt-1">
+              <div class="mb-3 row">
+                <label for="password" class="col-sm col-form-label">Ripeti password</label>
+                <div class="col-sm">
+                  <input required type="password" class="form-control bg-black text-white" id="password">
+                </div>
+              </div>
+              <input type="submit" value="Registrati" class="btn btn-light  position-relative start-50 bottom-0 translate-middle-x mt-1">
           </form>
       </div>
     </div>
-    <p class="text-center">Non hai un account? <a href="/signin" class="link-warning">Registrati</a></p>
+    <p class="text-center">Possiedi già un account? <a href="/login" class="link-warning">Accedi</a></p>
 </body>
 </html>
