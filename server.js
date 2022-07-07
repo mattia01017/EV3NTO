@@ -1,7 +1,18 @@
+require('dotenv').config()
 const bodyParser = require('body-parser')
 const express = require('express')
 const session = require('express-session')
 const accController = require('./controllers/accountControllers')
+const {Client} = require('pg')
+
+const client = new Client({
+    user: process.env.PG_USER,
+    host: process.env.PG_HOST,
+    database: process.env.PG_DB,
+    password: process.env.PG_PASS,
+})
+
+client.connect()
 
 // routers
 const profileRoutes = require('./routes/profileRoutes')
@@ -12,7 +23,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(session({
-    secret: 'secret-key',
+    secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false
 }))
@@ -47,4 +58,4 @@ app.all('*', (req,res) => {
     res.status(404).render('404.ejs')
 })
 
-app.listen(3000)
+app.listen(process.env.PORT)
