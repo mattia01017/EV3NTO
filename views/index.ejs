@@ -9,7 +9,7 @@
     <title>EV3NTO</title>
 </head>
 <body class="bg-black text-white">
-  <%- include('./partials/head.html') %>
+  <%- include('./partials/head.ejs') %>
   <main>
     <div id="home-car" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -53,17 +53,24 @@
     <div class="container-lg mt-3">
       <div class="row mt-1">
           <div class="col-xl mb-2">
-              <div class="card bg-dark border-0">
+              <div class="card bg-dark border-0 home-cards">
                   <div class="card-body">
+                      <% if (!user) { %>
                       <h2 class="display-6 card-title">Sei un organizzatore?</h2>
-                      <p class="card-text">Iscriviti alla piattaforma per organizzare i tuoi eventi</p>
+                      <p class="card-text">Accedi alla piattaforma per organizzare i tuoi eventi</p>
                       <a href="/signin" class="btn btn-light me-3">Registrati</a>
                       <a href="/login" class="btn btn-outline-light me-3">Accedi</a>
+                      <% } else { %>
+                      <h2 class="display-6 card-title">Ciao Mattia</h2>
+                      <p class="card-text">Accesso effettuato</p>
+                      <a href="/profilo/aggiungi" class="btn btn-light me-3">Nuovo evento</a>
+                      <a href="/?logout=1" class="btn btn-outline-light me-3">Logout</a>
+                      <% } %>
                   </div>
               </div>
           </div>
           <div class="col-xl mb-2">
-              <div class="card bg-dark border-0">
+              <div class="card bg-dark border-0 home-cards">
                   <div class="card-body">
                       <h2 class="card-title display-6">Stai cercando un evento?</h2>
                       <p class="card-text">Visualizza gli eventi nelle vicinanze o inserisci un codice di invito</p>

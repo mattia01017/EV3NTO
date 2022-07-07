@@ -18,11 +18,11 @@ const checkIfLogged = (req, res, next) => {
 }
 
 const loadMyPartecip = (req,res) => {
-    res.render('mypage.ejs', {user:user})
+    res.render('mypage.ejs', {user:req.session.user})
 }
 
 const loadAddEvent = (req,res) => {
-    res.render('addevent.ejs')
+    res.render('addevent.ejs', {user:req.session.user})
 }
 
 const addEventReq = (req,res) => {

@@ -13,3 +13,8 @@
 	position: sticky;
 	top: 0;
 }
+
+
+.home-cards{
+	min-height: 170px;
+}

@@ -9,7 +9,7 @@
     <title>Il mio account - EV3NTO</title>
 </head>
 <body class="text-white bg-black">
-    <%- include('./partials/head.html') %>
+    <%- include('./partials/head.ejs') %>
     <main>
       <div class="container-lg mt-3">
           <h2 class="display-5"><%= user %></h2>
@@ -60,7 +60,8 @@
                   </div>
               </div>
             </div>
-          <a href="#" class="btn btn-outline-danger position-relative start-50 translate-middle-x mt-5 mb-3">Elimina il mio account</a>
+          <a href="/?logout=1" class="btn btn-outline-light position-relative start-50 translate-middle-x mt-5 mb-3">Logout</a><br>
+          <a href="#" class="btn btn-outline-danger position-relative start-50 translate-middle-x mt-1 mb-3">Elimina il mio account</a>
       </div>
     </main>
 </body>

@@ -30,24 +30,27 @@ app.use(session({
 
 // home
 app.get('/', (req, res) => {
-   res.render('index.ejs')
+    if (req.query.logout) {
+        delete req.session.user
+    }
+    res.render('index.ejs', {user:req.session.user})
 })
 
 // login
 app.get('/login', (req, res) => {
-    res.render('login.ejs')
+    res.render('login.ejs', {user:req.session.user})
 })
 
 app.post('/login', accController.login);
 
 // sign in
 app.get('/signin', (req, res) => {
-    res.render('signin.ejs')
+    res.render('signin.ejs', {user:req.session.user})
 })
 
 // ricerca
 app.get('/search', (req,res) => {
-    res.render('search.ejs')
+    res.render('search.ejs', {user:req.session.user})
 })
 
 // profilo
@@ -55,7 +58,7 @@ app.use(profileRoutes)
 
 // pagina inesistente
 app.all('*', (req,res) => {
-    res.status(404).render('404.ejs')
+    res.status(404).render('404.ejs', {user:req.session.user})
 })
 
 app.listen(process.env.PORT)

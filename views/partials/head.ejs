@@ -13,9 +13,18 @@
                 <li class="nav-item">
                     <a href="/" class="nav-link">Home</a>
                 </li>
+                <% if (!user) { %>
                 <li class="nav-item">
                     <a href="/login" class="nav-link">Accedi</a>
                 </li>
+                <% } else {%>
+                <li class="nav-item">
+                    <a href="/profilo" class="nav-link"><%= user %></a>
+                </li>
+                <li class="nav-item">
+                    <a href="/profilo/aggiungi" class="nav-link">Nuovo evento</a>
+                </li>
+                <% } %>
             </li>
             </ul>
             <form class="d-flex" role="search" method="get" action="/search">

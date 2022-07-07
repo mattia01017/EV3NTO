@@ -9,9 +9,9 @@
     <title>Nuovo evento - EV3NTO</title>
 </head>
 <body class="text-white bg-black">
-    <%- include('./partials/head.html') %>
+    <%- include('./partials/head.ejs') %>
     <div class="container-lg mt-3">
-        <h2 class="display-5">Nome cognome</h2>
+        <h2 class="display-5"><%= user %></h2>
         <div class="card border-0">
             <%- include('./partials/profilenavbar.ejs') %>
             <div class="card-body bg-dark">
