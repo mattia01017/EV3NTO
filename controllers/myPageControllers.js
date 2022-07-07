@@ -1,16 +1,9 @@
-const login = (req, res) => {
-    let {user, password} = req.body
-    req.session.user = user
-    res.redirect('/profilo')
-}
-
 const loadMyPage = (req, res) => {
-    let {user} = req.session
-    res.render('mypage.ejs', {user:user})
+    res.render('mypage.ejs', {user:req.session.user})
 }
 
 const checkIfLogged = (req, res, next) => {
-    if (req.session.user != undefined) {
+    if (req.session && req.session.user) {
         next();
     } else {
         res.redirect('/login')
@@ -26,16 +19,14 @@ const loadAddEvent = (req,res) => {
 }
 
 const addEventReq = (req,res) => {
-    console.log(req.body)
     res.redirect('/profilo/miei')
 }
 
 const profRedirect = (req,res) => {
-    res.redirect('profilo/miei')
+    res.redirect('/profilo/miei')
 }
 
 module.exports = {
-    login,
     loadMyPage,
     checkIfLogged,
     loadMyPartecip,

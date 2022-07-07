@@ -2,59 +2,60 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const express = require('express')
 const session = require('express-session')
-const accController = require('./controllers/accountControllers')
 const {Client} = require('pg')
 
+const app = express()
+
+// postgreSQL database
 const client = new Client({
     user: process.env.PG_USER,
     host: process.env.PG_HOST,
     database: process.env.PG_DB,
     password: process.env.PG_PASS,
 })
-
 client.connect()
 
-// routers
-const profileRoutes = require('./routes/profileRoutes')
-
-const app = express()
-
-app.use(express.static('public'))
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+// middlewares
 app.use(session({
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false
 }))
+app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+// controllers
+const authControllers = require('./controllers/authControllers')
+const mainControllers = require('./controllers/mainControllers')
+
+// routers
+const profileRoutes = require('./routes/profileRoutes')
+app.use(profileRoutes)
 
 // home
-app.get('/', (req, res) => {
-    if (req.query.logout) {
-        delete req.session.user
-    }
-    res.render('index.ejs', {user:req.session.user})
-})
+app.get('/', 
+    mainControllers.loadHome
+)
 
 // login
-app.get('/login', (req, res) => {
-    res.render('login.ejs', {user:req.session.user})
-})
+app.get('/login', 
+    authControllers.skipIfLogged, 
+    authControllers.loadLogin
+)
 
-app.post('/login', accController.login);
+app.post('/login', 
+    authControllers.authenticate
+)
 
 // sign in
-app.get('/signin', (req, res) => {
-    res.render('signin.ejs', {user:req.session.user})
-})
+app.get('/signin', 
+    authControllers.skipIfLogged, 
+    authControllers.loadSignin
+)
 
 // ricerca
-app.get('/search', (req,res) => {
-    res.render('search.ejs', {user:req.session.user})
-})
-
-// profilo
-app.use(profileRoutes)
+app.get('/search', mainControllers.search)
 
 // pagina inesistente
 app.all('*', (req,res) => {
