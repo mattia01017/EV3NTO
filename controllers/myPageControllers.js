@@ -19,6 +19,16 @@ const loadAddEvent = (req,res) => {
 }
 
 const addEventReq = (req,res) => {
+    let {name, date, num, privacy, desc} = req.body;
+    privacy = privacy == 'priv'
+    num = num == ''? 0 : num
+    let text = `
+        INSERT INTO events(title,ddate,max_num_part,descr,priv,img,organizer,inv_code)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,substr(md5(random()::text), 0, 10))`
+    let values = [name,date,num,desc,privacy,req.file,req.session.email]
+    global.client.query(text, values, (err) => {
+        if (err) console.log(err)
+    })
     res.redirect('/profilo/miei')
 }
 

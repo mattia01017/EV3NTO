@@ -7,7 +7,7 @@ const {Client} = require('pg')
 const app = express()
 
 // postgreSQL database
-const client = new Client({
+global.client = new Client({
     user: process.env.PG_USER,
     host: process.env.PG_HOST,
     database: process.env.PG_DB,
@@ -52,6 +52,9 @@ app.post('/login',
 app.get('/signin', 
     authControllers.skipIfLogged, 
     authControllers.loadSignin
+)
+app.post('/signin',
+    authControllers.addUser
 )
 
 // ricerca
