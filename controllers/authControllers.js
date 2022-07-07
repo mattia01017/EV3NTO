@@ -17,8 +17,10 @@ const authenticate =  (req, res) => {
             if (vals.rows[0]) {
                 req.session.email = vals.rows[0].email
                 req.session.user = vals.rows[0].username
+                req.session.toast = {v: false}
                 res.redirect('/profilo/miei')
             } else {
+                req.session.toast = {v: true}
                 res.redirect('/login')
             }
         }
@@ -26,7 +28,7 @@ const authenticate =  (req, res) => {
 }
 
 const loadLogin = (req, res) => {
-    res.render('login.ejs', {user:req.session.user})
+    res.render('login.ejs', {user:req.session.user, toast: req.session.toast})
 }
 
 const loadSignin = (req, res) => {
