@@ -1,3 +1,5 @@
+const users = require('../models/users')
+
 const skipIfLogged = (req,res,next) => {
     if (req.session && req.session.user) {
         res.redirect('/profilo/miei')
@@ -6,25 +8,20 @@ const skipIfLogged = (req,res,next) => {
     }
 }
 
-const authenticate =  (req, res) => {
+const authenticate = async (req, res) => {
     let {user, password} = req.body
-    let text = 'SELECT email, username FROM users WHERE email=$1 AND (pwd::bytea)=sha256($2)'
-    let values = [user, password]
-    global.client.query(text, values, (err,vals) => {
-        if (err) {
-            console.log(err)
-        } else {
-            if (vals.rows[0]) {
-                req.session.email = vals.rows[0].email
-                req.session.user = vals.rows[0].username
-                req.session.toast = {v: false}
-                res.redirect('/profilo/miei')
-            } else {
-                req.session.toast = {v: true}
-                res.redirect('/login')
-            }
-        }
-    })
+    let cred = await users.selectUser(user, password)
+    console.log(cred)
+    if (cred) {
+        req.session.user = cred.username
+        req.session.email = cred.email
+    }
+    if (req.session.user) {
+        res.redirect('/profilo/miei')
+    } else {
+        req.session.toast = {v : true}
+        res.redirect('/login')
+    }
 }
 
 const loadLogin = (req, res) => {
@@ -38,12 +35,10 @@ const loadSignin = (req, res) => {
 const addUser = (req,res) => {
     let {email, user, password} = req.body
     if (email.includes('@') && password.length >= 3 && user != '') {
-        let text = 'INSERT INTO users VALUES($1,$2,sha256($3))'
-        let values = [email, user, password]
+        users.insertUser(email,user,password)
         req.session.email = email
         req.session.user = user
-        global.client.query(text, values)
-        res.redirect('/profilo')
+        res.redirect('/profilo/miei')
     } else {
         res.status(400).send('Richiesta non valida')
     }

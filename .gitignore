@@ -106,5 +106,5 @@ dist
 # uploaded images
 uploads/
 
-# db files
-db/
+# db tables
+tables.sql

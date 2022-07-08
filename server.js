@@ -2,18 +2,9 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const express = require('express')
 const session = require('express-session')
-const {Client} = require('pg')
+require('./db/db')
 
 const app = express()
-
-// postgreSQL database
-global.client = new Client({
-    user: process.env.PG_USER,
-    host: process.env.PG_HOST,
-    database: process.env.PG_DB,
-    password: process.env.PG_PASS,
-})
-client.connect()
 
 // middlewares
 app.use(session({
