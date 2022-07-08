@@ -2,7 +2,6 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const express = require('express')
 const session = require('express-session')
-require('./db/db')
 
 const app = express()
 
@@ -25,23 +24,23 @@ const profileRoutes = require('./routes/profileRoutes')
 app.use(profileRoutes)
 
 // home
-app.get('/', 
+app.get('/',
     mainControllers.loadHome
 )
 
 // login
-app.get('/login', 
-    authControllers.skipIfLogged, 
+app.get('/login',
+    authControllers.skipIfLogged,
     authControllers.loadLogin
 )
 
-app.post('/login', 
+app.post('/login',
     authControllers.authenticate
 )
 
 // sign in
-app.get('/signin', 
-    authControllers.skipIfLogged, 
+app.get('/signin',
+    authControllers.skipIfLogged,
     authControllers.loadSignin
 )
 app.post('/signin',
@@ -52,8 +51,8 @@ app.post('/signin',
 app.get('/search', mainControllers.search)
 
 // pagina inesistente
-app.all('*', (req,res) => {
-    res.status(404).render('404.ejs', {user:req.session.user})
+app.all('*', (req, res) => {
+    res.status(404).render('404.ejs', { user: req.session.user })
 })
 
 app.listen(process.env.PORT)

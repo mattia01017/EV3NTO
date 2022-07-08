@@ -1,56 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>Nuovo evento - EV3NTO</title>
 </head>
+
 <body class="text-white bg-black">
     <%- include('./partials/head.ejs') %>
-    <div class="container-lg mt-3">
-        <h2 class="display-5"><%= user %></h2>
-        <div class="card border-0">
-            <%- include('./partials/profilenavbar.ejs') %>
-            <div class="card-body bg-dark">
-                <form action="/profilo/aggiungi" method="post" enctype="multipart/form-data">
-                    <div class="mb-3 row">
-                        <label for="name" class="col-sm col-form-label">Nome evento*</label>
-                        <div class="col-sm">
-                          <input required name="name" type="text" class="form-control bg-black text-white" id="name">
-                        </div>
-                        <label for="date" class="col-sm col-form-label">Data*</label>
-                        <div class="col-sm">
-                            <input required name="date" type="date" class="form-control bg-black text-white" id="date">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="num" class="col-sm col-form-label">Numero massimo di partecipanti</label>
-                        <div class="col-sm">
-                          <input type="number" name="num" class="form-control bg-black text-white" id="num">
-                        </div>
-                        <label for="image" class="col-sm col-form-label">Immagine</label>
-                        <div class="col-sm">
-                            <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg" class="form-control bg-black text-white mb-3" id="image">
-                        </div>
-                    </div>
-                    <div class="container-sm w-75 text-center">
-                        <input type="radio" value="pubb" class="btn-check" name="privacy" id="public" autocomplete="off" checked>
-                        <label class="btn btn-outline-light" for="public">Pubblico</label>
+        <div class="container-lg mt-3">
+            <h2 class="display-5">
+                <%= user %>
+            </h2>
+            <div class="card border-0">
+                <%- include('./partials/profilenavbar.ejs') %>
+                    <div class="card-body bg-dark">
+                        <form action="/profilo/aggiungi" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <label for="name" class="col-lg col-form-label">Nome evento*</label>
+                                <div class="col-lg mb-3">
+                                    <input required name="name" type="text" class="form-control bg-black text-white"
+                                        id="name">
+                                </div>
+                                <label for="date" class="col-lg col-form-label">Data*</label>
+                                <div class="col-lg mb-3">
+                                    <input required name="date" type="date" class="form-control bg-black text-white"
+                                        id="date">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="num" class="col-lg col-form-label">Numero massimo di partecipanti</label>
+                                <div class="col-lg mb-3">
+                                    <input type="number" name="num" class="form-control bg-black text-white" id="num">
+                                </div>
+                                <label for="image" class="col-lg col-form-label">Immagine</label>
+                                <div class="col-lg mb-3">
+                                    <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg"
+                                        class="form-control bg-black text-white" id="image">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="location" class="col-lg col-form-label">Dove*</label>
+                                <div class="col-lg mb-3">
+                                    <input type="text" name="location" class="form-control bg-black text-white"
+                                        id="location">
+                                </div>
+                                <label for="priv-btns" class="col-lg col-form-label">Privacy*</label>
+                                <div class="col-lg mb-3" id="priv-btns">
+                                    <input type="radio" value="pubb" class="btn-check" name="privacy" id="public"
+                                        autocomplete="off" checked>
+                                    <label class="btn btn-outline-light" for="public">Pubblico</label>
 
-                        <input type="radio" value="priv" class="btn-check" name="privacy" id="private" autocomplete="off">
-                        <label class="btn btn-outline-light" for="private">Privato</label><br>
-                        <label for="desc" class="col-sm col-form-label mt-3">Descrizione</label>
-                        <div class="col-sm">
-                            <textarea type="number" name="desc" class="form-control bg-black text-white mb-3" id="desc" rows="4"></textarea>
-                        </div>
-                        <input type="submit" value="Aggiungi" class="btn btn-light btn-lg mt-3">
+                                    <input type="radio" value="priv" class="btn-check" name="privacy" id="private"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-light" for="private">Privato</label><br>
+                                </div>
+                            </div>
+                            <div class="container-sm w-75 text-center">
+                                <label for="desc" class="col-lg col-form-label mt-3">Descrizione</label>
+                                <div class="col-lg">
+                                    <textarea type="number" name="desc" class="form-control bg-black text-white mb-3"
+                                        id="desc" rows="4"></textarea>
+                                </div>
+                                <input type="submit" value="Aggiungi" class="btn btn-light btn-lg mt-3">
+                            </div>
+                        </form>
                     </div>
-                </form>
             </div>
         </div>
-    </div>
 </body>
+
 </html>

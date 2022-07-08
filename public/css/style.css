@@ -1,20 +1,20 @@
-.car-img{
+.car-img {
 	object-fit: cover;
-	filter: brightness(0.6);	
+	filter: brightness(0.6);
 }
 
-.img-acc{
-	height: 300px; 
-	width: 600px; 
+.img-acc {
+	height: 300px;
+	width: 600px;
 	object-fit: cover;
 }
 
-.navbar{
+.navbar {
 	position: sticky;
 	top: 0;
 }
 
 
-.home-cards{
+.home-cards {
 	min-height: 170px;
 }

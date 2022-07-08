@@ -4,34 +4,39 @@
     </div>
     <nav class="navbar sticky-top navbar-dark navbar-expand-lg bg-dark">
         <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-                <li class="nav-item">
-                    <a href="/" class="nav-link">Home</a>
-                </li>
-                <% if (!user) { %>
-                <li class="nav-item">
-                    <a href="/login" class="nav-link">Accedi</a>
-                </li>
-                <% } else {%>
-                <li class="nav-item">
-                    <a href="/profilo" class="nav-link"><%= user %></a>
-                </li>
-                <li class="nav-item">
-                    <a href="/profilo/aggiungi" class="nav-link">Nuovo evento</a>
-                </li>
-                <% } %>
-            </li>
-            </ul>
-            <form class="d-flex" role="search" method="get" action="/search">
-                <input class="form-control me-2 bg-dark text-white" type="search" placeholder="Cerca evento " aria-label="Search">
-                <button class="btn btn-outline-warning" type="submit">Vai</button>
-            </form>
-        </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <% if (!user) { %>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link">Accedi</a>
+                        </li>
+                        <% } else {%>
+                            <li class="nav-item">
+                                <a href="/profilo" class="nav-link">
+                                    <%= user %>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/profilo/aggiungi" class="nav-link">Nuovo evento</a>
+                            </li>
+                            <% } %>
+                                </li>
+                </ul>
+                <form class="d-flex" role="search" method="get" action="/search">
+                    <input class="form-control me-2 bg-dark text-white" type="search" placeholder="Cerca evento "
+                        aria-label="Search">
+                    <button class="btn btn-outline-warning" type="submit">Vai</button>
+                </form>
+            </div>
         </div>
     </nav>
 </header>

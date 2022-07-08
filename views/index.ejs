@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <title>EV3NTO</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <title>EV3NTO</title>
 </head>
+
 <body class="bg-black text-white">
   <%- include('./partials/head.ejs') %>
-  <main>
-    <div id="home-car" class="carousel slide" data-bs-ride="carousel">
+    <main>
+      <div id="home-car" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#home-car" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#home-car" data-bs-slide-to="0" class="active" aria-current="true"
+            aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#home-car" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#home-car" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
@@ -48,43 +54,45 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-    </div>
-    
-    <div class="container-lg mt-3">
-      <div class="row mt-1">
+      </div>
+
+      <div class="container-lg mt-3">
+        <div class="row mt-1">
           <div class="col-xl mb-2">
-              <div class="card bg-dark border-0 home-cards">
-                  <div class="card-body">
-                      <% if (!user) { %>
-                      <h2 class="display-6 card-title">Sei un organizzatore?</h2>
-                      <p class="card-text">Accedi alla piattaforma per organizzare i tuoi eventi</p>
-                      <a href="/signin" class="btn btn-light me-3">Registrati</a>
-                      <a href="/login" class="btn btn-outline-light me-3">Accedi</a>
-                      <% } else { %>
-                      <h2 class="display-6 card-title">Ciao <%= user %></h2>
-                      <p class="card-text">Accesso effettuato</p>
-                      <a href="/profilo/aggiungi" class="btn btn-light me-3">Nuovo evento</a>
-                      <a href="/?logout=1" class="btn btn-outline-light me-3">Logout</a>
-                      <% } %>
-                  </div>
+            <div class="card bg-dark border-0 home-cards">
+              <div class="card-body">
+                <% if (!user) { %>
+                  <h2 class="display-6 card-title">Sei un organizzatore?</h2>
+                  <p class="card-text">Accedi alla piattaforma per organizzare i tuoi eventi</p>
+                  <a href="/signin" class="btn btn-light me-3">Registrati</a>
+                  <a href="/login" class="btn btn-outline-light me-3">Accedi</a>
+                  <% } else { %>
+                    <h2 class="display-6 card-title">Ciao <%= user %>
+                    </h2>
+                    <p class="card-text">Accesso effettuato</p>
+                    <a href="/profilo/aggiungi" class="btn btn-light me-3">Nuovo evento</a>
+                    <a href="/?logout=1" class="btn btn-outline-light me-3">Logout</a>
+                    <% } %>
               </div>
+            </div>
           </div>
           <div class="col-xl mb-2">
-              <div class="card bg-dark border-0 home-cards">
-                  <div class="card-body">
-                      <h2 class="card-title display-6">Stai cercando un evento?</h2>
-                      <p class="card-text">Visualizza gli eventi nelle vicinanze o inserisci un codice di invito</p>
-                      <div class="d-flex">
-                        <a href="/search" class="btn btn-light me-3">Trova eventi</a>
-                        <form action="">
-                            <input class="form-control bg-dark text-white" type="text" placeholder="Inserisci codice evento">
-                        </form> 
-                      </div>
-                  </div>
+            <div class="card bg-dark border-0 home-cards">
+              <div class="card-body">
+                <h2 class="card-title display-6">Stai cercando un evento?</h2>
+                <p class="card-text">Visualizza gli eventi nelle vicinanze o inserisci un codice di invito</p>
+                <div class="d-flex">
+                  <a href="/search" class="btn btn-light me-3">Trova eventi</a>
+                  <form action="">
+                    <input class="form-control bg-dark text-white" type="text" placeholder="Inserisci codice evento">
+                  </form>
+                </div>
               </div>
+            </div>
           </div>
         </div>
-    </div>
-  </main>         
+      </div>
+    </main>
 </body>
+
 </html>

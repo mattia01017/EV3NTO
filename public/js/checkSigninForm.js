@@ -5,7 +5,7 @@ form.addEventListener('submit', (e) => {
     let toasttext = document.getElementById('toast-text')
     let pwd = form.elements['password']
     let pwd2 = form.elements['password2']
-    
+
     if (!form.checkValidity()) {
         e.preventDefault()
         e.stopPropagation()
