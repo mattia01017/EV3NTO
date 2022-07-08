@@ -19,7 +19,7 @@ const authenticate = async (req, res) => {
         res.redirect('/profilo/miei')
     } else {
         req.session.toast = { v: true }
-        res.redirect('/login')
+        res.redirect('/account/login')
     }
 }
 

@@ -1,33 +1,31 @@
-const express = require('express')
-const router = express.Router()
+const { Router } = require('express')
 const multer = require('multer')
 const myPageControllers = require('../controllers/myPageControllers')
 
+const router = Router()
+
 const upload = multer({ dest: 'uploads/' })
 
-router.get('/profilo',
-    myPageControllers.checkIfLogged,
+router.use(myPageControllers.checkIfLogged)
+
+router.get('/',
     myPageControllers.profRedirect
 )
 
-router.get('/profilo/miei',
-    myPageControllers.checkIfLogged,
+router.get('/miei',
     myPageControllers.loadMyPage
 )
 
-router.get('/profilo/partecipazioni',
-    myPageControllers.checkIfLogged,
+router.get('/partecipazioni',
     myPageControllers.loadMyPartecip
 )
 
-router.get('/profilo/aggiungi',
-    myPageControllers.checkIfLogged,
+router.get('/aggiungi',
     myPageControllers.loadAddEvent
 )
 
-router.post('/profilo/aggiungi',
+router.post('/aggiungi',
     upload.single('image'),
-    myPageControllers.checkIfLogged,
     myPageControllers.addEventReq
 )
 

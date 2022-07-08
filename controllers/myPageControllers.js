@@ -1,4 +1,7 @@
-const { insertEvent } = require("../models/events");
+const NodeGeocoder = require("node-geocoder");
+const events = require("../models/events");
+
+const geocoder = NodeGeocoder({ provider: 'openstreetmap' })
 
 const loadMyPage = (req, res) => {
     res.render('mypage.ejs', { user: req.session.user })
@@ -6,9 +9,9 @@ const loadMyPage = (req, res) => {
 
 const checkIfLogged = (req, res, next) => {
     if (req.session && req.session.user) {
-        next();
+        next()
     } else {
-        res.redirect('/login')
+        res.redirect('/account/login')
     }
 }
 
@@ -20,16 +23,22 @@ const loadAddEvent = (req, res) => {
     res.render('addevent.ejs', { user: req.session.user })
 }
 
-const addEventReq = (req, res) => {
-    let { name, date, num, privacy, desc, where } = req.body;
-    privacy = privacy == 'priv'
-    num = num == '' ? null : num
-    const file_path = req.file ? req.file.path : null
-    insertEvent(name, date, num, privacy, desc, file_path, req.session.email, where)
+const profRedirect = (req, res) => {
     res.redirect('/profilo/miei')
 }
 
-const profRedirect = (req, res) => {
+
+const addEventReq = async (req, res) => {
+    let { name, date, num, privacy, desc, location } = req.body;
+    privacy = privacy == 'priv'
+    num = num == '' ? null : num
+    
+    let vals = await geocoder.geocode({q: location})
+    let {latitude,longitude} = vals[0]
+    console.log(latitude,longitude)
+
+    let file_path = req.file ? req.file.path : null
+    events.insertEvent(name, date, num, privacy, desc, file_path, req.session.email, location, latitude, longitude)
     res.redirect('/profilo/miei')
 }
 

@@ -17,7 +17,7 @@
     <div class="card border-0 mb-3 mt-5 start-50 translate-middle-x" style="max-width: 450px;">
       <h1 class="card-header bg-light text-black display-6">Accedi</h1>
       <div class="card-body bg-dark">
-        <form id="login-form" action="/login" method="post" novalidate>
+        <form id="login-form" action="/account/login" method="post" novalidate>
           <div class="mb-3 row">
             <label for="user" class="col-sm col-form-label">Username</label>
             <div class="col-sm">
@@ -35,7 +35,7 @@
         </form>
       </div>
     </div>
-    <p class="text-center">Non hai un account? <a href="/signin" class="link-warning">Registrati</a></p>
+    <p class="text-center">Non hai un account? <a href="/account/signin" class="link-warning">Registrati</a></p>
     <% if (toast && toast.v) { toast.v=false %>
       <div id="toast" class="toast position-fixed start-50 bottom-0 bg-light text-black translate-middle w-25"
         role="alert" aria-live="assertive" aria-atomic="true">
