@@ -20,54 +20,35 @@
         <h2 class="display-5">
           <%= user %>
         </h2>
+        
         <div class="card text-center border-0">
           <%- include('./partials/profilenavbar.ejs') %>
             <div class="card-body bg-dark">
-              <div class="card mb-3 border-0 bg-black mb-3">
+              
+              
+              <!--Inizio card evento-->
+              <div class="card mb-3 border-0 bg-black mb-3 event-card">
+                <div class="d-flex align-items-center position-absolute start-50 top-50 translate-middle">
+                  <strong>Caricamento...</strong class="display-6">
+                  <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
+                </div>
                 <div class="row">
                   <div class="col-md-4">
-                    <img src="assets/images/c1.jpg" class="img-fluid d-block img-acc" alt="Sample">
+                    <img src="" class="img-fluid d-block img-acc event-image" alt="">
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
-                      <h4 class="card-title">Nome evento</h4>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                      <p class="card-text"><small>Data</small></p>
+                      <h4 class="card-title event-title"></h4>
+                      <p class="text-right event-part"></p>
+                      <p class="card-text event-desc"></p>
+                      <p class="card-text event-date"><small></small></p>
+                      <p class="card-text event-loc"><small></small></p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="card mb-3 border-0 bg-black mb-3">
-                <div class="row">
-                  <div class="col-md-4">
-                    <img src="assets/images/c2.jpg" class="img-fluid d-block img-acc" alt="Sample">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h4 class="card-title">Nome evento</h4>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                      <p class="card-text"><small>Data</small></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card mb-3 border-0 bg-black mb-3">
-                <div class="row">
-                  <div class="col-md-4">
-                    <img src="assets/images/c3.jpg" class="img-fluid d-block img-acc" alt="Sample">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h4 class="card-title">Nome evento</h4>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                      <p class="card-text"><small>Data</small></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!--Fine card evento-->
+
             </div>
         </div>
         <a href="/?logout=1"
@@ -77,5 +58,5 @@
       </div>
     </main>
 </body>
-
+<script src="/js/fetchMyEvents.js"></script>
 </html>

@@ -26,7 +26,8 @@ router.get('/aggiungi',
 
 router.post('/aggiungi',
     upload.single('image'),
-    myPageControllers.addEventReq
+    myPageControllers.addEventReq,
+    myPageControllers.loadMyPartecip
 )
 
 module.exports = router;

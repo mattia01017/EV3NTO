@@ -21,8 +21,10 @@ const mainControllers = require('./controllers/mainControllers')
 // routers
 const profileRoutes = require('./routes/profileRoutes')
 const authRoutes = require('./routes/authRoutes')
+const apiRoutes = require('./routes/apiRoutes')
 app.use('/profilo', profileRoutes)
 app.use('/account', authRoutes)
+app.use('/api', apiRoutes)
 
 // home
 app.get('/',
