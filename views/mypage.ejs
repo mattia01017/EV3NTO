@@ -27,7 +27,7 @@
               
               
               <!--Inizio card evento-->
-              <div class="card mb-3 border-0 bg-black mb-3 event-card">
+              <div class="card mb-3 border-0 bg-black mb-3 event-card" style="min-height: 80px;">
                 <div class="d-flex align-items-center position-absolute start-50 top-50 translate-middle">
                   <strong>Caricamento...</strong class="display-6">
                   <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
@@ -38,11 +38,15 @@
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
-                      <h4 class="card-title event-title"></h4>
+                      <h4 class="card-title event-title display-6 fs-2"></h4>
                       <p class="text-right event-part"></p>
                       <p class="card-text event-desc"></p>
-                      <p class="card-text event-date"><small></small></p>
-                      <p class="card-text event-loc"><small></small></p>
+                      <small class="event-date"></small><br>  
+                      <small class="event-loc"></small><br>
+                      <button class="btn btn-light event-btn mt-3" hidden>Dettagli</button>
+                      <% if (edit) { %>
+                      <button class="btn btn-danger event-btn mt-3" hidden>Elimina</button>
+                      <% } %>
                     </div>
                   </div>
                 </div>
@@ -57,6 +61,7 @@
           mio account</a>
       </div>
     </main>
+    <%- include('./partials/footer.ejs') %>
 </body>
 <script src="/js/fetchMyEvents.js"></script>
 </html>

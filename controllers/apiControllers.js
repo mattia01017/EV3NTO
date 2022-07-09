@@ -1,8 +1,8 @@
 const events = require('../models/events')
 
-const fetchMyEvents = (req,res,next) => {
+const sendMyEvents = (req,res) => {
     if (req.session.email) {
-        events.selectEvents(req.session.email).then((data) => {
+        events.selectMyEvents(req.session.email).then((data) => {
             res.json(data) 
         })
     } else {
@@ -10,6 +10,17 @@ const fetchMyEvents = (req,res,next) => {
     }
 }
 
+const sendMyPartecip = (req,res) => {
+    if (req.session.email) {
+        events.selectMyPartecip(req.session.email).then((data) => {
+            res.json(data)
+        })
+    } else {
+        res.json({Errore: 'Non hai effettuato l\'accesso'})
+    }
+}
+
 module.exports = {
-    fetchMyEvents
+    sendMyEvents,
+    sendMyPartecip
 }

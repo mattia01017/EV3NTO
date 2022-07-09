@@ -6,7 +6,8 @@ const geocoder = NodeGeocoder({ provider: 'openstreetmap' })
 const loadMyPage = (req, res) => {
     res.render('mypage.ejs', { 
         user: req.session.user,
-        select: 'i'
+        select: 'i',
+        edit: true
     })
 }
 
@@ -21,7 +22,8 @@ const checkIfLogged = (req, res, next) => {
 const loadMyPartecip = (req, res) => {
     res.render('mypage.ejs', { 
         user: req.session.user,
-        select: 'e'
+        select: 'e',
+        edit: false
     })
 }
 
