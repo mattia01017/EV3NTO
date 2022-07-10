@@ -44,9 +44,23 @@ const deleteMyEvent = async (id, email) => {
     await pool.query(text,values)
 }
 
+const selectImage = async (img, email, inv_code) => {
+    let text = 
+        `SELECT img 
+        FROM events
+        WHERE img=$1 AND (priv=FALSE OR organizer=$2 OR inv_code=$3)`
+    let values = ['uploads/' + img, email, inv_code]
+    let res = await pool.query(text, values, inv_code)
+    if (res.rowCount == 1) {
+        return true
+    }
+    return false
+}
+
 module.exports = {
     insertEvent,
     selectMyEvents,
     selectMyPartecip,
-    deleteMyEvent
+    deleteMyEvent,
+    selectImage
 }

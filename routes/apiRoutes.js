@@ -11,6 +11,10 @@ router.get('/mypartecip',
     apiControllers.sendMyPartecip
 )
 
+router.get('/img/:imgpath',
+    apiControllers.sendImg
+)
+
 
 
 module.exports = router;

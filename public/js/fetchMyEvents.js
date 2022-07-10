@@ -1,6 +1,12 @@
 var ecard = document.querySelector('.event-card')
 var mastercard = document.querySelector('.card-body')
 
+var w = new Worker('../js/workers/imageFetcher.js')
+
+w.addEventListener('message', (e) => {
+
+})
+
 async function fillCards() {
     let path
     if (window.location.pathname == '/profilo/miei') {
@@ -17,7 +23,9 @@ async function fillCards() {
         data.forEach(event => {
             let nextcard = ecard.cloneNode(true)
             ecard.removeChild(ecard.querySelector('.d-flex'))
-    
+
+            ecard.querySelector('.event-image').id = 'img' + event.id
+            w.postMessage({ img: event.img, id: event.id })
             ecard.querySelector('.event-title').innerText = event.title
             ecard.querySelector('.event-desc').innerText = event.descr
             ecard.querySelector('.event-date').innerText = event.ddate
@@ -25,27 +33,26 @@ async function fillCards() {
             ecard.querySelector('.event-org').innerText = event.organizer
             ecard.querySelector('.det-btn').setAttribute('href', '/evento/' + event.id)
             let delbtn = ecard.querySelector('.del-btn')
-            console.log(delbtn)
             if (delbtn) {
                 delbtn.setAttribute('href', `${window.location.pathname}?delete=${event.id}`)
             }
-            
+
             let partecip = ecard.querySelector('.event-part')
-            partecip.innerText = 'Partecipanti: ' +  event.num_part
+            partecip.innerText = 'Partecipanti: ' + event.num_part
             if (event.max_num_part) {
                 partecip.innerText += ' / ' + event.max_num_part
             }
-    
-    
+
+
             mastercard.appendChild(ecard)
-            ecard = nextcard    
+            ecard = nextcard
         })
     } else {
         while (ecard.childNodes.length > 1) {
             ecard.removeChild(ecard.firstChild)
         }
         let notice = document.createElement('h3')
-        notice.classList.add('display-6','mt-3','mb-3')
+        notice.classList.add('display-6', 'mt-3', 'mb-3')
         notice.innerText = 'Nessun evento presente'
         ecard.appendChild(notice)
     }
