@@ -44,13 +44,18 @@ const addEventReq = async (req, res, next) => {
     privacy = privacy == 'priv'
     num = num == '' ? null : num
     
-    geocoder.geocode({q: location}).then((vals) => {
-        let {latitude,longitude} = vals[0]
-        console.log(latitude,longitude)
-    
-        let file_path = req.file ? req.file.path : null
-        events.insertEvent(name, date, num, privacy, desc, file_path, req.session.email, location, latitude, longitude)
-    })
+    let vals = await geocoder.geocode({q: location})
+    let {latitude,longitude} = vals[0]
+
+    let file_path = req.file ? req.file.path : null
+    await events.insertEvent(name, date, num, privacy, desc, file_path, req.session.email, location, latitude, longitude)
+    next()
+}
+
+const deleteEvent = async (req,res,next) => {
+    if (req.query.delete) {
+        events.deleteMyEvent(req.query.delete, req.session.email)
+    }
     next()
 }
 
@@ -60,5 +65,6 @@ module.exports = {
     loadMyPartecip,
     loadAddEvent,
     addEventReq,
-    profRedirect
+    profRedirect,
+    deleteEvent
 }

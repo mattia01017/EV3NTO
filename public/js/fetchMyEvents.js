@@ -22,6 +22,13 @@ async function fillCards() {
             ecard.querySelector('.event-desc').innerText = event.descr
             ecard.querySelector('.event-date').innerText = event.ddate
             ecard.querySelector('.event-loc').innerText = event.location_name
+            ecard.querySelector('.event-org').innerText = event.organizer
+            ecard.querySelector('.det-btn').setAttribute('href', '/evento/' + event.id)
+            let delbtn = ecard.querySelector('.del-btn')
+            console.log(delbtn)
+            if (delbtn) {
+                delbtn.setAttribute('href', `${window.location.pathname}?delete=${event.id}`)
+            }
             
             let partecip = ecard.querySelector('.event-part')
             partecip.innerText = 'Partecipanti: ' +  event.num_part

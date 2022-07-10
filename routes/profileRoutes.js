@@ -13,6 +13,7 @@ router.get('/',
 )
 
 router.get('/miei',
+    myPageControllers.deleteEvent,
     myPageControllers.loadMyPage
 )
 
@@ -27,7 +28,7 @@ router.get('/aggiungi',
 router.post('/aggiungi',
     upload.single('image'),
     myPageControllers.addEventReq,
-    myPageControllers.loadMyPartecip
+    myPageControllers.profRedirect
 )
 
 module.exports = router;

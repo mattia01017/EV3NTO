@@ -38,8 +38,15 @@ const selectMyPartecip = async (user) => {
     return res.rows
 }
 
+const deleteMyEvent = async (id, email) => {
+    let text = 'DELETE FROM events WHERE id=$1 AND organizer=$2'
+    let values = [id, email]
+    await pool.query(text,values)
+}
+
 module.exports = {
     insertEvent,
     selectMyEvents,
-    selectMyPartecip
+    selectMyPartecip,
+    deleteMyEvent
 }

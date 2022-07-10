@@ -39,14 +39,34 @@
                   <div class="col-md-8">
                     <div class="card-body">
                       <h4 class="card-title event-title display-6 fs-2"></h4>
-                      <p class="text-right event-part"></p>
+                      <p class="card-text event-part"></p>
                       <p class="card-text event-desc"></p>
                       <small class="event-date"></small><br>  
                       <small class="event-loc"></small><br>
-                      <button class="btn btn-light event-btn mt-3" hidden>Dettagli</button>
+                      <a href="" class="btn btn-light event-btn det-btn mt-3 mb-2" hidden>Dettagli</a>
                       <% if (edit) { %>
-                      <button class="btn btn-danger event-btn mt-3" hidden>Elimina</button>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-danger mt-3 mb-2 askdel-btn" data-bs-toggle="modal" data-bs-target="#delpopup">
+                        Elimina
+                      </button>
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="delpopup" tabindex="-1" aria-labelledby="delpopupLabel" aria-hidden="true">
+                        <div class="modal-dialog bg-dark">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title text-black" id="delpopupLabel">Confermi l'eliminazione?</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                              <a href="" class="btn btn-danger del-btn">Si</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <% } %>
+                      <br><small class="event-org"></small>
                     </div>
                   </div>
                 </div>
