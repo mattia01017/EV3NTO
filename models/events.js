@@ -45,13 +45,14 @@ const deleteMyEvent = async (id, email) => {
 }
 
 const selectImage = async (img, email, inv_code) => {
-    let text = 
-        `SELECT img 
+    let text = `
+        SELECT img 
         FROM events
-        WHERE img=$1 AND (priv=FALSE OR organizer=$2 OR inv_code=$3)`
-    let values = ['uploads/' + img, email, inv_code]
+        WHERE img=$1 AND (priv=FALSE OR organizer=$2 OR inv_code=$3)
+        LIMIT 1`
+    let values = [img, email, inv_code]
     let res = await pool.query(text, values, inv_code)
-    if (res.rowCount == 1) {
+    if (res.rowCount >= 1) {
         return true
     }
     return false

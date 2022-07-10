@@ -47,7 +47,7 @@ const addEventReq = async (req, res, next) => {
     let vals = await geocoder.geocode({q: location})
     let {latitude,longitude} = vals[0]
 
-    let file_path = req.file ? req.file.path : null
+    let file_path = req.file && req.file.filename != ''? req.file.filename : 'qm.jpg'
     await events.insertEvent(name, date, num, privacy, desc, file_path, req.session.email, location, latitude, longitude)
     next()
 }

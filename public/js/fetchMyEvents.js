@@ -4,7 +4,16 @@ var mastercard = document.querySelector('.card-body')
 var w = new Worker('../js/workers/imageFetcher.js')
 
 w.addEventListener('message', (e) => {
-
+    let imgblob = e.data.blob
+    let imgel = document.getElementById('img' + e.data.id)
+    
+    let objURL = URL.createObjectURL(imgblob)
+    
+    imgel.addEventListener('load', e => {
+        URL.revokeObjectURL(objURL)
+    })
+    
+    imgel.setAttribute('src', objURL)
 })
 
 async function fillCards() {
@@ -25,7 +34,11 @@ async function fillCards() {
             ecard.removeChild(ecard.querySelector('.d-flex'))
 
             ecard.querySelector('.event-image').id = 'img' + event.id
-            w.postMessage({ img: event.img, id: event.id })
+            w.postMessage({ 
+                img: event.img, 
+                id: event.id, 
+                host: window.location.host
+            })
             ecard.querySelector('.event-title').innerText = event.title
             ecard.querySelector('.event-desc').innerText = event.descr
             ecard.querySelector('.event-date').innerText = event.ddate
@@ -58,4 +71,7 @@ async function fillCards() {
     }
 }
 
-fillCards()
+const imgs = document.getElementsByTagName('img')
+fillCards().then(
+    imgs.removeAttribute('hidden')
+)
