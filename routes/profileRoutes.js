@@ -4,7 +4,8 @@ const myPageControllers = require('../controllers/myPageControllers')
 
 const router = Router()
 
-const upload = multer({ dest: 'uploads/' })
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 router.use(myPageControllers.checkIfLogged)
 

@@ -3,7 +3,7 @@ var mastercard = document.querySelector('.card-body')
 
 var w = new Worker('../js/workers/imageFetcher.js')
 
-w.addEventListener('message', (e) => {
+w.addEventListener('message', e => {
     let imgblob = e.data.blob
     let imgel = document.getElementById('img' + e.data.id)
     
@@ -14,6 +14,7 @@ w.addEventListener('message', (e) => {
     })
     
     imgel.setAttribute('src', objURL)
+    imgel.style.removeProperty('visibility')
 })
 
 async function fillCards() {
@@ -56,7 +57,6 @@ async function fillCards() {
                 partecip.innerText += ' / ' + event.max_num_part
             }
 
-
             mastercard.appendChild(ecard)
             ecard = nextcard
         })
@@ -65,13 +65,11 @@ async function fillCards() {
             ecard.removeChild(ecard.firstChild)
         }
         let notice = document.createElement('h3')
-        notice.classList.add('display-6', 'mt-3', 'mb-3')
+        notice.classList.add('display-6')
         notice.innerText = 'Nessun evento presente'
-        ecard.appendChild(notice)
+        notice.classList.add('position-absolute', 'top-50', 'start-50', 'translate-middle')
+        ecard.parentNode.append(notice)
     }
 }
 
-const imgs = document.getElementsByTagName('img')
-fillCards().then(
-    imgs.removeAttribute('hidden')
-)
+fillCards()
