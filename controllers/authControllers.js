@@ -32,14 +32,13 @@ const authenticate = async (req, res) => {
 // carica la pagina di autenticazione
 const loadLogin = (req, res) => {
     res.render('login.ejs', { 
-        user: req.session.user, 
         toast: req.session.toast 
     })
 }
 
 // carica la pagina di registrazione
 const loadSignin = (req, res) => {
-    res.render('signin.ejs', { user: req.session.user })
+    res.render('signin.ejs')
 }
 
 // Registra l'utente al sistema

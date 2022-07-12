@@ -2,7 +2,7 @@ var ecard = document.querySelector('.event-card')
 var mastercard = document.querySelector('.card-body')
 
 // web worker per caricare e renderizzare le immagini degli eventi
-var w = new Worker('../js/workers/imageFetcher.js')
+var w = new Worker('/js/workers/imageFetcher.js')
 
 w.addEventListener('message', e => {
     let imgblob = e.data.blob

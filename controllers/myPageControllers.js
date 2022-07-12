@@ -12,7 +12,6 @@ const geocoder = NodeGeocoder({ provider: 'openstreetmap' })
 // invia la pagina degli eventi appartenenti all'utente
 const loadMyPage = (req, res) => {
     res.render('mypage.ejs', {
-        user: req.session.user,
         select: 'i',
         edit: true
     })
@@ -31,7 +30,6 @@ const checkIfLogged = (req, res, next) => {
 // invia la pagina degli eventi a cui partecipa l'utente
 const loadMyPartecip = (req, res) => {
     res.render('mypage.ejs', {
-        user: req.session.user,
         select: 'e',
         edit: false
     })
@@ -40,7 +38,6 @@ const loadMyPartecip = (req, res) => {
 // invia la pagina di inserimento eventi
 const loadAddEvent = (req, res) => {
     res.render('addevent.ejs', {
-        user: req.session.user,
         select: 'n'
     })
 }

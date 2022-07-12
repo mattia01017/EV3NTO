@@ -19,6 +19,15 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+// variabili globali views
+app.use((req,res,next) => {
+    res.locals = {
+        user: req.session.user,
+        host: __dirname
+    }
+    next()
+})
+
 // controllers
 const mainControllers = require('./controllers/mainControllers')
 
@@ -42,7 +51,7 @@ app.get('/search', mainControllers.search)
 // pagina inesistente
 app.all('*', (req, res) => {
     console.log(req.url)
-    res.status(404).render('404.ejs', { user: req.session.user })
+    res.status(404).render('404.ejs')
 })
 
 app.listen(process.env.PORT)
