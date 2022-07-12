@@ -1,7 +1,9 @@
+/* Controller delle richieste AJAX */
+
 const events = require('../models/events')
-const fs = require('fs')
 const path = require('path')
 
+// invia gli eventi appartenenti all'utente della sessione corrente
 const sendMyEvents = (req, res) => {
     if (req.session.email) {
         events.selectMyEvents(req.session.email).then((data) => {
@@ -12,6 +14,7 @@ const sendMyEvents = (req, res) => {
     }
 }
 
+// invia gli eventi a cui partecipa l'utente della sessione corrente
 const sendMyPartecip = (req, res) => {
     if (req.session.email) {
         events.selectMyPartecip(req.session.email).then((data) => {
@@ -22,19 +25,12 @@ const sendMyPartecip = (req, res) => {
     }
 }
 
+// invia l'immagine di un evento se i permessi sono sufficienti
 const sendImg = async (req, res) => {
     let { imgpath } = req.params
     let { email } = req.session
-    let val = await events.selectImage(imgpath, email)
-    console.log(val)
-    if (val) {
-        fs.readFile(path.join(path.dirname(__dirname), 'uploads', imgpath), (err, data) => {
-            if (!err) {
-                res.send(data)
-            } else {
-                res.json({ Errore: 'Immagine insesistente o non hai i permessi richiesti' })
-            }
-        })
+    if (await events.selectImage(imgpath, email)) {
+        res.sendFile(path.join(path.dirname(__dirname), 'uploads', imgpath))
     } else {
         res.json({ Errore: 'Immagine insesistente o non hai i permessi richiesti' })
     }

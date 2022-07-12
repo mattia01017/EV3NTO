@@ -1,3 +1,6 @@
+/* Controllers principali */
+
+// carica pagina home
 const loadHome = (req, res) => {
     if (req.query.logout) {
         delete req.session.user
@@ -6,6 +9,7 @@ const loadHome = (req, res) => {
     res.render('index.ejs', { user: req.session.user })
 }
 
+// carica pagina di ricerca
 const search = (req, res) => {
     res.render('search.ejs', { user: req.session.user })
 }

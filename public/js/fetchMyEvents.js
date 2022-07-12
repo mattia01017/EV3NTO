@@ -1,6 +1,7 @@
 var ecard = document.querySelector('.event-card')
 var mastercard = document.querySelector('.card-body')
 
+// web worker per caricare e renderizzare le immagini degli eventi
 var w = new Worker('../js/workers/imageFetcher.js')
 
 w.addEventListener('message', e => {
@@ -17,6 +18,7 @@ w.addEventListener('message', e => {
     imgel.style.removeProperty('visibility')
 })
 
+// richiede attraverso AJAX gli eventi e li mostra nella pagina
 async function fillCards() {
     let path
     if (window.location.pathname == '/profilo/miei') {

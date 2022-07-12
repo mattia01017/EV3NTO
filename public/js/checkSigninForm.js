@@ -1,5 +1,7 @@
 let form = document.getElementById('signin-form')
 
+// alla richiesta di invio dei dati nel form, controlla se i dati inseriti sono validi,
+// in caso contrario mostra un messaggio di errore e impedisce l'invio
 form.addEventListener('submit', (e) => {
     let flag = false
     let toasttext = document.getElementById('toast-text')
