@@ -23,7 +23,7 @@ app.use(bodyParser.json())
 app.use((req,res,next) => {
     res.locals = {
         user: req.session.user,
-        host: __dirname
+        host: req.headers.host
     }
     next()
 })
@@ -41,7 +41,7 @@ app.use('/api', apiRoutes)
 
 // home
 app.get('/',
-    mainControllers.loadHome
+    mainControllers.loadHome,
 )
 
 // ricerca
@@ -51,6 +51,7 @@ app.get('/search', mainControllers.search)
 // pagina inesistente
 app.all('*', (req, res) => {
     console.log(req.url)
+    console.log('Request HTTP Version: ', req.httpVersion)
     res.status(404).render('404.ejs')
 })
 
