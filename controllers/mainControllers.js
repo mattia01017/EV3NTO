@@ -3,18 +3,18 @@
 // carica pagina home
 const loadHome = (req, res) => {
     if (req.query.logout) {
-        delete req.session.user
-        delete req.session.email
+        delete req.session.user;
+        delete req.session.email;
     }
-    res.render('index.ejs')
+    res.render('index.ejs');
 }
 
 // carica pagina di ricerca
 const search = (req, res) => {
-    res.render('search.ejs')
+    res.render('search.ejs');
 }
 
 module.exports = {
     loadHome,
     search
-}
+};

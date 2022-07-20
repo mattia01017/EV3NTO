@@ -1,23 +1,23 @@
 .car-img {
 	object-fit: cover;
-	filter: brightness(0.6);
+	filter: brightness(0.6)
 }
 
 .img-acc {
 	height: 300px;
 	width: 600px;
-	object-fit: cover;
+	object-fit: cover
 }
 
 .navbar {
 	position: sticky;
-	top: 0;
+	top: 0
 }
 
 .event-card {
-	min-height: 300px;
+	min-height: 300px
 }
 
 .home-cards {
-	min-height: 170px;
+	min-height: 170px
 }
