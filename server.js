@@ -2,6 +2,8 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
+const { readFileSync } = require('fs');
+const https = require('https');
 
 const app = express();
 
@@ -55,4 +57,12 @@ app.all('*', (req, res) => {
     res.status(404).render('404.ejs');
 });
 
-app.listen(process.env.PORT);
+// app.listen(process.env.PORT);
+
+https.createServer(
+    {
+        key: readFileSync(process.env.SSL_KEY),
+        cert: readFileSync(process.env.SSL_CERT)
+    },
+    app
+)

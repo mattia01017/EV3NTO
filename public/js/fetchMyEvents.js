@@ -26,7 +26,7 @@ async function fillCards() {
     } else {
         path = '/api/mypartecip';
     }
-    let res = await fetch(`http;://${window.location.host}${path}`);
+    let res = await fetch(`https://${window.location.host}${path}`);
     let data = await res.json(res);
     if (data[0]) {
         document.querySelectorAll('.event-btn').forEach(el => {
