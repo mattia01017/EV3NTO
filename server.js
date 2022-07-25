@@ -59,10 +59,14 @@ app.all('*', (req, res) => {
 
 // app.listen(process.env.PORT);
 
-https.createServer(
+const server = https.createServer(
     {
         key: readFileSync(process.env.SSL_KEY),
         cert: readFileSync(process.env.SSL_CERT)
     },
     app
-)
+);
+
+server.listen(process.env.PORT, () => {
+    console.log(`Listening at port ${process.env.PORT}`);
+});
