@@ -9,15 +9,21 @@
 	object-fit: cover
 }
 
-.navbar {
-	position: sticky;
-	top: 0
-}
-
 .event-card {
 	min-height: 300px
 }
 
 .home-cards {
 	min-height: 170px
+}
+
+
+/* footer */
+html, body {
+	height: 100%;
+}
+
+footer {
+	position: sticky;
+	top: 100vh;	
 }

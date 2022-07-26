@@ -5,6 +5,7 @@ const loadHome = (req, res) => {
     if (req.query.logout) {
         delete req.session.user;
         delete req.session.email;
+        res.locals.user = undefined;
     }
     res.render('index.ejs');
 }
