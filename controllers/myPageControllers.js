@@ -77,7 +77,10 @@ const addEventReq = async (req, res, next) => {
 
 const deleteEvent = async (req, res, next) => {
     if (req.query.delete) {
-        events.deleteMyEvent(req.query.delete, req.session.email);
+        let img = await events.deleteMyEvent(req.query.delete, req.session.email);
+        fs.unlink('uploads/' + img, (err) => {
+            console.log(err);
+        });
     }
     next();
 }

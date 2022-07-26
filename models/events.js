@@ -45,11 +45,13 @@ const selectMyPartecip = async (user) => {
 }
 
 // rimuove l'evento con l'id dato solo se l'email specificata è 
-// dell'utente organizzatore 
+// dell'utente organizzatore. Restituisce il nome dell'immagine associata all'evento
 const deleteMyEvent = async (id, email) => {
-    let text = 'DELETE FROM events WHERE id=$1 AND organizer=$2';
+    let text = 'DELETE FROM events WHERE id=$1 AND organizer=$2 RETURNING img';
     let values = [id, email];
-    await pool.query(text,values);
+    let res = await pool.query(text,values);
+    console.log(res);
+    return res.rows[0].img;
 }
 
 // restituisce true se il nome dato dell'immagine è di un evento pubblico,
