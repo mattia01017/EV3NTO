@@ -50,7 +50,6 @@ const deleteMyEvent = async (id, email) => {
     let text = 'DELETE FROM events WHERE id=$1 AND organizer=$2 RETURNING img';
     let values = [id, email];
     let res = await pool.query(text,values);
-    console.log(res);
     return res.rows[0].img;
 }
 

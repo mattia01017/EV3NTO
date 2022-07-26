@@ -65,10 +65,8 @@ const addEventReq = async (req, res, next) => {
 
         // metodo per la compressione dell'immagine inviata dall'utente
         await sharp(buffer)
-            .webp({ quality: 50 })
+            .webp({ quality: 60 })
             .toFile(filePath);
-    } else {
-        filename = 'qm.jpg';
     }
 
     await events.insertEvent(name, date, num, privacy, desc, filename, req.session.email, location, latitude, longitude);
