@@ -29,7 +29,6 @@ const sendMyPartecip = (req, res) => {
 const sendImg = async (req, res) => {
     let { imgpath } = req.params;
     let { email } = req.session;
-    console.log(imgpath);
     if (imgpath != 'null') {
         if (await events.selectImage(imgpath, email)) {
             res.sendFile(path.join(path.dirname(__dirname), 'uploads', imgpath));
