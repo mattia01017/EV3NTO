@@ -43,7 +43,6 @@ async function fillCards() {
                 host: window.location.host
             });
             ecard.querySelector('.event-title').innerText = event.title;
-            ecard.querySelector('.event-desc').innerText = event.descr;
             ecard.querySelector('.event-date').innerText = event.ddate;
             ecard.querySelector('.event-loc').innerText = event.location_name;
             ecard.querySelector('.event-org').innerText = event.organizer;

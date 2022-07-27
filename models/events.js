@@ -24,7 +24,11 @@ const insertEvent = async (name, date, num, privacy, desc, file, email, where, l
 
 // restituisce i dati degli eventi organizzati dall'utente specificato
 const selectMyEvents = async (user) => {
-    let text = 'SELECT * FROM events WHERE organizer=$1';
+    let text = `
+        SELECT id, title, ddate, num_part, max_num_part, U.username AS organizer, img, location_name
+        FROM events as E
+        JOIN users AS U ON U.email = E.organizer
+        WHERE organizer=$1`;
     let values = [user];
     let res = await pool.query(text, values);
     res = trimTime(res);
