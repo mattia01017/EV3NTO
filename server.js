@@ -37,9 +37,11 @@ const mainControllers = require('./controllers/mainControllers');
 const myPageRoutes = require('./routes/myPageRoutes');
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const eventRoutes = require('./routes/eventRoutes');
 app.use('/profilo', myPageRoutes);
 app.use('/account', authRoutes);
 app.use('/api', apiRoutes);
+app.use('/evento', eventRoutes);
 
 // home
 app.get('/',

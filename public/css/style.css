@@ -1,29 +1,37 @@
+/* immagini carosello */
 .car-img {
 	object-fit: cover;
 	filter: brightness(0.6)
 }
 
+/* Immagini lista eventi */
 .img-acc {
 	height: 300px;
 	width: 600px;
 	object-fit: cover
 }
 
+/* card lista eventi */
 .event-card {
 	min-height: 280px
 }
 
+/* Cards di index */
 .home-cards {
 	min-height: 170px
 }
-
 
 /* footer */
 html, body {
 	height: 100%;
 }
-
 footer {
 	position: sticky;
 	top: 100vh;	
+}
+
+/* Immagine pagina di dettagli evento */
+#e-img{
+	object-fit: contain;
+	width: 95%;
 }
