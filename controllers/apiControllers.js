@@ -40,8 +40,19 @@ const sendImg = async (req, res) => {
     }
 }
 
+const sendEvent = async (req, res) => {
+    let { id } = req.params;
+    let event = await events.selectEvent(id);
+    if (event && (!event.priv || event.organizer == req.session.email)) {
+        res.json(event);
+    } else {
+        res.json({ Errore: 'L\'evento non esiste o non disponi di permessi sufficienti' })
+    }
+}
+
 module.exports = {
     sendMyEvents,
     sendMyPartecip,
-    sendImg
+    sendImg,
+    sendEvent
 };  

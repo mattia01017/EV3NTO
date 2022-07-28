@@ -20,6 +20,10 @@ router.get('/img/:imgpath',
     apiControllers.sendImg
 );
 
+router.get('/event/:id',
+    apiControllers.sendEvent
+)
+
 
 
 module.exports = router;

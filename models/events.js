@@ -73,10 +73,27 @@ const selectImage = async (img, email, inv_code) => {
     return false;
 }
 
+const selectEvent = async (id) => {
+    let text = `
+        SELECT title, ddate, num_part, max_num_part, 
+            descr, priv, U.username, organizer, inv_code, img, location_name
+        FROM events as E
+        JOIN users as U ON U.email = E.organizer
+        WHERE E.id = $1`;
+    let values = [id];
+    let res = await pool.query(text, values);
+    return res.rows[0];
+}
+
+const isOwner = async (eventId, user) => {
+    
+}
+
 module.exports = {
     insertEvent,
     selectMyEvents,
     selectMyPartecip,
     deleteMyEvent,
-    selectImage
+    selectImage,
+    selectEvent
 };
