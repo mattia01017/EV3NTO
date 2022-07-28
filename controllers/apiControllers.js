@@ -50,9 +50,25 @@ const sendEvent = async (req, res) => {
     }
 }
 
+const registerPart = async (req,res) => {
+    let {add,remove} = req.body;
+    console
+    if (add) {
+        await events.insertPartecipant(add, req.session.email);
+        res.sendStatus(200);
+    }
+    else if (remove) {
+        await events.deletePartecipant(remove, req.session.email);
+        res.sendStatus(200);
+    } else {
+        res.sendStatus(400);
+    }
+}
+
 module.exports = {
     sendMyEvents,
     sendMyPartecip,
     sendImg,
-    sendEvent
+    sendEvent,
+    registerPart
 };  

@@ -95,6 +95,32 @@ const isOwner = async (eventId, user) => {
     return res.rows.length == 1;
 }
 
+const isPartecipant = async (eventId, user) => {
+    let text = `
+        SELECT p_event
+        FROM partecipations
+        WHERE p_event=$1 AND user_email=$2`;
+    let values = [eventId, user];
+    let res = await pool.query(text, values);
+    return res.rows.length == 1;
+}
+
+const insertPartecipant = async (eventId, user) => {
+    let text = `
+        INSERT INTO partecipations
+        VALUES ($2,$1)`;
+    let values = [eventId, user];
+    await pool.query(text, values);
+}
+
+const deletePartecipant = async (eventId, user) => {
+    let text = `
+        DELETE FROM partecipations
+        WHERE p_event=$1 AND user_email=$2`;
+    let values = [eventId, user];
+    await pool.query(text, values)
+}
+
 module.exports = {
     insertEvent,
     selectMyEvents,
@@ -102,5 +128,8 @@ module.exports = {
     deleteMyEvent,
     selectImage,
     selectEvent,
-    isOwner
+    isOwner,
+    isPartecipant,
+    insertPartecipant,
+    deletePartecipant
 };

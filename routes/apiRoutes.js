@@ -2,6 +2,7 @@
 
 const { Router } = require('express');
 const apiControllers = require('../controllers/apiControllers');
+const { checkIfLogged } = require('../controllers/myPageControllers');
 
 const router = Router();
 
@@ -22,7 +23,11 @@ router.get('/img/:imgpath',
 
 router.get('/event/:id',
     apiControllers.sendEvent
-)
+);
+
+router.post('/event/:id',
+    apiControllers.registerPart
+);
 
 
 
