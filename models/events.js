@@ -6,7 +6,7 @@ const { pool } = require("./db");
 const trimTime = (res) => {
     res.rows.forEach(row => {
         let d = new Date(row.ddate);
-        row.ddate = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+        row.ddate = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
     })
     return res;
 }
@@ -53,7 +53,7 @@ const selectMyPartecip = async (user) => {
 const deleteMyEvent = async (id, email) => {
     let text = 'DELETE FROM events WHERE id=$1 AND organizer=$2 RETURNING img';
     let values = [id, email];
-    let res = await pool.query(text,values);
+    let res = await pool.query(text, values);
     return res.rows[0].img;
 }
 
@@ -86,7 +86,13 @@ const selectEvent = async (id) => {
 }
 
 const isOwner = async (eventId, user) => {
-    
+    let text = `
+        SELECT id
+        FROM events
+        WHERE id=$1 AND organizer=$2`;
+    let values = [eventId, user];
+    let res = await pool.query(text, values);
+    return res.rows.length == 1;
 }
 
 module.exports = {
@@ -95,5 +101,6 @@ module.exports = {
     selectMyPartecip,
     deleteMyEvent,
     selectImage,
-    selectEvent
+    selectEvent,
+    isOwner
 };
