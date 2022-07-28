@@ -73,12 +73,15 @@ const addEventReq = async (req, res, next) => {
     next();
 }
 
+// elimina l'evento specificato nel query parameter
 const deleteEvent = async (req, res, next) => {
     if (req.query.delete) {
         let img = await events.deleteMyEvent(req.query.delete, req.session.email);
-        fs.unlink('uploads/' + img, (err) => {
-            console.log(err);
-        });
+        if (img != 'null') {
+            fs.unlink('uploads/' + img, (err) => {
+                console.log(err);
+            });
+        }
     }
     next();
 }

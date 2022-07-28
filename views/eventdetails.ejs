@@ -5,19 +5,19 @@
     <body class="bg-black text-white">
         <%- include('./partials/header') %>
 
-            <div class="card bg-dark container-xxl mt-3 mb-3">
+            <div class="card border-light rounded-4 border-opacity-25 bg-black container-lg mt-3 mb-3">
                 <div class="card-body">
-                    <h2 class="display-3 ms-1">Dettagli Evento</h2>
+                    <h3 class="display-5 ms-1 mb-3">Dettagli Evento</h2>
                     <p class="card-text">
                     <div class="row opacity-0" id="card-content">
-                        <div class="col position-relative">
+                        <div class="col-sm position-relative">
                             <p><strong>Codice invito:</strong> <span id="e-invcode"></span></p>
                             <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle" id="img-spinner">
                                 <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                             </div>
-                            <img id="e-img" width="500">
+                            <img id="e-img">
                         </div>
-                        <div class="col">
+                        <div class="col-sm">
                             <p><strong>Titolo:</strong> <span id="e-title"></span></p>
                             <p><strong>Data:</strong> <span id="e-date"></span></p>
                             <p><strong>Organizzatore:</strong> <span id="e-org"></span></p>

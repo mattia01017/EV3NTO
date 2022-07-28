@@ -20,7 +20,7 @@
                 <!--Inizio card evento-->
                 <div class="card mb-3 border-0 bg-black mb-3 event-card position-relative">
                   <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
-                    <strong>Caricamento...</strong class="display-6">
+                    <strong class="display-6">Caricamento...</strong>
                     <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                   </div>
                   <div class="row">
@@ -36,31 +36,32 @@
                         <div class="position-absolute bottom-0 start-50 translate-middle-x pb-3">
                           <a href="" class="btn btn-light event-btn det-btn mt-3 mb-2" hidden>Dettagli</a>
                           <% if (edit) { %>
+
+
+
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-danger mt-3 mb-2 event-btn" data-bs-toggle="modal"
                               data-bs-target="#delpopup" hidden>
                               Elimina
                             </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="delpopup" tabindex="-1" aria-labelledby="delpopupLabel"
-                              aria-hidden="true">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h4 class="modal-title text-black" id="delpopupLabel">Confermi l'eliminazione?</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                      aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                    <a href="" class="btn btn-danger del-btn">Si</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
                             <% } %>
                               <br><small class="event-org"></small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Modal -->
+                  <div class="modal fade" id="delpopup" tabindex="-1" aria-labelledby="delpopupLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title text-black" id="delpopupLabel">Confermi l'eliminazione?</h4>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                          <a href="" class="btn btn-danger del-btn">Si</a>
                         </div>
                       </div>
                     </div>
@@ -77,7 +78,10 @@
         </div>
       </main>
       <%- include('./partials/footer.ejs') %>
+        <script src="/js/fetchMyEvents.js"></script>
+        <% if (edit) { %>
+
+          <% } %>
   </body>
-  <script src="/js/fetchMyEvents.js"></script>
 
 </html>

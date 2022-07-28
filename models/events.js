@@ -82,7 +82,7 @@ const selectEvent = async (id) => {
         WHERE E.id = $1`;
     let values = [id];
     let res = await pool.query(text, values);
-    return res.rows[0];
+    return trimTime(res).rows[0];
 }
 
 const isOwner = async (eventId, user) => {
