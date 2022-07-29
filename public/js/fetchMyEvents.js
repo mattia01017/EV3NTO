@@ -24,8 +24,11 @@ async function fillCards() {
     let path;
     if (window.location.pathname == '/profilo/miei') {
         path = '/api/myevents';
-    } else {
+    } else if (window.location.pathname == '/profilo/partecipazioni') {
         path = '/api/mypartecip';
+    } else {
+        let q = document.querySelector('#query').innerText;
+        path = '/api/namesearch?q=' + q;
     }
     let res = await fetch(`https://${window.location.host}${path}`);
     let data = await res.json(res);
@@ -64,9 +67,7 @@ async function fillCards() {
             ecard = nextcard;
         })
     } else {
-        while (ecard.childNodes.length > 1) {
-            ecard.removeChild(ecard.firstChild);
-        }
+        ecard.innerHTML = '';
         let notice = document.createElement('h3');
         notice.classList.add('display-6');
         notice.innerText = 'Nessun evento presente';

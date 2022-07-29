@@ -38,9 +38,10 @@ const selectMyEvents = async (user) => {
 // restituisce i dati degli eventi a cui partecipa l'utente specificato
 const selectMyPartecip = async (user) => {
     let text = `
-        SELECT E.*
+        SELECT id, title, ddate, num_part, max_num_part, U.username AS organizer, img, location_name
         FROM partecipations as P
         JOIN events as E ON E.id = P.p_event
+        Join users as U ON U.email = E.organizer
         WHERE P.user_email = $1`;
     let values = [user];
     let res = await pool.query(text, values);
@@ -123,15 +124,14 @@ const deletePartecipant = async (eventId, user) => {
 
 const selectEventsByName = async (q) => {
     let text = `
-        SELECT title, ddate, num_part, max_num_part, 
-            descr, priv, U.username, organizer, inv_code, img, location_name
+        SELECT id, title, ddate, num_part, max_num_part, 
+            descr, priv, U.username, U.username as organizer, inv_code, img, location_name
         FROM events as E
         JOIN users as U ON U.email = E.organizer
         WHERE priv=false AND title LIKE '%' || $1 || '%'`;
     let values = [q];
     let res = await pool.query(text, values);
-    console.log(res.rows)
-    return res.rows;
+    return trimTime(res).rows;
 }
 
 module.exports = {

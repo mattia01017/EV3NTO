@@ -8,13 +8,44 @@
     <%- include('./partials/header.ejs') %>
     <main>
         <div class="container-sm">
-            <h2 class="display-5 mt-3">Risultati ricerca:</h2>
-            <div class="card bg-dark">
-                <div class="card-body">
-                    
+            <h2 class="display-5 mt-3">Risultati ricerca per "<span id="query"><%-q%></span>"</h2>
+            <div class="card text-center border-0">
+                <div class="card-body bg-dark">
+                    <!--Inizio card evento-->
+                    <div class="card mb-3 border-0 bg-black mb-3 event-card position-relative">
+                        <div
+                            class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
+                            <strong>Caricamento...</strong>
+                            <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 position-relative">
+                                <img src="" class="img-fluid d-block img-acc event-image opacity-0">
+                                <div
+                                    class="d-flex align-items-center position-absolute top-50 start-50 translate-middle opacity-0 img-spinner">
+                                    <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 position-relative">
+                                <div class="card-body">
+                                    <h3 class="card-title event-title display-6 fs-2"></h3>
+                                    <p class="card-text event-part"></p>
+                                    <small class="event-loc"></small><br>
+                                    <small class="event-date"></small><br>
+                                    <div class="position-absolute bottom-0 start-50 translate-middle-x pb-3">
+                                        <a href="" class="btn btn-light event-btn det-btn mt-3 mb-2"
+                                            hidden>Dettagli</a>
+                                            <br><small class="event-org"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
     <%- include('./partials/footer.ejs') %>
+    <script src="/js/fetchMyEvents.js"></script>
 </body>
+</html>
