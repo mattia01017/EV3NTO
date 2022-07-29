@@ -20,12 +20,16 @@
                 <!--Inizio card evento-->
                 <div class="card mb-3 border-0 bg-black mb-3 event-card position-relative">
                   <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
-                    <strong class="display-6">Caricamento...</strong>
+                    <strong>Caricamento...</strong>
                     <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                   </div>
                   <div class="row">
-                    <div class="col-md-4">
-                      <img src="" class="img-fluid d-block img-acc event-image" alt="" style="visibility: hidden;">
+                    <div class="col-md-4 position-relative">
+                      <img src="" class="img-fluid d-block img-acc event-image opacity-0" alt="">
+                      <div
+                        class="d-flex align-items-center position-absolute top-50 start-50 translate-middle opacity-0 img-spinner">
+                        <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
+                      </div>
                     </div>
                     <div class="col-md-8 position-relative">
                       <div class="card-body">
@@ -56,12 +60,12 @@
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h4 class="modal-title text-black" id="delpopupLabel">Confermi l'eliminazione?</h4>
+                          <h4 class="modal-title text-black" id="delpopupLabel">L'evento verrà eliminato</h4>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                          <a href="" class="btn btn-danger del-btn">Si</a>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                          <a href="" class="btn btn-danger del-btn">Ok</a>
                         </div>
                       </div>
                     </div>

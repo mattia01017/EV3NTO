@@ -15,7 +15,8 @@ w.addEventListener('message', e => {
     })
     
     imgel.setAttribute('src', objURL);
-    imgel.style.removeProperty('visibility');
+    imgel.classList.remove('opacity-0');
+    imgel.nextElementSibling.remove()
 })
 
 // richiede attraverso AJAX gli eventi e li mostra nella pagina
@@ -47,6 +48,7 @@ async function fillCards() {
             ecard.querySelector('.event-loc').innerText = event.location_name;
             ecard.querySelector('.event-org').innerText = event.organizer;
             ecard.querySelector('.det-btn').setAttribute('href', '/evento/' + event.id);
+            ecard.querySelector('.img-spinner').classList.remove('opacity-0');
             let delbtn = ecard.querySelector('.del-btn');
             if (delbtn) {
                 delbtn.setAttribute('href', `${window.location.pathname}?delete=${event.id}`);

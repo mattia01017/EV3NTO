@@ -54,7 +54,7 @@ const deleteMyEvent = async (id, email) => {
     let text = 'DELETE FROM events WHERE id=$1 AND organizer=$2 RETURNING img';
     let values = [id, email];
     let res = await pool.query(text, values);
-    return res.rows[0].img;
+    return res.rows[0] ? res.rows[0].img : null;
 }
 
 // restituisce true se il nome dato dell'immagine è di un evento pubblico,

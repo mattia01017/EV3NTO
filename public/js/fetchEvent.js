@@ -3,6 +3,8 @@ function getId() {
     return tk[tk.length - 1];
 }
 
+const eId = getId()
+
 let w = new Worker('/js/workers/imageFetcher.js');
 
 w.addEventListener('message', e => {
@@ -22,15 +24,15 @@ w.addEventListener('message', e => {
 var button = document.querySelector('#part-btn');
 
 async function fillCard() {
-    let res = await fetch(`https://${window.location.host}/api/event/${getId()}`);
+    let res = await fetch(`https://${window.location.host}/api/event/${eId}`);
     let data = await res.json();
-    document.querySelector('#card-content').classList.remove('opacity-0');
     document.querySelector('#spinner').remove();
-    w.postMessage({
-        host: window.location.host,
-        img: data.img
-    });
-    if (data) {
+    if (!data.Errore) {
+        w.postMessage({
+            host: window.location.host,
+            img: data.img
+        });
+        document.querySelector('#card-content').classList.remove('opacity-0');
         document.querySelector('#e-title').innerText = data.title;
         document.querySelector('#e-date').innerText = data.ddate;
         document.querySelector('#e-org').innerText = data.username;
@@ -40,21 +42,28 @@ async function fillCard() {
         document.querySelector('#e-part').innerText = data.num_part;
         document.querySelector('#e-invcode').innerText = data.inv_code;
         document.querySelector('#e-desc').innerText = data.descr;
-        if (data.ispart) {
-            button.classList.add('btn-warning');
-            button.innerText = 'Rimuovi partecipazione';
-        } else {
-            button.classList.add('btn-success');
-            button.innerText = 'Partecipa';
+        document.querySelector('#del-ev-btn')
+            .setAttribute('href', 'profilo/miei?delete=' + eId);
+        if (button) {
+            if (data.ispart) {
+                button.classList.add('btn-warning');
+                button.innerText = 'Rimuovi partecipazione';
+            } else {
+                button.classList.add('btn-success');
+                button.innerText = 'Partecipa';
+            }
         }
+    } else {
+        let warning = document.createElement('h3');
+        warning.innerText = 'L\'evento non esiste o è privato';
+        warning.classList.add('display-3', 'position-absolute', 'top-50', 'start-50', 'translate-middle-x', 'text-center');
+        
+        let card = document.querySelector('.card');
+        card.append(warning);
     }
 }
 
-
-fillCard();
-
 async function partBtn() {
-    eId = getId()
     button.addEventListener('click', async () => {
         let prev = button.innerText;
         button.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>';
@@ -89,6 +98,7 @@ async function partBtn() {
     });
 }
 
+fillCard();
 
 if (button) {
     partBtn();
