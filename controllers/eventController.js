@@ -4,8 +4,7 @@ const sendEvent = async (req,res) => {
     res.render(
         'eventdetails.ejs',
         {
-            edit: await events.isOwner(req.params.id, req.session.email),
-            part: await events.isPartecipant(req.params.id, req.session.email)
+            edit: await events.isOwner(req.params.id, req.session.email)
         }
     );
 }

@@ -19,6 +19,8 @@ w.addEventListener('message', e => {
     imgel.setAttribute('src', objURL);
 })
 
+var button = document.querySelector('#part-btn');
+
 async function fillCard() {
     let res = await fetch(`https://${window.location.host}/api/event/${getId()}`);
     let data = await res.json();
@@ -38,6 +40,13 @@ async function fillCard() {
         document.querySelector('#e-part').innerText = data.num_part;
         document.querySelector('#e-invcode').innerText = data.inv_code;
         document.querySelector('#e-desc').innerText = data.descr;
+        if (data.ispart) {
+            button.classList.add('btn-warning');
+            button.innerText = 'Rimuovi partecipazione';
+        } else {
+            button.classList.add('btn-success');
+            button.innerText = 'Partecipa';
+        }
     }
 }
 
@@ -80,7 +89,6 @@ async function partBtn() {
     });
 }
 
-let button = document.querySelector('#part-btn');
 
 if (button) {
     partBtn();
