@@ -42,8 +42,10 @@ async function fillCard() {
         document.querySelector('#e-part').innerText = data.num_part;
         document.querySelector('#e-invcode').innerText = data.inv_code;
         document.querySelector('#e-desc').innerText = data.descr;
-        document.querySelector('#del-ev-btn')
-            .setAttribute('href', 'profilo/miei?delete=' + eId);
+        let delBtn = document.querySelector('#del-ev-btn');
+        if (delBtn) {
+            delBtn.setAttribute('href', 'profilo/miei?delete=' + eId);
+        }
         if (button) {
             if (data.ispart) {
                 button.classList.add('btn-warning');

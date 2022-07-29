@@ -25,7 +25,14 @@ const insertUser = async (email, user, password) => {
     });
 }
 
+const deleteUser = async (email) => {
+    let text = 'DELETE FROM users WHERE email=$1';
+    let values = [email];
+    pool.query(text, values);
+}
+
 module.exports = {
     selectUser,
-    insertUser
+    insertUser,
+    deleteUser
 };

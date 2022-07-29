@@ -72,20 +72,35 @@
                   </div>
                 </div>
                 <!--Fine card evento-->
-
               </div>
           </div>
           <a href="/?logout=1"
             class="btn btn-outline-light position-relative start-50 translate-middle-x mt-5 mb-3">Logout</a><br>
-          <a href="#" class="btn btn-outline-danger position-relative start-50 translate-middle-x mt-1 mb-3">Elimina il
-            mio account</a>
+          <button type="button" class="btn btn-outline-danger position-relative start-50 translate-middle-x mt-1 mb-3"
+            data-bs-toggle="modal" data-bs-target="#delAccount">
+            Elimina l'account
+          </button>
+          <div class="modal fade" id="delAccount" tabindex="-1" aria-labelledby="delAccountLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title text-black" id="delAccountLabel">Eliminare l'account?</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-black">
+                  <p>Tutti gli eventi creati e le partecipazioni verranno persi</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                  <a href="/?deleteUser=1" class="btn btn-danger del-btn">Ok</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <%- include('./partials/footer.ejs') %>
         <script src="/js/fetchMyEvents.js"></script>
-        <% if (edit) { %>
-
-          <% } %>
   </body>
 
 </html>

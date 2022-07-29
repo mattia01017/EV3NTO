@@ -28,6 +28,7 @@ html, body {
 footer {
 	position: sticky;
 	top: 100vh;	
+	z-index: -1;
 }
 
 /* Immagine pagina di dettagli evento */
