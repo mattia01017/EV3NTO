@@ -58,7 +58,7 @@ async function fillCard() {
     } else {
         let warning = document.createElement('h3');
         warning.innerText = 'L\'evento non esiste o è privato';
-        warning.classList.add('display-3', 'position-absolute', 'top-50', 'start-50', 'translate-middle-x', 'text-center');
+        warning.classList.add('display-3', 'position-absolute', 'top-50', 'start-50', 'translate-middle', 'text-center');
         
         let card = document.querySelector('.card');
         card.append(warning);

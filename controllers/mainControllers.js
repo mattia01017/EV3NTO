@@ -19,12 +19,6 @@ const loadHome = (req, res) => {
     res.render('index.ejs');
 }
 
-// carica pagina di ricerca
-const search = (req, res) => {
-    res.render('search.ejs');
-}
-
 module.exports = {
-    loadHome,
-    search
+    loadHome
 };

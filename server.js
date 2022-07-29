@@ -38,19 +38,17 @@ const myPageRoutes = require('./routes/myPageRoutes');
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
 const eventRoutes = require('./routes/eventRoutes');
+const searchRoutes = require('./routes/searchRoutes')
 app.use('/profilo', myPageRoutes);
 app.use('/account', authRoutes);
 app.use('/api', apiRoutes);
 app.use('/evento', eventRoutes);
+app.use('/ricerca', searchRoutes);
 
 // home
 app.get('/',
     mainControllers.loadHome,
 );
-
-// ricerca
-app.get('/search', mainControllers.search);
-
 
 // pagina inesistente
 app.all('*', (req, res) => {

@@ -29,6 +29,8 @@ router.post('/event/:id',
     apiControllers.registerPart
 );
 
-
+router.get('/namesearch',
+    apiControllers.eventsByName
+);
 
 module.exports = router;

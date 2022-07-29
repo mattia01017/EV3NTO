@@ -51,8 +51,8 @@ const sendEvent = async (req, res) => {
     }
 }
 
-const registerPart = async (req,res) => {
-    let {add,remove} = req.body;
+const registerPart = async (req, res) => {
+    let { add, remove } = req.body;
     console
     if (add) {
         await events.insertPartecipant(add, req.session.email);
@@ -66,10 +66,22 @@ const registerPart = async (req,res) => {
     }
 }
 
+const eventsByName = async (req, res) => {
+    let { q } = req.query;
+    console.log(q);
+    if (q != '') {
+        let rows = await events.selectEventsByName(q);
+        res.json(rows);
+    } else {
+        res.json({Errore: 'Stringa di ricerca vuota'});
+    }
+}
+
 module.exports = {
     sendMyEvents,
     sendMyPartecip,
     sendImg,
     sendEvent,
-    registerPart
+    registerPart,
+    eventsByName
 };  

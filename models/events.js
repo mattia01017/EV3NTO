@@ -121,6 +121,19 @@ const deletePartecipant = async (eventId, user) => {
     await pool.query(text, values)
 }
 
+const selectEventsByName = async (q) => {
+    let text = `
+        SELECT title, ddate, num_part, max_num_part, 
+            descr, priv, U.username, organizer, inv_code, img, location_name
+        FROM events as E
+        JOIN users as U ON U.email = E.organizer
+        WHERE priv=false AND title LIKE '%' || $1 || '%'`;
+    let values = [q];
+    let res = await pool.query(text, values);
+    console.log(res.rows)
+    return res.rows;
+}
+
 module.exports = {
     insertEvent,
     selectMyEvents,
@@ -131,5 +144,6 @@ module.exports = {
     isOwner,
     isPartecipant,
     insertPartecipant,
-    deletePartecipant
+    deletePartecipant,
+    selectEventsByName
 };
