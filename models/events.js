@@ -1,6 +1,7 @@
 /* modello di gestione dei dati degli eventi nel db */
 
 const { pool } = require("./db");
+const geolib = require('geolib');
 
 // metodo privato per rimuovere l'orario dalla data
 const trimTime = (res) => {
@@ -134,6 +135,36 @@ const selectEventsByName = async (q) => {
     return trimTime(res).rows;
 }
 
+const selectNearbyEvents = async (lat, lon, dist) => {
+    let text = 'SELECT id, loc_lat, loc_lon FROM events';
+    let allEvents = (await pool.query(text)).rows;
+
+    let point = {latitude: lat, longitude: lon};
+    let near = ['null']
+    allEvents.forEach((event) => {
+        console.log(event);
+        let b = geolib.isPointWithinRadius(
+            {latitude: event.loc_lat, longitude: event.loc_lon},
+            point,
+            dist
+        );
+        if (b) {
+            near.push(event.id);
+        }
+    });
+
+    let nearStr = near.toString().replace('[', '').replace(']','');
+    text = `
+        SELECT id, title, ddate, num_part, max_num_part, 
+        descr, priv, U.username, U.username as organizer, inv_code, img, location_name
+        FROM events as E
+        JOIN users as U ON U.email = E.organizer
+        WHERE id IN (${nearStr}) AND priv=false`;
+    let res = await pool.query(text);
+    console.log(res.rows)
+    return trimTime(res).rows;
+}
+
 module.exports = {
     insertEvent,
     selectMyEvents,
@@ -145,5 +176,6 @@ module.exports = {
     isPartecipant,
     insertPartecipant,
     deletePartecipant,
-    selectEventsByName
+    selectEventsByName,
+    selectNearbyEvents
 };

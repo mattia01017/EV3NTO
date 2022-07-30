@@ -71,7 +71,17 @@ const eventsByName = async (req, res) => {
         let rows = await events.selectEventsByName(q);
         res.json(rows);
     } else {
-        res.json({Errore: 'Stringa di ricerca vuota'});
+        res.json({ Errore: 'Stringa di ricerca vuota' });
+    }
+}
+
+const eventsByPos = async (req, res) => {
+    let { lat, lon, dist } = req.query;
+    if (lat && lon && dist) {
+        let rows = await events.selectNearbyEvents(lat, lon, dist);
+        res.json(rows);
+    } else {
+        res.json({Errore: 'Specificare parametri "lat", "lon" e "dist"'});
     }
 }
 
@@ -81,5 +91,6 @@ module.exports = {
     sendImg,
     sendEvent,
     registerPart,
-    eventsByName
+    eventsByName,
+    eventsByPos
 };  

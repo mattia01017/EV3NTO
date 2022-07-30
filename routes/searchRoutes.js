@@ -7,4 +7,8 @@ router.get('/',
     searchControllers.searchByName
 );
 
+router.get('/vicinanze',
+    searchControllers.searchNearby
+)
+
 module.exports = router;

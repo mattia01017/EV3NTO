@@ -33,4 +33,8 @@ router.get('/namesearch',
     apiControllers.eventsByName
 );
 
+router.get('/geosearch',
+    apiControllers.eventsByPos
+)
+
 module.exports = router;
