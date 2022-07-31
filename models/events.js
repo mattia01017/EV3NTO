@@ -15,7 +15,7 @@ const trimTime = (res) => {
 // inserisce nel db l'evento con i valori specificati
 const insertEvent = async (name, date, num, privacy, desc, file, email, where, lat, lon) => {
     let text = `
-        INSERT INTO events(title,ddate,max_num_part,descr,priv,img,organizer,inv_code,location_name, loc_lat, loc_lon)
+        INSERT INTO events(title,ddate,max_num_part,descr,priv,img,organizer,id,location_name, loc_lat, loc_lon)
         VALUES ($1,$2,$3,$4,$5,$6,$7,substr(md5(random()::text), 0, 10),$8,$9,$10)`;
     let values = [name, date, num, desc, privacy, file, email, where, lat, lon];
     pool.query(text, values, (err) => {
@@ -61,14 +61,14 @@ const deleteMyEvent = async (id, email) => {
 
 // restituisce true se il nome dato dell'immagine è di un evento pubblico,
 // appartenente all'utente dell'email specificata o se il codice di invito è corretto
-const selectImage = async (img, email, inv_code) => {
+const selectImage = async (img) => {
     let text = `
         SELECT img 
         FROM events
-        WHERE img=$1 AND (priv=FALSE OR organizer=$2 OR inv_code=$3)
+        WHERE img=$1
         LIMIT 1`;
-    let values = [img, email, inv_code];
-    let res = await pool.query(text, values, inv_code);
+    let values = [img];
+    let res = await pool.query(text, values);
     if (res.rowCount == 1) {
         return true;
     }
@@ -78,7 +78,7 @@ const selectImage = async (img, email, inv_code) => {
 const selectEvent = async (id) => {
     let text = `
         SELECT title, ddate, num_part, max_num_part, 
-            descr, priv, U.username, organizer, inv_code, img, location_name
+            descr, priv, U.username, id, img, location_name
         FROM events as E
         JOIN users as U ON U.email = E.organizer
         WHERE E.id = $1`;
@@ -126,7 +126,7 @@ const deletePartecipant = async (eventId, user) => {
 const selectEventsByName = async (q) => {
     let text = `
         SELECT id, title, ddate, num_part, max_num_part, 
-            descr, priv, U.username, U.username as organizer, inv_code, img, location_name
+            descr, priv, U.username as organizer, img, location_name
         FROM events as E
         JOIN users as U ON U.email = E.organizer
         WHERE priv=false AND title LIKE '%' || $1 || '%'`;
@@ -156,7 +156,7 @@ const selectNearbyEvents = async (lat, lon, dist) => {
     let nearStr = near.toString().replace('[', '').replace(']','');
     text = `
         SELECT id, title, ddate, num_part, max_num_part, 
-        descr, priv, U.username, U.username as organizer, inv_code, img, location_name
+        descr, priv, U.username as organizer, img, location_name
         FROM events as E
         JOIN users as U ON U.email = E.organizer
         WHERE id IN (${nearStr}) AND priv=false`;

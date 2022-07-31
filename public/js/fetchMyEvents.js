@@ -80,7 +80,7 @@ async function fillCards(path) {
             ecard.querySelector('.event-date').innerText = event.ddate;
             ecard.querySelector('.event-loc').innerText = event.location_name;
             ecard.querySelector('.event-org').innerText = event.organizer;
-            ecard.querySelector('.det-btn').setAttribute('href', '/evento/' + event.id);
+            ecard.querySelector('.det-btn').setAttribute('href', '/evento?id=' + event.id);
             ecard.querySelector('.img-spinner').classList.remove('opacity-0');
             let delbtn = ecard.querySelector('.del-btn');
             if (delbtn) {

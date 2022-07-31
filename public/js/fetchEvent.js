@@ -1,6 +1,6 @@
 function getId() {
-    let tk = window.location.href.split('/');
-    return tk[tk.length - 1];
+    let params = new URLSearchParams(window.location.search);
+    return params.get('id');
 }
 
 const eId = getId()
@@ -40,7 +40,7 @@ async function fillCard() {
         let priv = document.querySelector('#e-priv');
         priv.innerText = data.priv ? 'No' : 'Sì';
         document.querySelector('#e-part').innerText = data.num_part;
-        document.querySelector('#e-invcode').innerText = data.inv_code;
+        document.querySelector('#e-invcode').innerText = data.id;
         document.querySelector('#e-desc').innerText = data.descr;
         let delBtn = document.querySelector('#del-ev-btn');
         if (delBtn) {
@@ -57,8 +57,8 @@ async function fillCard() {
         }
     } else {
         let warning = document.createElement('h3');
-        warning.innerText = 'L\'evento non esiste o è privato';
-        warning.classList.add('display-3', 'position-absolute', 'top-50', 'start-50', 'translate-middle', 'text-center');
+        warning.innerText = 'L\'evento non esiste o è stato cancellato';
+        warning.classList.add('display-4', 'position-absolute', 'top-50', 'start-50', 'translate-middle', 'text-center');
         
         let card = document.querySelector('.card');
         card.append(warning);

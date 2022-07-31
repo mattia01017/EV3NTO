@@ -3,7 +3,7 @@ const eventController = require('../controllers/eventController');
 
 const router = Router();
 
-router.get('/:id',
+router.get('/',
     eventController.sendEvent
 );
 
