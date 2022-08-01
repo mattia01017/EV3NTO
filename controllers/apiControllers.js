@@ -10,7 +10,7 @@ const sendMyEvents = (req, res) => {
             res.json(data);
         })
     } else {
-        res.json({ Errore: 'Non hai effettuato l\'accesso' });
+        res.status(400).json({ Errore: 'Non hai effettuato l\'accesso' });
     }
 }
 
@@ -21,7 +21,7 @@ const sendMyPartecip = (req, res) => {
             res.json(data);
         })
     } else {
-        res.json({ Errore: 'Non hai effettuato l\'accesso' });
+        res.status(400).json({ Errore: 'Non hai effettuato l\'accesso' });
     }
 }
 
@@ -47,7 +47,7 @@ const sendEvent = async (req, res) => {
         event.ispart = await events.isPartecipant(id, req.session.email);
         res.json(event);
     } else {
-        res.json({ Errore: 'L\'evento non esiste o non disponi di permessi sufficienti' })
+        res.status(400).json({ Errore: 'L\'evento non esiste o non disponi di permessi sufficienti' })
     }
 }
 
@@ -67,11 +67,11 @@ const registerPart = async (req, res) => {
 
 const eventsByName = async (req, res) => {
     let { q } = req.query;
-    if (q != '') {
+    if (q && q != '') {
         let rows = await events.selectEventsByName(q);
         res.json(rows);
     } else {
-        res.json({ Errore: 'Stringa di ricerca vuota' });
+        res.status(400).json({ Errore: 'Stringa di ricerca vuota' });
     }
 }
 
@@ -81,8 +81,14 @@ const eventsByPos = async (req, res) => {
         let rows = await events.selectNearbyEvents(lat, lon, dist);
         res.json(rows);
     } else {
-        res.json({Errore: 'Specificare parametri "lat", "lon" e "dist"'});
+        res.status(400).json({Errore: 'Specificare parametri "lat", "lon" e "dist"'});
     }
+}
+
+const sendPartecipants = async (req,res) => {
+    let {id} = req.params;
+    let rows = await events.selectPartecipants(id);
+    res.json(rows);
 }
 
 module.exports = {
@@ -92,5 +98,6 @@ module.exports = {
     sendEvent,
     registerPart,
     eventsByName,
-    eventsByPos
+    eventsByPos,
+    sendPartecipants
 };  

@@ -25,6 +25,10 @@ router.get('/event/:id',
     apiControllers.sendEvent
 );
 
+router.get('/event/:id/partecipants',
+    apiControllers.sendPartecipants
+)
+
 router.post('/event/:id',
     apiControllers.registerPart
 );

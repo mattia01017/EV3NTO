@@ -6,7 +6,6 @@ function getId() {
 const eId = getId()
 
 let w = new Worker('/js/workers/imageFetcher.js');
-
 w.addEventListener('message', e => {
     let imgblob = e.data.blob;
     let imgel = document.querySelector('#e-img');
@@ -21,7 +20,25 @@ w.addEventListener('message', e => {
     imgel.setAttribute('src', objURL);
 })
 
-var button = document.querySelector('#part-btn');
+var subscrBtn = document.querySelector('#part-btn');
+var showPartBtn = document.querySelector('#show-part-btn');
+if (showPartBtn) {
+    let partFetched = false;
+    showPartBtn.addEventListener('click', async () => {
+        if (!partFetched) {
+            let res = await fetch(`https://${window.location.host}/api/event/${eId}/partecipants`);
+            let data = await res.json();
+            document.querySelector('#modal-spinner').remove();
+            let partList = document.querySelector('#part-list');
+            data.forEach(user => {
+                let li = document.createElement('li');
+                li.innerText = `${user.username} - ${user.email}`;
+                partList.append(li);
+            });
+            partFetched = true;
+        }
+    })
+}
 
 async function fillCard() {
     let res = await fetch(`https://${window.location.host}/api/event/${eId}`);
@@ -46,13 +63,13 @@ async function fillCard() {
         if (delBtn) {
             delBtn.setAttribute('href', 'profilo/miei?delete=' + eId);
         }
-        if (button) {
+        if (subscrBtn) {
             if (data.ispart) {
-                button.classList.add('btn-warning');
-                button.innerText = 'Rimuovi partecipazione';
+                subscrBtn.classList.add('btn-warning');
+                subscrBtn.innerText = 'Rimuovi partecipazione';
             } else {
-                button.classList.add('btn-success');
-                button.innerText = 'Partecipa';
+                subscrBtn.classList.add('btn-success');
+                subscrBtn.innerText = 'Partecipa';
             }
         }
     } else {
@@ -66,9 +83,9 @@ async function fillCard() {
 }
 
 async function partBtn() {
-    button.addEventListener('click', async () => {
-        let prev = button.innerText;
-        button.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>';
+    subscrBtn.addEventListener('click', async () => {
+        let prev = subscrBtn.innerText;
+        subscrBtn.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>';
         if (prev == 'Partecipa') {
             await fetch(
                 `https://${window.location.host}/api/event/${eId}`,
@@ -94,14 +111,14 @@ async function partBtn() {
                 }
             );
         }
-        button.innerText = prev == 'Partecipa' ? 'Rimuovi partecipazione' : 'Partecipa';
-        button.classList.toggle('btn-success');
-        button.classList.toggle('btn-warning');
+        subscrBtn.innerText = prev == 'Partecipa' ? 'Rimuovi partecipazione' : 'Partecipa';
+        subscrBtn.classList.toggle('btn-success');
+        subscrBtn.classList.toggle('btn-warning');
     });
 }
 
 fillCard();
 
-if (button) {
+if (subscrBtn) {
     partBtn();
 }

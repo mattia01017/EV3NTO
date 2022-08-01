@@ -129,7 +129,8 @@ const selectEventsByName = async (q) => {
             descr, priv, U.username as organizer, img, location_name
         FROM events as E
         JOIN users as U ON U.email = E.organizer
-        WHERE priv=false AND title LIKE '%' || $1 || '%'`;
+        WHERE priv=false 
+            AND (title LIKE '%' || $1 || '%' OR location_name LIKE '%' || $1 || '%'`;
     let values = [q];
     let res = await pool.query(text, values);
     return trimTime(res).rows;
@@ -159,10 +160,22 @@ const selectNearbyEvents = async (lat, lon, dist) => {
         descr, priv, U.username as organizer, img, location_name
         FROM events as E
         JOIN users as U ON U.email = E.organizer
-        WHERE id IN (${nearStr}) AND priv=false`;
+        WHERE id IN (${nearStr}) AND priv = false`;
     let res = await pool.query(text);
     console.log(res.rows)
     return trimTime(res).rows;
+}
+
+const selectPartecipants = async (eventId) => {
+    let text = `
+        SELECT U.username, U.email
+        FROM users as U
+        JOIN partecipations as P ON U.email = P.user_email
+        WHERE P.p_event=$1
+        ORDER BY U.username ASC, U.email ASC`;
+    let values = [eventId];
+    let res = await pool.query(text, values);
+    return res.rows;
 }
 
 module.exports = {
@@ -177,5 +190,6 @@ module.exports = {
     insertPartecipant,
     deletePartecipant,
     selectEventsByName,
-    selectNearbyEvents
+    selectNearbyEvents,
+    selectPartecipants
 };

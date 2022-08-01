@@ -32,7 +32,7 @@
                                     <% if (user) { %>
                                         <% if (edit) { %>
                                             <button class="mt-3 btn btn-light" data-bs-toggle="modal"
-                                                data-bs-target="#modal">
+                                                data-bs-target="#modal" id="show-part-btn">
                                                 Visualizza partecipanti
                                             </button>
                                             <button class="btn btn-danger mt-3"
@@ -50,7 +50,11 @@
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <ul>
+                                                            <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle"
+                                                                id="modal-spinner">
+                                                                <div class="spinner-border" role="status" aria-hidden="true"></div>
+                                                            </div>
+                                                            <ul id="part-list">
 
                                                             </ul>
                                                         </div>

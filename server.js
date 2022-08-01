@@ -52,8 +52,6 @@ app.get('/',
 
 // pagina inesistente
 app.all('*', (req, res) => {
-    console.log(req.url);
-    console.log('Request HTTP Version: ', req.httpVersion);
     res.status(404).render('404.ejs');
 });
 
