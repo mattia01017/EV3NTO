@@ -78,9 +78,11 @@ const deleteEvent = async (req, res, next) => {
     if (req.query.delete) {
         let img = await events.deleteMyEvent(req.query.delete, req.session.email);
         if (img != 'null') {
-            fs.unlink('uploads/' + img, (err) => {
-                console.log(err);
-            });
+            try {
+                fs.unlink('uploads/' + img, (err) => {
+                    console.log(err);
+                });
+            } catch(e) {}
         }
     }
     next();

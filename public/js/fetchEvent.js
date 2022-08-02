@@ -30,12 +30,19 @@ if (showPartBtn) {
             let data = await res.json();
             document.querySelector('#modal-spinner').remove();
             let partList = document.querySelector('#part-list');
-            data.forEach(user => {
-                let li = document.createElement('li');
-                li.innerText = `${user.username} - ${user.email}`;
-                partList.append(li);
-            });
-            partFetched = true;
+            if (data.length > 0) {
+                data.forEach(user => {
+                    let li = document.createElement('li');
+                    li.innerText = `${user.username} - ${user.email}`;
+                    partList.append(li);
+                });
+                partFetched = true;
+            } else {
+                let notice = document.createElement('p');
+                notice.innerText = 'Nessun partecipante';
+                notice.classList.add('text-center');
+                partList.insertAdjacentElement("afterend", notice);
+            }
         }
     })
 }
