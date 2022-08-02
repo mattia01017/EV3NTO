@@ -61,7 +61,6 @@ w.addEventListener('message', e => {
 async function fillCards(path) {
     let res = await fetch(`https://${window.location.host}${path}`);
     let data = await res.json();
-    console.log(data);
     if (data[0]) {
         document.querySelectorAll('.event-btn').forEach(el => {
             el.removeAttribute('hidden');

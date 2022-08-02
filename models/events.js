@@ -130,7 +130,7 @@ const selectEventsByName = async (q) => {
         FROM events as E
         JOIN users as U ON U.email = E.organizer
         WHERE priv=false 
-            AND (title LIKE '%' || $1 || '%' OR location_name LIKE '%' || $1 || '%'`;
+            AND (title LIKE '%' || $1 || '%' OR location_name LIKE '%' || $1 || '%')`;
     let values = [q];
     let res = await pool.query(text, values);
     return trimTime(res).rows;
@@ -141,28 +141,27 @@ const selectNearbyEvents = async (lat, lon, dist) => {
     let allEvents = (await pool.query(text)).rows;
 
     let point = {latitude: lat, longitude: lon};
-    let near = ['null']
+    let nearby = ['null']
     allEvents.forEach((event) => {
-        console.log(event);
         let b = geolib.isPointWithinRadius(
             {latitude: event.loc_lat, longitude: event.loc_lon},
             point,
             dist
         );
         if (b) {
-            near.push(event.id);
+            nearby.push(event.id);
         }
     });
 
-    let nearStr = near.toString().replace('[', '').replace(']','');
+    let nearStr = nearby.toString().replace('[', '').replace(']','');
+    console.log(nearStr)
     text = `
         SELECT id, title, ddate, num_part, max_num_part, 
         descr, priv, U.username as organizer, img, location_name
         FROM events as E
         JOIN users as U ON U.email = E.organizer
-        WHERE id IN (${nearStr}) AND priv = false`;
-    let res = await pool.query(text);
-    console.log(res.rows)
+        WHERE id = ANY ($1) AND priv = false`;
+    let res = await pool.query(text, [nearby]);
     return trimTime(res).rows;
 }
 

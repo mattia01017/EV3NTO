@@ -43,7 +43,7 @@ const sendImg = async (req, res) => {
 const sendEvent = async (req, res) => {
     let { id } = req.params;
     let event = await events.selectEvent(id);
-    if (event && (!event.priv || event.organizer == req.session.email)) {
+    if (event) {
         event.ispart = await events.isPartecipant(id, req.session.email);
         res.json(event);
     } else {
