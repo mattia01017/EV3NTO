@@ -18,11 +18,11 @@ const selectUser = async (user, password) => {
 const insertUser = async (email, user, password) => {
     let text = 'INSERT INTO users VALUES($1,$2,sha256($3))';
     let values = [email, user, password];
-    pool.query(text, values, (err) => {
-        if (err) {
-            console.log(err);
-        }
-    });
+    try {
+        await pool.query(text, values);
+    } catch (err) {
+        return err;
+    }
 }
 
 const deleteUser = async (email) => {

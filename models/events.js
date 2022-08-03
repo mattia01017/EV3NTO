@@ -149,12 +149,10 @@ const selectNearbyEvents = async (lat, lon, dist) => {
             dist
         );
         if (b) {
-            nearby.push(event.id);
+            nearby.push(geolib.isPointWithevent.id);
         }
     });
 
-    let nearStr = nearby.toString().replace('[', '').replace(']','');
-    console.log(nearStr)
     text = `
         SELECT id, title, ddate, num_part, max_num_part, 
         descr, priv, U.username as organizer, img, location_name

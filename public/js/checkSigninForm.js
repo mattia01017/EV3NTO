@@ -25,7 +25,7 @@ form.addEventListener('submit', (e) => {
         flag = true;
     }
     if (flag) {
-        let toast = document.getElementById('toast');
+        let toast = document.getElementById('toast2');
         new bootstrap.Toast(toast).show();
         console.log(toast);
     }

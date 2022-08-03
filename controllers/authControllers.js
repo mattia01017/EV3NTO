@@ -3,7 +3,7 @@
 const users = require('../models/users');
 
 // middleware per saltare al profilo personale se già autenticato
-const skipIfLogged = (req, res, next) => {
+const skipIfLogged = async (req, res, next) => {
     if (req.session && req.session.user) {
         res.redirect('/profilo/miei');
     } else {
@@ -30,25 +30,32 @@ const authenticate = async (req, res) => {
 }
 
 // carica la pagina di autenticazione
-const loadLogin = (req, res) => {
+const loadLogin = async (req, res) => {
     res.render('login.ejs', { 
         toast: req.session.toast 
     });
 }
 
 // carica la pagina di registrazione
-const loadSignin = (req, res) => {
-    res.render('signin.ejs');
+const loadSignin = async (req, res) => {
+    res.render('signin.ejs', {
+        toast: req.session.toast
+    });
 }
 
 // Registra l'utente al sistema
-const addUser = (req, res) => {
+const addUser = async (req, res) => {
     let { email, user, password } = req.body;
     if (email.includes('@') && password.length >= 3 && user != '') {
-        users.insertUser(email, user, password);
-        req.session.email = email;
-        req.session.user = user;
-        res.redirect('/profilo/miei');
+        let err = await users.insertUser(email, user, password);
+        if (err) {
+            req.session.toast = { v: true };
+            res.redirect('/account/signin');
+        } else {
+            req.session.email = email;
+            req.session.user = user;
+            res.redirect('/profilo/miei');
+        }
     } else {
         res.status(400).send('Richiesta non valida');
     }
