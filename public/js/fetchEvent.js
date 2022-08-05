@@ -1,6 +1,16 @@
+var isPart;
+
 function getId() {
     let params = new URLSearchParams(window.location.search);
     return params.get('id');
+}
+
+async function disablePartBtn() {
+    let part = document.querySelector('#e-part').innerText;
+    let maxPart = document.querySelector('#e-part-max').innerText;
+    if (part == maxPart && !isPart) {
+        document.querySelector('#part-btn').setAttribute('disabled', '');
+    }
 }
 
 const eId = getId()
@@ -22,6 +32,7 @@ w.addEventListener('message', e => {
 
 var subscrBtn = document.querySelector('#part-btn');
 var showPartBtn = document.querySelector('#show-part-btn');
+
 if (showPartBtn) {
     let partFetched = false;
     showPartBtn.addEventListener('click', async () => {
@@ -64,6 +75,7 @@ async function fillCard() {
         let priv = document.querySelector('#e-priv');
         priv.innerText = data.priv ? 'No' : 'Sì';
         document.querySelector('#e-part').innerText = data.num_part;
+        document.querySelector('#e-part-max').innerText = data.max_num_part;
         document.querySelector('#e-invcode').innerText = data.id;
         document.querySelector('#e-desc').innerText = data.descr;
         let delBtn = document.querySelector('#del-ev-btn');
@@ -72,9 +84,11 @@ async function fillCard() {
         }
         if (subscrBtn) {
             if (data.ispart) {
+                isPart = true;
                 subscrBtn.classList.add('btn-warning');
                 subscrBtn.innerText = 'Rimuovi partecipazione';
             } else {
+                isPart = false;
                 subscrBtn.classList.add('btn-success');
                 subscrBtn.innerText = 'Partecipa';
             }
@@ -83,7 +97,7 @@ async function fillCard() {
         let warning = document.createElement('h3');
         warning.innerText = 'L\'evento non esiste o è stato cancellato';
         warning.classList.add('display-4', 'position-absolute', 'top-50', 'start-50', 'translate-middle', 'text-center');
-        
+
         let card = document.querySelector('.card');
         card.append(warning);
     }
@@ -91,41 +105,37 @@ async function fillCard() {
 
 async function partBtn() {
     subscrBtn.addEventListener('click', async () => {
-        let prev = subscrBtn.innerText;
         subscrBtn.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>';
-        if (prev == 'Partecipa') {
-            await fetch(
-                `https://${window.location.host}/api/event/${eId}`,
-                { 
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: 'POST',
-                    body: JSON.stringify({add: eId})
-                }
-            );
-        } else {
-            await fetch(
-                `https://${window.location.host}/api/event/${eId}`,
-                { 
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: 'POST',
-                    body: JSON.stringify({remove: eId})
-                }
-            );
-        }
-        subscrBtn.innerText = prev == 'Partecipa' ? 'Rimuovi partecipazione' : 'Partecipa';
+        let body = {};
+        body[(isPart ? 'remove' : 'add')] = eId;
+        let res = await fetch(
+            `https://${window.location.host}/api/event/${eId}`,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(body)
+            }
+        );
+        let data = await res.json();
+        isPart = !isPart;
+        document.querySelector('#e-part').innerText = data.numPart;
+        subscrBtn.innerText = isPart ? 'Rimuovi partecipazione' : 'Partecipa';
         subscrBtn.classList.toggle('btn-success');
         subscrBtn.classList.toggle('btn-warning');
+        disablePartBtn();
     });
 }
 
-fillCard();
+
+fillCard().then(() => {
+    if (subscrBtn) {
+        disablePartBtn();
+    }
+});
 
 if (subscrBtn) {
-    partBtn();
+    partBtn()
 }

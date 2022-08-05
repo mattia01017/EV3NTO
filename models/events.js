@@ -16,7 +16,7 @@ const trimTime = (res) => {
 const insertEvent = async (name, date, num, privacy, desc, file, email, where, lat, lon) => {
     let text = `
         INSERT INTO events(title,ddate,max_num_part,descr,priv,img,organizer,id,location_name, loc_lat, loc_lon)
-        VALUES ($1,$2,$3,$4,$5,$6,$7,substr(md5(random()::text), 0, 10),$8,$9,$10)`;
+        VALUES ($1,$2,$3,$4,$5,$6,$7,substr(md5(random()::text), 0, 11),$8,$9,$10)`;
     let values = [name, date, num, desc, privacy, file, email, where, lat, lon];
     pool.query(text, values, (err) => {
         console.log(err);
@@ -112,7 +112,14 @@ const insertPartecipant = async (eventId, user) => {
         INSERT INTO partecipations
         VALUES ($2,$1)`;
     let values = [eventId, user];
-    await pool.query(text, values);
+    try {
+        await pool.query(text, values);
+    } catch (err) {
+        if (err.constraint === 'num_part_constraint' ) {
+            return false
+        }
+    }
+    return true;
 }
 
 const deletePartecipant = async (eventId, user) => {
@@ -149,7 +156,7 @@ const selectNearbyEvents = async (lat, lon, dist) => {
             dist
         );
         if (b) {
-            nearby.push(geolib.isPointWithevent.id);
+            nearby.push(event.id);
         }
     });
 
@@ -175,6 +182,13 @@ const selectPartecipants = async (eventId) => {
     return res.rows;
 }
 
+const selectNumPart = async (eventId) => {
+    let text = 'SELECT num_part FROM events WHERE id = $1';
+    let values = [eventId];
+    let res = await pool.query(text, values);
+    return res.rows[0].num_part;
+}
+
 module.exports = {
     insertEvent,
     selectMyEvents,
@@ -188,5 +202,6 @@ module.exports = {
     deletePartecipant,
     selectEventsByName,
     selectNearbyEvents,
-    selectPartecipants
+    selectPartecipants,
+    selectNumPart
 };

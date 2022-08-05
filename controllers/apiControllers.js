@@ -55,11 +55,13 @@ const registerPart = async (req, res) => {
     let { add, remove } = req.body;
     if (add) {
         await events.insertPartecipant(add, req.session.email);
-        res.sendStatus(200);
+        let n = await events.selectNumPart(add);
+        res.send({numPart: n});
     }
     else if (remove) {
         await events.deletePartecipant(remove, req.session.email);
-        res.sendStatus(200);
+        let n = await events.selectNumPart(remove);
+        res.send({numPart: n});
     } else {
         res.sendStatus(400);
     }
