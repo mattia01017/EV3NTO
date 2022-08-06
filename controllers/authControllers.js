@@ -16,24 +16,18 @@ const skipIfLogged = async (req, res, next) => {
 // login e mostra un messaggio di errore
 const authenticate = async (req, res) => {
     let { user, password } = req.body;
+    console.log(req.body)
     let cred = await users.selectUser(user, password);
     if (cred) {
         req.session.user = cred.username;
         req.session.email = cred.email;
     }
-    if (req.session.user) {
-        res.redirect('/profilo/miei');
-    } else {
-        req.session.toast = { v: true };
-        res.redirect('/account/login');
-    }
+    res.send({ ok: req.session.user ? true : false })
 }
 
 // carica la pagina di autenticazione
 const loadLogin = async (req, res) => {
-    res.render('login.ejs', { 
-        toast: req.session.toast 
-    });
+    res.render('login.ejs');
 }
 
 // carica la pagina di registrazione

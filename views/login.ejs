@@ -8,7 +8,7 @@
     <div class="card border-0 mb-3 mt-5 start-50 translate-middle-x" style="max-width: 450px;">
       <h1 class="card-header bg-light text-black display-6">Accedi</h1>
       <div class="card-body bg-dark">
-        <form id="login-form" action="/account/login" method="post" novalidate>
+        <form id="login-form" novalidate>
           <div class="mb-3 row">
             <label for="user" class="col-sm col-form-label">Username</label>
             <div class="col-sm">
@@ -27,7 +27,6 @@
       </div>
     </div>
     <p class="text-center">Non hai un account? <a href="/account/signin" class="link-warning">Registrati</a></p>
-    <% if (toast && toast.v) { toast.v=false %>
     <div id="toast" class="toast position-fixed start-50 bottom-0 bg-light text-black translate-middle w-25"
       role="alert" aria-live="assertive" aria-atomic="true">
       <div class="d-flex text-center">
@@ -37,7 +36,6 @@
         <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
     </div>
-    <% } %>
     <%- include('./partials/footer.ejs') %>
 </body>
 <script src="/js/showToast.js"></script>
