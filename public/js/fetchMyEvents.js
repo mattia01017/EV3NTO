@@ -31,6 +31,11 @@ function fetchEvents() {
                 navigator.geolocation.getCurrentPosition((pos) => {
                     path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=15000`;
                     fillCards(path);
+
+                },
+                (err) => {
+                    console.error(err);
+                    showError('Impossibile accedere alla posizione');
                 });
             } else {
                 showError('Il browser non supporta la geolocalizzazione');

@@ -102,6 +102,15 @@
                         </div>
                 </div>
             </main>
+            <div id="toast" class="toast position-fixed start-50 bottom-0 bg-light text-black translate-middle w-25"
+                role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex text-center">
+                <div id="toast-text" class="toast-body fs-5">
+                    Impossibile partecipare. Evento al completo
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
             <%- include('./partials/footer') %>
     </body>
     <script src="js/fetchEvent.js" type="application/javascript"></script>

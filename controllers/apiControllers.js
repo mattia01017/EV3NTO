@@ -54,9 +54,12 @@ const sendEvent = async (req, res) => {
 const registerPart = async (req, res) => {
     let { add, remove } = req.body;
     if (add) {
-        await events.insertPartecipant(add, req.session.email);
+        let err = await events.insertPartecipant(add, req.session.email);
         let n = await events.selectNumPart(add);
-        res.send({numPart: n});
+        res.send({
+            numPart: n,
+            error: err
+        });
     }
     else if (remove) {
         await events.deletePartecipant(remove, req.session.email);

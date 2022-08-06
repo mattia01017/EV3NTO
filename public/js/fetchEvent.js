@@ -120,11 +120,17 @@ async function partBtn() {
             }
         );
         let data = await res.json();
-        isPart = !isPart;
+        console.log(data);
+        if (data.error) {
+            let t = document.querySelector('#toast');
+            new bootstrap.Toast(t).show();
+        } else {
+            isPart = !isPart;
+            subscrBtn.classList.toggle('btn-success');
+            subscrBtn.classList.toggle('btn-warning');
+        }
         document.querySelector('#e-part').innerText = data.numPart;
         subscrBtn.innerText = isPart ? 'Rimuovi partecipazione' : 'Partecipa';
-        subscrBtn.classList.toggle('btn-success');
-        subscrBtn.classList.toggle('btn-warning');
         disablePartBtn();
     });
 }

@@ -116,10 +116,10 @@ const insertPartecipant = async (eventId, user) => {
         await pool.query(text, values);
     } catch (err) {
         if (err.constraint === 'num_part_constraint' ) {
-            return false
+            return true
         }
     }
-    return true;
+    return false;
 }
 
 const deletePartecipant = async (eventId, user) => {
