@@ -1,10 +1,10 @@
-let form = document.querySelector('#login-form');
-form.addEventListener('submit', e => {
+let loginForm = document.querySelector('#login-form');
+loginForm.addEventListener('submit', e => {
     e.preventDefault();
     e.stopPropagation();
     let data = {}
 
-    let formElems = [...form.elements];
+    let formElems = [...loginForm.elements];
     formElems.forEach(element => {
         data[element.name] = element.value;
     });
@@ -29,6 +29,7 @@ form.addEventListener('submit', e => {
                 // mostra il messaggio di credenziali errate
                 let toast = document.getElementById('toast');
                 new bootstrap.Toast(toast).show();
+                document.querySelector('#password').value = '';
             }
         })
     })

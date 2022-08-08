@@ -11,9 +11,8 @@ const skipIfLogged = async (req, res, next) => {
     }
 }
 
-// controlla email e password per l'autenticazione. Se corretti 
-// procede verso le pagine del profilo, altrimenti ricarica la pagina di
-// login e mostra un messaggio di errore
+// controlla email e password per l'autenticazione dal corpo della richiesta. Se corretti 
+// risponde con true, altrimenti con false
 const authenticate = async (req, res) => {
     let { user, password } = req.body;
     console.log(req.body)

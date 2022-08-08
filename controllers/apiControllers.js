@@ -4,18 +4,18 @@ const events = require('../models/events');
 const path = require('path');
 
 // invia gli eventi appartenenti all'utente della sessione corrente
-const sendMyEvents = (req, res) => {
+const sendMyEvents = async (req, res) => {
     if (req.session.email) {
         events.selectMyEvents(req.session.email).then((data) => {
             res.json(data);
-        })
+        });
     } else {
         res.status(400).json({ Errore: 'Non hai effettuato l\'accesso' });
     }
 }
 
 // invia gli eventi a cui partecipa l'utente della sessione corrente
-const sendMyPartecip = (req, res) => {
+const sendMyPartecip = async (req, res) => {
     if (req.session.email) {
         events.selectMyPartecip(req.session.email).then((data) => {
             res.json(data);

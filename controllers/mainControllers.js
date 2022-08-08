@@ -2,7 +2,7 @@
 const { deleteUser } = require('../models/users');
 
 // carica pagina home
-const loadHome = (req, res) => {
+const loadHome = async (req, res) => {
     // logout
     if (req.query.logout) {
         delete req.session.user;

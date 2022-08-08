@@ -10,7 +10,7 @@ const path = require("path");
 const geocoder = NodeGeocoder({ provider: 'openstreetmap' });
 
 // invia la pagina degli eventi appartenenti all'utente
-const loadMyPage = (req, res) => {
+const loadMyPage = async (req, res) => {
     res.render('mypage.ejs', {
         select: 'i',
         edit: true
@@ -19,7 +19,7 @@ const loadMyPage = (req, res) => {
 
 // middleware per ridirezionare verso la pagina di login se
 // non è stato fatto il login
-const checkIfLogged = (req, res, next) => {
+const checkIfLogged = async (req, res, next) => {
     if (req.session && req.session.user) {
         next();
     } else {
@@ -28,7 +28,7 @@ const checkIfLogged = (req, res, next) => {
 }
 
 // invia la pagina degli eventi a cui partecipa l'utente
-const loadMyPartecip = (req, res) => {
+const loadMyPartecip = async (req, res) => {
     res.render('mypage.ejs', {
         select: 'e',
         edit: false
@@ -36,14 +36,14 @@ const loadMyPartecip = (req, res) => {
 }
 
 // invia la pagina di inserimento eventi
-const loadAddEvent = (req, res) => {
+const loadAddEvent = async (req, res) => {
     res.render('addevent.ejs', {
         select: 'n'
     });
 }
 
 // redireziona verso la pagina del profilo
-const profRedirect = (req, res) => {
+const profRedirect = async (req, res) => {
     res.redirect('/profilo/miei');
 }
 
