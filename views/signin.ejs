@@ -8,7 +8,7 @@
     <div class="card border-0 mb-3 mt-5 start-50 translate-middle-x" style="max-width: 450px;">
       <h1 class="card-header bg-light text-black display-6">Registrati</h1>
       <div class="card-body bg-dark">
-        <form id="signin-form" action="/account/signin" method="post" novalidate>
+        <form id="signin-form" method="post" novalidate>
           <div class="mb-3 row has-validation">
             <label for="user" class="col-sm col-form-label">Email</label>
             <div class="col-sm">
@@ -39,26 +39,14 @@
       </div>
     </div>
     <p class="text-center">Possiedi già un account? <a href="/account/login" class="link-warning">Accedi</a></p>
-    <div id="toast2" class="toast position-fixed start-50 bottom-0 bg-light text-black translate-middle w-25"
+    <div id="toast" class="toast position-fixed start-50 bottom-0 bg-light text-black translate-middle w-25"
       role="alert" aria-live="assertive" aria-atomic="true">
       <div class="d-flex text-center">
         <div id="toast-text" class="toast-body fs-5"></div>
         <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
     </div>
-    <% if (toast && toast.v) { toast.v=false %>
-      <div id="toast" class="toast position-fixed start-50 bottom-0 bg-light text-black translate-middle w-25"
-        role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex text-center">
-          <div id="toast-text" class="toast-body fs-5">
-            Esiste già un account con questa email
-          </div>
-          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-      </div>
-      <% } %>
     <%- include('./partials/footer.ejs') %>
   </body>
 <script src="/js/checkSigninForm.js" async></script>
-<script src="/js/showToast.js" async></script>
 </html>

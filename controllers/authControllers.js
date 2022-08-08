@@ -15,7 +15,6 @@ const skipIfLogged = async (req, res, next) => {
 // risponde con true, altrimenti con false
 const authenticate = async (req, res) => {
     let { user, password } = req.body;
-    console.log(req.body)
     let cred = await users.selectUser(user, password);
     if (cred) {
         req.session.user = cred.username;
@@ -42,12 +41,11 @@ const addUser = async (req, res) => {
     if (email.includes('@') && password.length >= 3 && user != '') {
         let err = await users.insertUser(email, user, password);
         if (err) {
-            req.session.toast = { v: true };
-            res.redirect('/account/signin');
+            res.json({ok: false});
         } else {
             req.session.email = email;
             req.session.user = user;
-            res.redirect('/profilo/miei');
+            res.json({ok: true});
         }
     } else {
         res.status(400).send('Richiesta non valida');

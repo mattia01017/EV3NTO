@@ -51,11 +51,9 @@ app.get('/',
 );
 
 // pagina inesistente
-app.all('*', (req, res) => {
+app.all('*', async (req, res) => {
     res.status(404).render('404.ejs');
 });
-
-// app.listen(process.env.PORT);
 
 const server = https.createServer(
     {
@@ -65,6 +63,6 @@ const server = https.createServer(
     app
 );
 
-server.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, async () => {
     console.log(`Listening on port ${process.env.PORT}`);
 });
