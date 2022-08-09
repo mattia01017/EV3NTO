@@ -47,7 +47,8 @@ app.use('/ricerca', searchRoutes);
 
 // home
 app.get('/',
-    mainControllers.loadHome,
+    mainControllers.deleteOrLogout,
+    mainControllers.loadHome
 );
 
 // pagina inesistente

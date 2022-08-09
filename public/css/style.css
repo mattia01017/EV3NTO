@@ -27,12 +27,15 @@ html, body {
 }
 footer {
 	position: sticky;
-	top: 100vh;	
-	z-index: -1;
+	top: 100vh;
 }
 
 /* Immagine pagina di dettagli evento */
 #e-img{
 	object-fit: contain;
 	width: 95%;
+}
+
+.toast {
+	z-index: 200;
 }

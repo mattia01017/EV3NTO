@@ -137,7 +137,8 @@ const selectEventsByName = async (q) => {
         FROM events as E
         JOIN users as U ON U.email = E.organizer
         WHERE priv=false 
-            AND (title LIKE '%' || $1 || '%' OR location_name LIKE '%' || $1 || '%')`;
+            AND (LOWER(title) LIKE '%' || LOWER($1) || '%' 
+                OR LOWER(location_name) LIKE '%' || LOWER($1) || '%')`;
     let values = [q];
     let res = await pool.query(text, values);
     return trimTime(res).rows;
