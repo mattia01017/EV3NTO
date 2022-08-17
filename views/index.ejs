@@ -1,89 +1,90 @@
 <!DOCTYPE html>
 <html lang="it">
-
-<%- include('./partials/head.ejs') %>
-
+<head>
+  <%- include('./partials/head.ejs') %>
+  <title>EV3NTO</title>
+</head>
 <body class="bg-black text-white">
-  <%- include('./partials/header.ejs') %>
-    <main>
-      <div id="home-car" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#home-car" data-bs-slide-to="0" class="active" aria-current="true"
-            aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#home-car" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#home-car" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="/assets/images/c1.jpg" class="d-block w-100 car-img" alt="" height="450">
-            <div class="carousel-caption d-none d-md-block">
-              <h2>Concerti</h2>
-              <p>Puoi tenere sotto controllo il numero di partecipanti</p>
-            </div>
-          </div>
-          <div class="carousel-item position-relative">
-            <img src="/assets/images/c2.jpg" class="d-block w-100 car-img" alt="" height="450">
-            <div class="carousel-caption d-none d-md-block">
-              <h2>Feste</h2>
-              <p>È possibile organizzare party pubblici e farli conoscere</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="/assets/images/c3.jpg" class="d-block w-100 car-img" alt="" height="450">
-            <div class="carousel-caption d-none d-md-block">
-              <h2>Spettacoli</h2>
-              <p>Includi dettagli e un'immagine per rappresentare l'occasione</p>
-            </div>
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#home-car" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#home-car" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+<%- include('./partials/header.ejs') %>
+  <main>
+    <div id="home-car" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#home-car" data-bs-slide-to="0" class="active" aria-current="true"
+          aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#home-car" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#home-car" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/assets/images/c1.jpg" class="d-block w-100 car-img" alt="" height="450">
+          <div class="carousel-caption d-none d-md-block">
+            <h2>Concerti</h2>
+            <p>Puoi tenere sotto controllo il numero di partecipanti</p>
+          </div>
+        </div>
+        <div class="carousel-item position-relative">
+          <img src="/assets/images/c2.jpg" class="d-block w-100 car-img" alt="" height="450">
+          <div class="carousel-caption d-none d-md-block">
+            <h2>Feste</h2>
+            <p>È possibile organizzare party pubblici e farli conoscere</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="/assets/images/c3.jpg" class="d-block w-100 car-img" alt="" height="450">
+          <div class="carousel-caption d-none d-md-block">
+            <h2>Spettacoli</h2>
+            <p>Includi dettagli e un'immagine per rappresentare l'occasione</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#home-car" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#home-car" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
 
-      <div class="container-lg mt-3">
-        <div class="row mt-1">
-          <div class="col-xl mb-2">
-            <div class="card bg-dark border-0 home-cards">
-              <div class="card-body">
-                <% if (!user) { %>
-                  <h2 class="display-6 card-title">Sei un organizzatore?</h2>
-                  <p class="card-text">Accedi alla piattaforma per organizzare i tuoi eventi</p>
-                  <a href="/account/signin" class="btn btn-light me-3">Registrati</a>
-                  <a href="/account/login" class="btn btn-outline-light me-3">Accedi</a>
-                  <% } else { %>
-                    <h2 class="display-6 card-title">Ciao <%= user %>
-                    </h2>
-                    <p class="card-text">Accesso effettuato</p>
-                    <a href="/profilo/aggiungi" class="btn btn-light me-3">Nuovo evento</a>
-                    <a href="/?logout=1" class="btn btn-outline-light me-3">Logout</a>
-                    <% } %>
-              </div>
+    <div class="container-lg mt-3">
+      <div class="row mt-1">
+        <div class="col-xl mb-2">
+          <div class="card bg-dark border-0 home-cards">
+            <div class="card-body">
+              <% if (!user) { %>
+                <h2 class="display-6 card-title">Sei un organizzatore?</h2>
+                <p class="card-text">Accedi alla piattaforma per organizzare i tuoi eventi</p>
+                <a href="/account/signin" class="btn btn-light me-3">Registrati</a>
+                <a href="/account/login" class="btn btn-outline-light me-3">Accedi</a>
+                <% } else { %>
+                  <h2 class="display-6 card-title">Ciao <%= user %>
+                  </h2>
+                  <p class="card-text">Accesso effettuato</p>
+                  <a href="/profilo/aggiungi" class="btn btn-light me-3">Nuovo evento</a>
+                  <a href="/?logout=1" class="btn btn-outline-light me-3">Logout</a>
+                  <% } %>
             </div>
           </div>
-          <div class="col-xl mb-2">
-            <div class="card bg-dark border-0 home-cards">
-              <div class="card-body">
-                <h2 class="card-title display-6">Stai cercando un evento?</h2>
-                <p class="card-text">Visualizza gli eventi nelle vicinanze o inserisci un codice di invito</p>
-                <div class="d-flex">
-                  <a href="/ricerca/vicinanze" class="btn btn-light me-3">Nelle vicinanze</a>
-                  <form action="/evento" method="get">
-                    <input class="form-control bg-dark text-white" name="id" type="text" placeholder="Inserisci codice evento">
-                  </form>
-                </div>
+        </div>
+        <div class="col-xl mb-2">
+          <div class="card bg-dark border-0 home-cards">
+            <div class="card-body">
+              <h2 class="card-title display-6">Stai cercando un evento?</h2>
+              <p class="card-text">Visualizza gli eventi nelle vicinanze o inserisci un codice di invito</p>
+              <div class="d-flex">
+                <a href="/ricerca/vicinanze" class="btn btn-light me-3">Nelle vicinanze</a>
+                <form action="/evento" method="get">
+                  <input class="form-control bg-dark text-white" name="id" type="text" placeholder="Inserisci codice evento">
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
-    <%- include('./partials/footer.ejs') %>
+    </div>
+  </main>
+  <%- include('./partials/footer.ejs') %>
 </body>
 <script src="/js/reloadOnBack.js"></script>
 </html>

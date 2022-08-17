@@ -1,117 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('./partials/head') %>
-
-    <body class="bg-black text-white">
-        <%- include('./partials/header') %>
-            <main>
-                <div class="card bg-dark bg-opacity-75 container-lg mt-3 mb-3">
-                    <div class="card-body opacity-0" id="card-content">
-                        <h3 class="display-5 ms-1 mb-3">Dettagli Evento</h2>
-                            <div class="card-text">
-                                <div class="row">
-                                    <p><strong>Codice invito:</strong> <span id="e-invcode"></span></p>
-                                    <div class="col-sm">
-                                        <div class="position-relative">
-                                            <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle"
-                                                id="img-spinner">
-                                                <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
-                                            </div>
-                                            <img id="e-img" height="400">
+<head>
+    <%- include('./partials/head.ejs') %>
+    <title>Dettagli EV3NTO</title>
+</head>
+<body class="bg-black text-white">
+    <%- include('./partials/header') %>
+        <main>
+            <div class="card bg-dark bg-opacity-75 container-lg mt-3 mb-3">
+                <div class="card-body opacity-0" id="card-content">
+                    <h3 class="display-5 ms-1 mb-3">Dettagli Evento</h2>
+                        <div class="card-text">
+                            <div class="row">
+                                <p><strong>Codice invito:</strong> <span id="e-invcode"></span></p>
+                                <div class="col-sm">
+                                    <div class="position-relative">
+                                        <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle"
+                                            id="img-spinner">
+                                            <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm">
-                                        <p><strong>Titolo:</strong> <span id="e-title"></span></p>
-                                        <p><strong>Data:</strong> <span id="e-date"></span></p>
-                                        <p><strong>Organizzatore:</strong> <span id="e-org"></span></p>
-                                        <p><strong>Luogo:</strong> <span id="e-loc"></span></p>
-                                        <p><strong>Pubblico?</strong> <span id="e-priv"></span></p>
-                                        <p><strong>Partecipanti:</strong> <span id="e-part"></span> / <span id="e-part-max"></span></p>
-                                        <p><strong>Descrizione:</strong><br><span id="e-desc"></span></p>
+                                        <img id="e-img" height="400">
                                     </div>
                                 </div>
-                                <div class="float-end">
-                                    <% if (user) { %>
-                                        <% if (edit) { %>
-                                            <button class="mt-3 btn btn-light" data-bs-toggle="modal"
-                                                data-bs-target="#modal" id="show-part-btn">
-                                                Visualizza partecipanti
-                                            </button>
-                                            <button class="btn btn-danger mt-3"
-                                                data-bs-toggle="modal" data-bs-target="#delpopup">
-                                                Elimina
-                                            </button>
-                                            <!-- Partecipant Modal -->
-                                            <div class="modal fade text-black" id="modal" tabindex="-1"
-                                                aria-labelledby="modalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="modal-title" id="modalLabel">Partecipanti</h3>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle"
-                                                                id="modal-spinner">
-                                                                <div class="spinner-border" role="status" aria-hidden="true"></div>
-                                                            </div>
-                                                            <ul id="part-list">
-
-                                                            </ul>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Ok</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Eraser-->
-                                            <div class="modal fade" id="delpopup" tabindex="-1" aria-labelledby="delpopupLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h4 class="modal-title text-black" id="delpopupLabel">L'evento verrà eliminato</h4>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                                    <a class="btn btn-danger del-btn" id="del-ev-btn">Ok</a>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <% } else { %>
-                                                <button class="btn btn-lg" id="part-btn">
-                                                    <div class="spinner-border spinner-border-sm" role="status"></div>
-                                                </button>
-                                            <% } %>
-                                        <% } else { %>
-                                                <p><a href="/account/login" class="link-warning">Accedi</a> per
-                                                    partecipare a questo evento</p>
-                                        <% } %>
+                                <div class="col-sm">
+                                    <p><strong>Titolo:</strong> <span id="e-title"></span></p>
+                                    <p><strong>Data:</strong> <span id="e-date"></span></p>
+                                    <p><strong>Organizzatore:</strong> <span id="e-org"></span></p>
+                                    <p><strong>Luogo:</strong> <span id="e-loc"></span></p>
+                                    <p><strong>Pubblico?</strong> <span id="e-priv"></span></p>
+                                    <p><strong>Partecipanti:</strong> <span id="e-part"></span> / <span id="e-part-max"></span></p>
+                                    <p><strong>Descrizione:</strong><br><span id="e-desc"></span></p>
                                 </div>
                             </div>
+                            <div class="float-end">
+                                <% if (user) { %>
+                                    <% if (edit) { %>
+                                        <button class="mt-3 btn btn-light" data-bs-toggle="modal"
+                                            data-bs-target="#modal" id="show-part-btn">
+                                            Visualizza partecipanti
+                                        </button>
+                                        <button class="btn btn-danger mt-3"
+                                            data-bs-toggle="modal" data-bs-target="#delpopup">
+                                            Elimina
+                                        </button>
+                                        <!-- Partecipant Modal -->
+                                        <div class="modal fade text-black" id="modal" tabindex="-1"
+                                            aria-labelledby="modalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="modalLabel">Partecipanti</h3>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle"
+                                                            id="modal-spinner">
+                                                            <div class="spinner-border" role="status" aria-hidden="true"></div>
+                                                        </div>
+                                                        <ul id="part-list">
+
+                                                        </ul>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Ok</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Eraser-->
+                                        <div class="modal fade" id="delpopup" tabindex="-1" aria-labelledby="delpopupLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h4 class="modal-title text-black" id="delpopupLabel">L'evento verrà eliminato</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                                <a class="btn btn-danger del-btn" id="del-ev-btn">Ok</a>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <button class="btn btn-lg" id="part-btn">
+                                                <div class="spinner-border spinner-border-sm" role="status"></div>
+                                            </button>
+                                        <% } %>
+                                    <% } else { %>
+                                            <p><a href="/account/login" class="link-warning">Accedi</a> per
+                                                partecipare a questo evento</p>
+                                    <% } %>
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle"
-                            id="spinner">
-                            <strong>Caricamento...</strong>
-                            <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
-                        </div>
-                </div>
-            </main>
-            <div id="toast" class="toast position-fixed start-50 bottom-0 bg-light text-black translate-middle w-25"
-                role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex text-center">
-                <div id="toast-text" class="toast-body fs-5">
-                    Impossibile partecipare. Evento al completo
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
+                    </div>
+                    <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle"
+                        id="spinner">
+                        <strong>Caricamento...</strong>
+                        <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
+                    </div>
             </div>
-            <%- include('./partials/footer') %>
-    </body>
-    <script src="js/fetchEvent.js" type="application/javascript"></script>
+        </main>
+        <div id="toast" class="toast position-fixed start-50 bottom-0 bg-light text-black translate-middle w-25"
+            role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex text-center">
+            <div id="toast-text" class="toast-body fs-5">
+                Impossibile partecipare. Evento al completo
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+</body>
+<script src="js/fetchEvent.js" type="application/javascript"></script>
 </html>
