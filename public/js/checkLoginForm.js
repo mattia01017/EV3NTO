@@ -24,8 +24,7 @@ loginForm.addEventListener('submit', e => {
         res.json()
         .then((data) => {
             if (data.ok) {
-                localStorage.setItem('reload', true);
-                history.back();
+                document.location.replace(document.referrer);
             } else {
                 // mostra il messaggio di credenziali errate
                 let toast = document.getElementById('toast');
