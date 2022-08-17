@@ -1,7 +1,7 @@
 /* modello di gestione dei dati degli eventi nel db */
 
 const { pool } = require("./db");
-const geolib = require('geolib');
+const { isPointWithinRadius } = require('geolib');
 
 // metodo privato per rimuovere l'orario dalla data
 const trimTime = (res) => {
@@ -75,18 +75,21 @@ const selectImage = async (img) => {
     return false;
 }
 
-const selectEvent = async (id) => {
+// restituisce le informazioni dell'evento con id specificato
+const selectEvent = async (eventId) => {
     let text = `
         SELECT title, ddate, num_part, max_num_part, 
             descr, priv, U.username, id, img, location_name
         FROM events as E
         JOIN users as U ON U.email = E.organizer
         WHERE E.id = $1`;
-    let values = [id];
+    let values = [eventId];
     let res = await pool.query(text, values);
     return trimTime(res).rows[0];
 }
 
+// restituisce true se l'utente specificato attraverso la mail è proprietario
+// dell'evento con id specificato, false altrimenti 
 const isOwner = async (eventId, user) => {
     let text = `
         SELECT id
@@ -97,6 +100,8 @@ const isOwner = async (eventId, user) => {
     return res.rows.length == 1;
 }
 
+// restituisce true se l'utente specificato attraverso la mail partecipa
+// all'evento con id specificato, false altrimenti 
 const isPartecipant = async (eventId, user) => {
     let text = `
         SELECT p_event
@@ -107,6 +112,7 @@ const isPartecipant = async (eventId, user) => {
     return res.rows.length == 1;
 }
 
+// inserisce la partecipazione specificata
 const insertPartecipant = async (eventId, user) => {
     let text = `
         INSERT INTO partecipations
@@ -115,13 +121,14 @@ const insertPartecipant = async (eventId, user) => {
     try {
         await pool.query(text, values);
     } catch (err) {
-        if (err.constraint === 'num_part_constraint' ) {
+        if (err.constraint === 'num_part_constraint') {
             return true
         }
     }
     return false;
 }
 
+// rimuove la partecipazione specificata
 const deletePartecipant = async (eventId, user) => {
     let text = `
         DELETE FROM partecipations
@@ -130,6 +137,8 @@ const deletePartecipant = async (eventId, user) => {
     await pool.query(text, values)
 }
 
+// restituisce gli eventi contenenti nel titolo o nel luogo la stringa
+// in argomento
 const selectEventsByName = async (q) => {
     let text = `
         SELECT id, title, ddate, num_part, max_num_part, 
@@ -144,15 +153,16 @@ const selectEventsByName = async (q) => {
     return trimTime(res).rows;
 }
 
+// restituisce gli eventi nelle vicinanze delle coordinate date, entro il raggio specificato
 const selectNearbyEvents = async (lat, lon, dist) => {
     let text = 'SELECT id, loc_lat, loc_lon FROM events';
     let allEvents = (await pool.query(text)).rows;
 
-    let point = {latitude: lat, longitude: lon};
+    let point = { latitude: lat, longitude: lon };
     let nearby = ['null']
     allEvents.forEach((event) => {
-        let b = geolib.isPointWithinRadius(
-            {latitude: event.loc_lat, longitude: event.loc_lon},
+        let b = isPointWithinRadius(
+            { latitude: event.loc_lat, longitude: event.loc_lon },
             point,
             dist
         );
@@ -171,6 +181,7 @@ const selectNearbyEvents = async (lat, lon, dist) => {
     return trimTime(res).rows;
 }
 
+// resisuisce i partecipanti dell'evento con id in argomento
 const selectPartecipants = async (eventId) => {
     let text = `
         SELECT U.username, U.email
@@ -183,6 +194,7 @@ const selectPartecipants = async (eventId) => {
     return res.rows;
 }
 
+// restituisce solamente il numero di partecipanti dell'evento specificato
 const selectNumPart = async (eventId) => {
     let text = 'SELECT num_part FROM events WHERE id = $1';
     let values = [eventId];

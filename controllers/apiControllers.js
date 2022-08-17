@@ -40,6 +40,7 @@ const sendImg = async (req, res) => {
     }
 }
 
+// invia l'evento con id specificato tra i parametri GET
 const sendEvent = async (req, res) => {
     let { id } = req.params;
     let event = await events.selectEvent(id);
@@ -51,6 +52,7 @@ const sendEvent = async (req, res) => {
     }
 }
 
+// registra la partecipazione ricevuta attraverso una richiesta POST
 const registerPart = async (req, res) => {
     let { add, remove } = req.body;
     if (add) {
@@ -70,6 +72,7 @@ const registerPart = async (req, res) => {
     }
 }
 
+// risponde con gli eventi risultato della ricerca
 const eventsByName = async (req, res) => {
     let { q } = req.query;
     if (q && q != '') {
@@ -80,6 +83,8 @@ const eventsByName = async (req, res) => {
     }
 }
 
+// invia gli eventi nelle vicinanze di un punto, entro un certo raggio, specificati
+// tra i parametri GET
 const eventsByPos = async (req, res) => {
     let { lat, lon, dist } = req.query;
     if (lat && lon && dist) {
@@ -90,6 +95,7 @@ const eventsByPos = async (req, res) => {
     }
 }
 
+// invia i partecipanti dell'evento specificato tra i parametri GET
 const sendPartecipants = async (req,res) => {
     let {id} = req.params;
     let rows = await events.selectPartecipants(id);

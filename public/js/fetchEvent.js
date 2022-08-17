@@ -1,10 +1,12 @@
 var isPart;
 
+// restituisce l'id dell'evento, specificato come parametro get
 function getId() {
     let params = new URLSearchParams(window.location.search);
     return params.get('id');
 }
 
+// disattiva il pulsante di partecipazione se l'evento è al completo
 async function disablePartBtn() {
     let part = document.querySelector('#e-part').innerText;
     let maxPart = document.querySelector('#e-part-max').innerText;
@@ -15,6 +17,7 @@ async function disablePartBtn() {
 
 const eId = getId()
 
+// worker per scaricare e renderizzare l'immagine dell'evento
 let w = new Worker('/js/workers/imageFetcher.js');
 w.addEventListener('message', e => {
     let imgblob = e.data.blob;
@@ -33,9 +36,13 @@ w.addEventListener('message', e => {
 var subscrBtn = document.querySelector('#part-btn');
 var showPartBtn = document.querySelector('#show-part-btn');
 
+// Aggiunge un event listener per il pulsante di visualizzazione partecipanti,
+// se presente (utente loggato è proprietario dell'evento), per visualizzare un popup con
+// i partecipanti
 if (showPartBtn) {
     let partFetched = false;
     showPartBtn.addEventListener('click', async () => {
+        // Lo scaricamento viene effettuato solamente quando il pulsante viene premuto
         if (!partFetched) {
             let res = await fetch(`https://${window.location.host}/api/event/${eId}/partecipants`);
             let data = await res.json();
@@ -58,6 +65,7 @@ if (showPartBtn) {
     })
 }
 
+// funzione di scaricamento e visualizzazione informazioni evento
 async function fillCard() {
     let res = await fetch(`https://${window.location.host}/api/event/${eId}`);
     let data = await res.json();
@@ -103,6 +111,9 @@ async function fillCard() {
     }
 }
 
+// Aggiunge un event listener per il pulsante di partecipazione, se esiste (utente loggato e non proprietario
+// dell'evento), per effettuare delle richieste POST asincrone al server e registrare la partecipazione o rimuoverla.
+// Inoltre aggiorna la visualizzazione del pulsante in base allo stato di partecipante o non partecipante dell'utente.
 async function partBtn() {
     subscrBtn.addEventListener('click', async () => {
         subscrBtn.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>';

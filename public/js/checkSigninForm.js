@@ -2,6 +2,8 @@ let form = document.getElementById('signin-form');
 var toastText = document.getElementById('toast-text');
 var valid = true;
 
+// Previene la richiesta POST di registrazione al server e mostra
+// un toast con il messaggio specificato come argomento della funzione
 function stopAndToast(toastMessage) {
     valid = false;
     toastText.innerText = toastMessage;

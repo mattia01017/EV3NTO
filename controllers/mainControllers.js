@@ -7,6 +7,8 @@ const loadHome = async (req, res) => {
     res.render('index.ejs');
 }
 
+// controlla se tra i parametri GET viene richiesto il logout o
+// la cancellazione dell'utente
 const deleteOrLogout = async (req,res,next) => {
     // logout
     if (req.query.logout) {

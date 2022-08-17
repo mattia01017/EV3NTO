@@ -1,4 +1,8 @@
 let loginForm = document.querySelector('#login-form');
+
+// effettua una richiesta POST con le credenziali utente e attende una risposta del
+// server. Se il server risponde positivamente, torna alla pagina referrer, se esiste, altrimenti
+// alla homepage del sito
 loginForm.addEventListener('submit', e => {
     e.preventDefault();
     e.stopPropagation();

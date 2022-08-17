@@ -1,6 +1,8 @@
 var ecard = document.querySelector('.event-card');
 var mastercard = document.querySelector('.card-body');
 
+// Mostra un messaggio di errore all'interno della card al posto della
+// lista eventi
 function showError(message) {
     ecard.innerHTML = '';
     let notice = document.createElement('h3');
@@ -10,43 +12,8 @@ function showError(message) {
     ecard.parentNode.append(notice);
 }
 
-function fetchEvents() {
-    let path;
-    switch (window.location.pathname) {
-        case '/profilo/miei':
-            path = '/api/myevents';
-            fillCards(path);
-            break;
-        case '/profilo/partecipazioni':
-            path = '/api/mypartecip';
-            fillCards(path);
-            break;
-        case '/ricerca':
-            let q = document.querySelector('#query').innerText;
-            path = '/api/namesearch?q=' + q;
-            fillCards(path);
-            break;
-        case '/ricerca/vicinanze':
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=15000`;
-                    fillCards(path);
-
-                },
-                (err) => {
-                    console.error(err);
-                    showError('Impossibile accedere alla posizione');
-                });
-            } else {
-                showError('Il browser non supporta la geolocalizzazione');
-            }
-            break;
-    }
-}
-
-// web worker per caricare e renderizzare le immagini degli eventi
+// web worker per scaricare e renderizzare le immagini degli eventi
 var w = new Worker('/js/workers/imageFetcher.js');
-
 w.addEventListener('message', e => {
     let imgblob = e.data.blob;
     let imgel = document.getElementById('img' + e.data.id);
@@ -69,7 +36,7 @@ async function fillCards(path) {
     if (data[0]) {
         document.querySelectorAll('.event-btn').forEach(el => {
             el.removeAttribute('hidden');
-        })
+        });
         data.forEach(event => {
             let nextcard = ecard.cloneNode(true);
             ecard.removeChild(ecard.querySelector('.d-flex'));
@@ -105,4 +72,37 @@ async function fillCards(path) {
     }
 }
 
-fetchEvents();
+// stabilisce la chiamata AJAX da effettuare in base agli eventi da richiedere (eventi nelle vicinanze, 
+// eventi dell'utente,...) e richiama la funzione di scaricamento e visualizzazione a schermo degli eventi
+// richiesti
+let path;
+switch (window.location.pathname) {
+    case '/profilo/miei':
+        path = '/api/myevents';
+        fillCards(path);
+        break;
+    case '/profilo/partecipazioni':
+        path = '/api/mypartecip';
+        fillCards(path);
+        break;
+    case '/ricerca':
+        let q = document.querySelector('#query').innerText;
+        path = '/api/namesearch?q=' + q;
+        fillCards(path);
+        break;
+    case '/ricerca/vicinanze':
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=15000`;
+                    fillCards(path);
+                },
+                (err) => {
+                    console.error(err);
+                    showError('Impossibile accedere alla posizione');
+                });
+        } else {
+            showError('Il browser non supporta la geolocalizzazione');
+        }
+        break;
+}

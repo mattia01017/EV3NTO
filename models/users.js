@@ -25,6 +25,7 @@ const insertUser = async (email, user, password) => {
     }
 }
 
+// elimina l'utente con l'email specificata dal db
 const deleteUser = async (email) => {
     let text = 'DELETE FROM users WHERE email=$1';
     let values = [email];
