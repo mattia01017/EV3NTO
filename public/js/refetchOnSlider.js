@@ -1,7 +1,10 @@
 let rangeform = document.querySelector('#rangeform');
 let range = document.querySelector('#dist');
 let rangeLabel = document.querySelector('#dist-val')
-dist = new URLSearchParams(window.location.search).get('dist');
+distParam = new URLSearchParams(window.location.search).get('dist');
+if (distParam) {
+    dist = distParam;
+}
 range.value = dist
 rangeLabel.innerText = dist + 'km';
 rangeform.addEventListener('change', e => {

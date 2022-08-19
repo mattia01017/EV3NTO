@@ -1,7 +1,7 @@
 var ecard = document.querySelector('.event-card');
 var mastercard = document.querySelector('.card-body');
 var cleanMastercard = mastercard.cloneNode(true);
-var dist = 15000;
+var dist = 15;
 
 // Mostra un messaggio di errore all'interno della card al posto della
 // lista eventi
@@ -99,10 +99,11 @@ switch (window.location.pathname) {
                 (pos) => {
                     let params = new URLSearchParams(window.location.search);
                     let distParam = params.get('dist');
+                    console.log(distParam, dist)
                     if (distParam) {
-                        dist = distParam * 1000;
+                        dist = distParam;
                     }
-                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist}`;
+                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist*1000}`;
                     fillCards(path);
                 },
                 (err) => {
