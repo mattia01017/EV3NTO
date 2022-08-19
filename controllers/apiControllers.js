@@ -111,4 +111,4 @@ module.exports = {
     eventsByName,
     eventsByPos,
     sendPartecipants
-};  
+};

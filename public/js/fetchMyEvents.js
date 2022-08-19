@@ -1,5 +1,7 @@
 var ecard = document.querySelector('.event-card');
 var mastercard = document.querySelector('.card-body');
+var cleanMastercard = mastercard.cloneNode(true);
+var dist = 15000;
 
 // Mostra un messaggio di errore all'interno della card al posto della
 // lista eventi
@@ -31,6 +33,7 @@ w.addEventListener('message', e => {
 
 // richiede attraverso AJAX gli eventi e li mostra nella pagina
 async function fillCards(path) {
+    console.log(path);
     let res = await fetch(`https://${window.location.host}${path}`);
     let data = await res.json();
     if (data[0]) {
@@ -55,7 +58,7 @@ async function fillCards(path) {
             ecard.querySelector('.img-spinner').classList.remove('opacity-0');
             let delbtn = ecard.querySelector('.del-btn');
             if (delbtn) {
-                delbtn.setAttribute('href', `${window.location.pathname}?delete=${event.id}`);
+                delbtn.setAttribute('href', `/delete=${event.id}`);
             }
 
             let partecip = ecard.querySelector('.event-part');
@@ -75,7 +78,7 @@ async function fillCards(path) {
 // stabilisce la chiamata AJAX da effettuare in base agli eventi da richiedere (eventi nelle vicinanze, 
 // eventi dell'utente,...) e richiama la funzione di scaricamento e visualizzazione a schermo degli eventi
 // richiesti
-let path;
+var path;
 switch (window.location.pathname) {
     case '/profilo/miei':
         path = '/api/myevents';
@@ -94,7 +97,12 @@ switch (window.location.pathname) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
-                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=15000`;
+                    let params = new URLSearchParams(window.location.search);
+                    let distParam = params.get('dist');
+                    if (distParam) {
+                        dist = distParam * 1000;
+                    }
+                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist}`;
                     fillCards(path);
                 },
                 (err) => {
