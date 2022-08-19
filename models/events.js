@@ -3,15 +3,6 @@
 const { pool } = require("./db");
 const { isPointWithinRadius } = require('geolib');
 
-// metodo privato per rimuovere l'orario dalla data
-const trimTime = (res) => {
-    res.rows.forEach(row => {
-        let d = new Date(row.ddate);
-        row.ddate = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-    })
-    return res;
-}
-
 // inserisce nel db l'evento con i valori specificati
 const insertEvent = async (name, date, num, privacy, desc, file, email, where, lat, lon) => {
     let text = `
@@ -29,10 +20,11 @@ const selectMyEvents = async (user) => {
         SELECT id, title, ddate, num_part, max_num_part, U.username AS organizer, img, location_name
         FROM events as E
         JOIN users AS U ON U.email = E.organizer
-        WHERE organizer=$1`;
+        WHERE organizer=$1
+        ORDER BY ddate ASC`;
     let values = [user];
     let res = await pool.query(text, values);
-    res = trimTime(res);
+    res = res;
     return res.rows;
 }
 
@@ -43,10 +35,11 @@ const selectMyPartecip = async (user) => {
         FROM partecipations as P
         JOIN events as E ON E.id = P.p_event
         Join users as U ON U.email = E.organizer
-        WHERE P.user_email = $1`;
+        WHERE P.user_email = $1
+        ORDER BY ddate ASC`;
     let values = [user];
     let res = await pool.query(text, values);
-    res = trimTime(res);
+    res = res;
     return res.rows;
 }
 
@@ -85,7 +78,7 @@ const selectEvent = async (eventId) => {
         WHERE E.id = $1`;
     let values = [eventId];
     let res = await pool.query(text, values);
-    return trimTime(res).rows[0];
+    return res.rows[0];
 }
 
 // restituisce true se l'utente specificato attraverso la mail è proprietario
@@ -150,7 +143,7 @@ const selectEventsByName = async (q) => {
                 OR LOWER(location_name) LIKE '%' || LOWER($1) || '%')`;
     let values = [q];
     let res = await pool.query(text, values);
-    return trimTime(res).rows;
+    return res.rows;
 }
 
 // restituisce gli eventi nelle vicinanze delle coordinate date, entro il raggio specificato
@@ -178,7 +171,7 @@ const selectNearbyEvents = async (lat, lon, dist) => {
         JOIN users as U ON U.email = E.organizer
         WHERE id = ANY ($1) AND priv = false`;
     let res = await pool.query(text, [nearby]);
-    return trimTime(res).rows;
+    return res.rows;
 }
 
 // resisuisce i partecipanti dell'evento con id in argomento

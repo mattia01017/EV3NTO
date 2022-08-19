@@ -33,7 +33,7 @@ footer {
 /* Immagine pagina di dettagli evento */
 #e-img{
 	object-fit: contain;
-	width: 95%;
+	width: 100%;
 }
 
 .toast {

@@ -28,7 +28,7 @@ w.addEventListener('message', e => {
     imgel.addEventListener('load', e => {
         URL.revokeObjectURL(objURL);
         document.querySelector('#img-spinner').remove();
-    })
+    });
 
     imgel.setAttribute('src', objURL);
 })
@@ -77,7 +77,8 @@ async function fillCard() {
         });
         document.querySelector('#card-content').classList.remove('opacity-0');
         document.querySelector('#e-title').innerText = data.title;
-        document.querySelector('#e-date').innerText = data.ddate;
+        let d = new Date(data.ddate);
+        document.querySelector('#e-date').innerText = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
         document.querySelector('#e-org').innerText = data.username;
         document.querySelector('#e-loc').innerText = data.location_name;
         let priv = document.querySelector('#e-priv');

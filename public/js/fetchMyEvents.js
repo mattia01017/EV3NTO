@@ -51,14 +51,15 @@ async function fillCards(path) {
                 host: window.location.host
             });
             ecard.querySelector('.event-title').innerText = event.title;
-            ecard.querySelector('.event-date').innerText = event.ddate;
+            let d = new Date(event.ddate);
+            ecard.querySelector('.event-date').innerText = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
             ecard.querySelector('.event-loc').innerText = event.location_name;
             ecard.querySelector('.event-org').innerText = event.organizer;
             ecard.querySelector('.det-btn').setAttribute('href', '/evento?id=' + event.id);
             ecard.querySelector('.img-spinner').classList.remove('opacity-0');
             let delbtn = ecard.querySelector('.del-btn');
             if (delbtn) {
-                delbtn.setAttribute('href', `/delete=${event.id}`);
+                delbtn.setAttribute('href', `/profilo/miei?delete=${event.id}`);
             }
 
             let partecip = ecard.querySelector('.event-part');
