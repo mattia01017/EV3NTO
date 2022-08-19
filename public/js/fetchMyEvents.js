@@ -40,6 +40,8 @@ async function fillCards(path) {
         document.querySelectorAll('.event-btn').forEach(el => {
             el.removeAttribute('hidden');
         });
+        let today = new Date();
+        let oldEvents = document.querySelector('#old-events');
         data.forEach(event => {
             let nextcard = ecard.cloneNode(true);
             ecard.removeChild(ecard.querySelector('.d-flex'));
@@ -67,10 +69,16 @@ async function fillCards(path) {
             if (event.max_num_part) {
                 partecip.innerText += ' / ' + event.max_num_part;
             }
-
-            mastercard.appendChild(ecard);
+            if (d < today) {
+                oldEvents.appendChild(ecard)
+            } else {
+                mastercard.appendChild(ecard);
+            }
             ecard = nextcard;
-        })
+        });
+        if (oldEvents.firstChild) {
+            document.querySelector('#toggle-old').removeAttribute('hidden');
+        }
     } else {
         showError('Nessun evento presente');
     }

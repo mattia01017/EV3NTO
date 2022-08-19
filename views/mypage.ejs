@@ -17,9 +17,13 @@
             <%- include('./partials/profilenavbar.ejs') %>
               <div class="card-body bg-dark">
 
+                <button hidden class="btn btn-outline-light mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#old-events" aria-expanded="false" aria-controls="past-events" id="toggle-old">
+                  Eventi passati
+                </button>
+                <div class="collapse border-bottom border-light border-opacity-75" id="old-events"></div>
 
                 <!--Inizio card evento-->
-                <div class="card mb-3 border-0 bg-black event-card position-relative">
+                <div class="card mt-2 mb-2 border-0 bg-black event-card position-relative">
                   <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
                     <strong>Caricamento...</strong>
                     <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
