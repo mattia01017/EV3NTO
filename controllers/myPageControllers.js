@@ -65,7 +65,7 @@ const addEventReq = async (req, res, next) => {
 
         // metodo per la compressione dell'immagine inviata dall'utente
         await sharp(buffer)
-            .webp({ quality: 60 })
+            .webp({ quality: 40 })
             .toFile(filePath);
     }
 

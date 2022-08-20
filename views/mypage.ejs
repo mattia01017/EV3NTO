@@ -3,105 +3,112 @@
 
 <head>
   <%- include('./partials/head.ejs') %>
-  <title>I miei EV3NTI</title>
+    <script src="/js/fetchMyEvents.js" defer></script>
+    <title>I miei EV3NTI</title>
 </head>
-  <body class="text-white bg-black">
-    <%- include('./partials/header.ejs') %>
-      <main>
-        <div class="container-lg mt-3">
-          <h2 class="display-5">
-            <%= user %>
-          </h2>
 
-          <div class="card text-center border-0">
-            <%- include('./partials/profilenavbar.ejs') %>
-              <div class="card-body bg-dark">
+<body class="text-white bg-black">
+  <%- include('./partials/header.ejs') %>
+    <main>
+      <div class="container-lg mt-3">
+        <h2 class="display-5">
+          <%= user %>
+        </h2>
 
-                <button hidden class="btn btn-outline-light mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#old-events" aria-expanded="false" aria-controls="past-events" id="toggle-old">
-                  Eventi passati
-                </button>
-                <div class="collapse border-bottom border-light border-opacity-75" id="old-events"></div>
+        <div class="card text-center border-0">
+          <%- include('./partials/profilenavbar.ejs') %>
+            <div class="card-body bg-dark">
 
-                <!--Inizio card evento-->
-                <div class="card mt-2 mb-2 border-0 bg-black event-card position-relative">
-                  <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
-                    <strong>Caricamento...</strong>
-                    <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 position-relative">
-                      <img src="" class="img-fluid d-block img-acc event-image opacity-0">
-                      <div
-                        class="d-flex align-items-center position-absolute top-50 start-50 translate-middle opacity-0 img-spinner">
-                        <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-8 position-relative">
-                      <div class="card-body">
-                        <h3 class="card-title event-title display-6 fs-2"></h3>
-                        <p class="card-text event-part"></p>
-                        <small class="event-loc"></small><br>
-                        <small class="event-date"></small><br>
-                        <div class="position-relative start-50 translate-middle-x mt-5">
-                          <a href="" class="btn btn-light event-btn det-btn mt-3 mb-2" hidden>Dettagli</a>
-                          <% if (edit) { %>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger mt-3 mb-2 event-btn" data-bs-toggle="modal"
-                              data-bs-target="#delpopup" hidden>
-                              Elimina
-                            </button>
-                            <% } %>
-                            <br><small class="event-org"></small>
-                        </div>
-                      </div>
+              <button hidden class="btn btn-outline-light mb-1" type="button" data-bs-toggle="collapse"
+                data-bs-target="#old-events" aria-expanded="false" aria-controls="past-events" id="toggle-old">
+                Eventi passati
+              </button>
+              <div class="collapse border-bottom border-light border-opacity-75" id="old-events"></div>
+
+              <!--Inizio card evento-->
+              <div class="card mt-2 mb-2 border-0 bg-black event-card position-relative">
+                <div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
+                  <strong>Caricamento...</strong>
+                  <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 position-relative">
+                    <img src="" class="img-fluid d-block img-acc event-image opacity-0">
+                    <div
+                      class="d-flex align-items-center position-absolute top-50 start-50 translate-middle opacity-0 img-spinner">
+                      <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                     </div>
                   </div>
-                  <!-- Modal -->
-                  <div class="modal fade" id="delpopup" tabindex="-1" aria-labelledby="delpopupLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title text-black" id="delpopupLabel">L'evento verrà eliminato</h4>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                          <a href="" class="btn btn-danger del-btn">Ok</a>
-                        </div>
+                  <div class="col-md-8 position-relative">
+                    <div class="card-body">
+                      <h3 class="card-title event-title display-6 fs-2"></h3>
+                      <p class="card-text event-part"></p>
+                      <small class="event-loc"></small><br>
+                      <small class="event-date"></small><br>
+                      <div class="position-relative start-50 translate-middle-x mt-5">
+                        <a href="" class="btn btn-light event-btn det-btn mt-3 mb-2" hidden>Dettagli</a>
+                        <% if (edit) { %>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger mt-3 mb-2 event-btn del-modal-trig" data-bs-toggle="modal"
+                          data-bs-target="#delpopup" hidden>
+                          Elimina
+                        </button>
+                        <% } %>
                       </div>
+                        <small class="event-org"></small>
                     </div>
                   </div>
                 </div>
-                <!--Fine card evento-->
               </div>
-          </div>
-          <a href="/?logout=1"
-            class="btn btn-outline-light position-relative start-50 translate-middle-x mt-5 mb-3">Logout</a><br>
-          <button type="button" class="btn btn-outline-danger position-relative start-50 translate-middle-x mt-1 mb-3"
-            data-bs-toggle="modal" data-bs-target="#delAccount">
-            Elimina l'account
-          </button>
-          <div class="modal fade" id="delAccount" tabindex="-1" aria-labelledby="delAccountLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title text-black" id="delAccountLabel">Eliminare l'account?</h4>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-black">
-                  <p>Tutti gli eventi creati e le partecipazioni verranno persi</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                  <a href="/?deleteUser=1" class="btn btn-danger del-btn">Ok</a>
-                </div>
+              <!--Fine card evento-->
+            </div>
+        </div>
+        <a href="/?logout=1"
+          class="btn btn-outline-light position-relative start-50 translate-middle-x mt-5 mb-3">Logout</a><br>
+        <button type="button" class="btn btn-outline-danger position-relative start-50 translate-middle-x mt-1 mb-3"
+          data-bs-toggle="modal" data-bs-target="#delAccount">
+          Elimina l'account
+        </button>
+        <div class="modal fade" id="delAccount" tabindex="-1" aria-labelledby="delAccountLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title text-black" id="delAccountLabel">Eliminare l'account?</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-black">
+                <p>Tutti gli eventi creati e le partecipazioni verranno persi</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <a href="/?deleteUser=1" class="btn btn-danger del-btn">Ok</a>
               </div>
             </div>
           </div>
         </div>
-      </main>
-      <%- include('./partials/footer.ejs') %>
-        <script src="/js/fetchMyEvents.js"></script>
-  </body>
+      </div>
+      <% if (edit) { %>
+        <!-- Modal -->
+        <div class="modal fade" id="delpopup" tabindex="-1" aria-labelledby="delpopupLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-black" id="delpopupLabel">L'evento verrà eliminato</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"
+                data-bs-dismiss="modal">Annulla</button>
+              <a href="" class="btn btn-danger" id="del-btn">Ok</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+
 </html>

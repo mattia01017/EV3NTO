@@ -6,19 +6,10 @@ function getId() {
     return params.get('id');
 }
 
-// disattiva il pulsante di partecipazione se l'evento è al completo
-async function disablePartBtn() {
-    let part = document.querySelector('#e-part').innerText;
-    let maxPart = document.querySelector('#e-part-max').innerText;
-    if (part == maxPart && !isPart) {
-        document.querySelector('#part-btn').setAttribute('disabled', '');
-    }
-}
-
 const eId = getId()
 
 // worker per scaricare e renderizzare l'immagine dell'evento
-let w = new Worker('/js/workers/imageFetcher.js');
+const w = new Worker('/js/workers/imageFetcher.js');
 w.addEventListener('message', e => {
     let imgblob = e.data.blob;
     let imgel = document.querySelector('#e-img');
@@ -83,8 +74,11 @@ async function fillCard() {
         document.querySelector('#e-loc').innerText = data.location_name;
         let priv = document.querySelector('#e-priv');
         priv.innerText = data.priv ? 'No' : 'Sì';
-        document.querySelector('#e-part').innerText = data.num_part;
-        document.querySelector('#e-part-max').innerText = data.max_num_part;
+        let npart = document.querySelector('#e-part');
+        npart.innerText = data.num_part;
+        if (data.max_num_part) {
+            npart.innerText += '/' + data.max_num_part;
+        }
         document.querySelector('#e-invcode').innerText = data.id;
         document.querySelector('#e-desc').innerText = data.descr;
         let delBtn = document.querySelector('#del-ev-btn');
@@ -100,6 +94,9 @@ async function fillCard() {
                 isPart = false;
                 subscrBtn.classList.add('btn-success');
                 subscrBtn.innerText = 'Partecipa';
+            }
+            if ((data.num_part == data.max_num_part && !isPart) || new Date() > d) {
+                document.querySelector('#part-btn').setAttribute('disabled', '');
             }
         }
     } else {
@@ -147,13 +144,8 @@ async function partBtn() {
     });
 }
 
-
-fillCard().then(() => {
-    if (subscrBtn) {
-        disablePartBtn();
-    }
-});
+fillCard();
 
 if (subscrBtn) {
-    partBtn()
+    partBtn();
 }

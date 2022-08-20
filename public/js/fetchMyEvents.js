@@ -1,6 +1,7 @@
 var ecard = document.querySelector('.event-card');
 var mastercard = document.querySelector('.card-body');
 var cleanMastercard = mastercard.cloneNode(true);
+var delbtn = document.querySelector('#del-btn');
 var dist = 15;
 
 // Mostra un messaggio di errore all'interno della card al posto della
@@ -59,9 +60,16 @@ async function fillCards(path) {
             ecard.querySelector('.event-org').innerText = event.organizer;
             ecard.querySelector('.det-btn').setAttribute('href', '/evento?id=' + event.id);
             ecard.querySelector('.img-spinner').classList.remove('opacity-0');
-            let delbtn = ecard.querySelector('.del-btn');
+
             if (delbtn) {
-                delbtn.setAttribute('href', `/profilo/miei?delete=${event.id}`);
+                let modalShowBtn = ecard.querySelector('.del-modal-trig');
+                modalShowBtn.setAttribute('data-event-id', event.id);
+                modalShowBtn.addEventListener('click', () => {
+                    delbtn.setAttribute(
+                        'href', 
+                        '/profilo/miei?delete=' + modalShowBtn.getAttribute('data-event-id')
+                    );
+                });
             }
 
             let partecip = ecard.querySelector('.event-part');
@@ -112,7 +120,7 @@ switch (window.location.pathname) {
                     if (distParam) {
                         dist = distParam;
                     }
-                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist*1000}`;
+                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist * 1000}`;
                     fillCards(path);
                 },
                 (err) => {
