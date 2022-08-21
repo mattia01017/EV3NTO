@@ -28,13 +28,21 @@ loginForm.addEventListener('submit', e => {
         res.json()
         .then((data) => {
             if (data.ok) {
-                document.location.replace(document.referrer);
+                let referrer = sessionStorage.getItem('referrer');
+                sessionStorage.removeItem('referrer')
+                document.location.replace(referrer);
             } else {
                 // mostra il messaggio di credenziali errate
                 let toast = document.getElementById('toast');
                 new bootstrap.Toast(toast).show();
                 document.querySelector('#password').value = '';
             }
-        })
-    })
-})
+        });
+    });
+});
+
+// salva referrer per ritornare alla pagina precedente al login, in particolare
+// per non perderlo in caso di selezione del link di registrazione dalla pagina di login e viceversa
+if (!sessionStorage.getItem('referrer') || document.referrer != 'https://' + window.location.host + '/account/signin') {
+    sessionStorage.setItem('referrer', document.referrer);
+}

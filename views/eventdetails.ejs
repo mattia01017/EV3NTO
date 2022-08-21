@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
     <%- include('./partials/head.ejs') %>
+    <script src="js/fetchEvent.js" async></script>
     <title>Dettagli EV3NTO</title>
 </head>
 <body class="bg-black text-white">
@@ -19,7 +20,7 @@
                                             id="img-spinner">
                                             <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                                         </div>
-                                        <img id="e-img" height="400">
+                                        <img id="e-img" height="400" class="opacity-0">
                                     </div>
                                 </div>
                                 <div class="col-sm">
@@ -91,8 +92,10 @@
                                             </button>
                                         <% } %>
                                     <% } else { %>
-                                            <p><a href="/account/login" class="link-warning">Accedi</a> per
-                                                partecipare a questo evento</p>
+                                            <p><a href="/account/login" class="link-warning">Accedi</a> o 
+                                                <a href="/account/signin" class="link-warning">Registrati</a> per
+                                                partecipare a questo evento
+                                            </p>
                                     <% } %>
                             </div>
                         </div>
@@ -115,5 +118,4 @@
         </div>
         <%- include('./partials/footer') %>
 </body>
-<script src="js/fetchEvent.js" type="application/javascript"></script>
 </html>

@@ -1,4 +1,5 @@
 var isPart;
+var maxNumPart;
 
 // restituisce l'id dell'evento, specificato come parametro get
 function getId() {
@@ -19,6 +20,7 @@ w.addEventListener('message', e => {
     imgel.addEventListener('load', e => {
         URL.revokeObjectURL(objURL);
         document.querySelector('#img-spinner').remove();
+        imgel.classList.remove('opacity-0');
     });
 
     imgel.setAttribute('src', objURL);
@@ -33,7 +35,7 @@ var showPartBtn = document.querySelector('#show-part-btn');
 if (showPartBtn) {
     let partFetched = false;
     showPartBtn.addEventListener('click', async () => {
-        // Lo scaricamento viene effettuato solamente quando il pulsante viene premuto
+        // Il caricamento dei partecipanti viene effettuato solamente una volta premuto il pulsante
         if (!partFetched) {
             let res = await fetch(`https://${window.location.host}/api/event/${eId}/partecipants`);
             let data = await res.json();
@@ -45,18 +47,18 @@ if (showPartBtn) {
                     li.innerText = `${user.username} - ${user.email}`;
                     partList.append(li);
                 });
-                partFetched = true;
             } else {
                 let notice = document.createElement('p');
                 notice.innerText = 'Nessun partecipante';
                 notice.classList.add('text-center');
                 partList.insertAdjacentElement("afterend", notice);
             }
+            partFetched = true;
         }
     })
 }
 
-// funzione di scaricamento e visualizzazione informazioni evento
+// funzione di caricamento e visualizzazione a schermo delle informazioni evento
 async function fillCard() {
     let res = await fetch(`https://${window.location.host}/api/event/${eId}`);
     let data = await res.json();
@@ -77,7 +79,8 @@ async function fillCard() {
         let npart = document.querySelector('#e-part');
         npart.innerText = data.num_part;
         if (data.max_num_part) {
-            npart.innerText += '/' + data.max_num_part;
+            maxNumPart = data.max_num_part;
+            npart.innerText += ' / ' + data.max_num_part;
         }
         document.querySelector('#e-invcode').innerText = data.id;
         document.querySelector('#e-desc').innerText = data.descr;
@@ -115,6 +118,7 @@ async function fillCard() {
 async function partBtn() {
     subscrBtn.addEventListener('click', async () => {
         subscrBtn.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>';
+
         let body = {};
         body[(isPart ? 'remove' : 'add')] = eId;
         let res = await fetch(
@@ -129,18 +133,23 @@ async function partBtn() {
             }
         );
         let data = await res.json();
-        console.log(data);
+
+        // gestisce il caso in cui un altro utente prende l'ultimo posto, prima di un ricaricamento
+        // della pagina. Mostra un toast di errore e disattiva il pulsante
         if (data.error) {
             let t = document.querySelector('#toast');
-            new bootstrap.Toast(t).show();
+            new bootstrap.Toast(t).show();  
+            document.querySelector('#part-btn').setAttribute('disabled', '');
         } else {
             isPart = !isPart;
             subscrBtn.classList.toggle('btn-success');
             subscrBtn.classList.toggle('btn-warning');
         }
-        document.querySelector('#e-part').innerText = data.numPart;
+        document.querySelector('#e-part').innerText = data.numPart + ' / ' + maxNumPart;
         subscrBtn.innerText = isPart ? 'Rimuovi partecipazione' : 'Partecipa';
-        disablePartBtn();
+        if (data.num_part == maxNumPart && !isPart) {
+            document.querySelector('#part-btn').setAttribute('disabled', '');
+        }
     });
 }
 

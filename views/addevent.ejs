@@ -33,7 +33,7 @@
                                 </div>
                                 <label for="image" class="col-lg col-form-label">Immagine</label>
                                 <div class="col-lg mb-3">
-                                    <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg"
+                                    <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg"
                                         class="form-control bg-black text-white" id="image">
                                 </div>
                             </div>
@@ -43,21 +43,20 @@
                                     <input required autocomplete="off" type="text" name="location" class="form-control bg-black text-white"
                                         id="location">
                                 </div>
-                                <label for="priv-btns" class="col-lg col-form-label">Privacy*</label>
+                                <label class="col-lg col-form-label">Privacy*</label>
                                 <div class="col-lg mb-3" id="priv-btns">
                                     <input type="radio" value="pubb" class="btn-check" name="privacy" id="public"
-                                        autocomplete="off" checked>
+                                        checked>
                                     <label class="btn btn-outline-light" for="public">Pubblico</label>
 
-                                    <input type="radio" value="priv" class="btn-check" name="privacy" id="private"
-                                        autocomplete="off">
+                                    <input type="radio" value="priv" class="btn-check" name="privacy" id="private">
                                     <label class="btn btn-outline-light" for="private">Privato</label><br>
                                 </div>
                             </div>
                             <div class="container-sm w-75 text-center">
                                 <label for="desc" class="col-lg col-form-label mt-3">Descrizione</label>
                                 <div class="col-lg">
-                                    <textarea type="number" name="desc" class="form-control bg-black text-white mb-3"
+                                    <textarea name="desc" class="form-control bg-black text-white mb-3"
                                         id="desc" rows="4"></textarea>
                                 </div>
                                 <input type="submit" value="Aggiungi" class="btn btn-light btn-lg mt-3">
@@ -68,7 +67,8 @@
         </div>
     <% include('./partials/footer.ejs') %>
 </body>
-<script async>    
+<!-- Limita la selezione di una data ai soli giorni futuri -->
+<script>    
     let d = new Date()
     document.getElementById('date')
         .setAttribute(

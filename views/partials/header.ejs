@@ -19,15 +19,25 @@
                         <li class="nav-item">
                             <a href="/account/login" class="nav-link">Accedi</a>
                         </li>
-                            <% } else {%>
-                        <li class="nav-item">
-                            <a href="/profilo/miei" class="nav-link">
-                                <%= user %>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/profilo/aggiungi" class="nav-link">Nuovo evento</a>
-                        </li>
+                        <% } else {%>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <%- user %>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="/profilo/miei">I miei eventi</a></li>
+                                        <li><a class="dropdown-item" href="/profilo/partecipazioni">Le mie partecipazioni</a></li>
+                                        <li><a class="dropdown-item" href="/profilo/aggiungi">Crea un nuovo evento</a></li>
+                                        <li><a class="dropdown-item" href="/?logout=1">Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                         <% } %>
                     </li>
                 </ul>

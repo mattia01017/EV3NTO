@@ -51,7 +51,15 @@ form.addEventListener('submit', async (e) => {
         }
     }
     if (valid) {
-        document.location.replace('/profilo/miei');
+        let referrer = sessionStorage.getItem('referrer');
+        sessionStorage.removeItem('referrer');
+        document.location.replace(referrer);
     }
     valid = true;
 });
+
+// salva referrer per ritornare alla pagina precedente al signin, in particolare
+// per non perderlo in caso di selezione del link di login dalla pagina di signin e viceversa
+if (!sessionStorage.getItem('referrer') || document.referrer != 'https://' + window.location.host + '/account/login') {
+    sessionStorage.setItem('referrer', document.referrer);
+}
