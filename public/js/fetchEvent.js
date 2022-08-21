@@ -71,7 +71,7 @@ async function fillCard() {
         document.querySelector('#card-content').classList.remove('opacity-0');
         document.querySelector('#e-title').innerText = data.title;
         let d = new Date(data.ddate);
-        document.querySelector('#e-date').innerText = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
+        document.querySelector('#e-date').innerText = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
         document.querySelector('#e-org').innerText = data.username;
         document.querySelector('#e-loc').innerText = data.location_name;
         let priv = document.querySelector('#e-priv');

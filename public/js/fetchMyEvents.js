@@ -55,7 +55,7 @@ async function fillCards(path) {
             });
             ecard.querySelector('.event-title').innerText = event.title;
             let d = new Date(event.ddate);
-            ecard.querySelector('.event-date').innerText = d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
+            ecard.querySelector('.event-date').innerText = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
             ecard.querySelector('.event-loc').innerText = event.location_name;
             ecard.querySelector('.event-org').innerText = event.organizer;
             ecard.querySelector('.det-btn').setAttribute('href', '/evento?id=' + event.id);
