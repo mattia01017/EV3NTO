@@ -29,7 +29,12 @@ const deleteOrLogout = async (req,res,next) => {
     }
 }
 
+const loadNotFound = async (req, res) => {
+    res.status(404).render('404.ejs');
+}
+
 module.exports = {
     loadHome,
-    deleteOrLogout
+    deleteOrLogout,
+    loadNotFound
 };

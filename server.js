@@ -52,9 +52,7 @@ app.get('/',
 );
 
 // pagina inesistente
-app.all('*', async (req, res) => {
-    res.status(404).render('404.ejs');
-});
+app.all('*', mainControllers.loadNotFound);
 
 const server = https.createServer(
     {
