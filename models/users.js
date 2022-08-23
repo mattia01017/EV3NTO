@@ -1,6 +1,7 @@
 /* modello di gestione dei dati utente nel db */
 
 const { pool } = require("./db");
+const fs = require('fs');
 
 // restituisce l'utente specificato se la password è corretta, null altrimenti
 const selectUser = async (user, password) => {
@@ -25,10 +26,23 @@ const insertUser = async (email, user, password) => {
     }
 }
 
-// elimina l'utente con l'email specificata dal db
+// elimina l'utente con l'email specificata dal db. Gli eventi e le partecipazioni
+// dell'utente verranno a loro volta cancellate
 const deleteUser = async (email) => {
-    let text = 'DELETE FROM users WHERE email=$1';
+    // elimina le immagini degli eventi associati all'utente
+    let text = 'SELECT img FROM events WHERE organizer=$1 AND img IS NOT NULL';
     let values = [email];
+    let res = await pool.query(text,values);
+    res.rows.forEach(({img}) => {
+        fs.unlink('uploads/' + img, err => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    })
+    // elimina l'utente
+    text = 'DELETE FROM users WHERE email=$1';
+    values = [email];
     pool.query(text, values);
 }
 
