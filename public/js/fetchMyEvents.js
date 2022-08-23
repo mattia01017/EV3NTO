@@ -34,7 +34,6 @@ w.addEventListener('message', e => {
 
 // richiede attraverso AJAX gli eventi e li mostra nella pagina
 async function fillCards(path) {
-    console.log(path);
     let res = await fetch(`https://${window.location.host}${path}`);
     let data = await res.json();
     if (data[0]) {
@@ -97,36 +96,57 @@ async function fillCards(path) {
 // richiesti
 var path;
 switch (window.location.pathname) {
+    // lista degli eventi di cui l'utente è proprietario
     case '/profilo/miei':
         path = '/api/myevents';
         fillCards(path);
         break;
+    // lista delle partecipazioni
     case '/profilo/partecipazioni':
         path = '/api/mypartecip';
         fillCards(path);
         break;
+    // ricerca testuale
     case '/ricerca':
         let q = document.querySelector('#query').innerText;
         path = '/api/namesearch?q=' + q;
         fillCards(path);
         break;
+    // ricerca nelle vicinanze
     case '/ricerca/vicinanze':
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    let params = new URLSearchParams(window.location.search);
-                    let distParam = params.get('dist');
-                    console.log(distParam, dist)
-                    if (distParam) {
-                        dist = distParam;
+            // la geolocalizzazione viene salvata in sessionStorage per evitare di richiederla a ogni ricaricamento
+            // il valore salvato scade in un minuto
+            let cachedGeoloc = sessionStorage.getItem('geoloc');
+            let pos = cachedGeoloc? JSON.parse(cachedGeoloc) : null;
+            if (!pos || pos.expires <= new Date().getTime()) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        sessionStorage.setItem(
+                            'geoloc', 
+                            JSON.stringify({
+                                latitude: pos.coords.latitude,
+                                longitude: pos.coords.longitude,
+                                expires: new Date().getTime() + 60000
+                            })
+                        );
+                        let params = new URLSearchParams(window.location.search);
+                        let distParam = params.get('dist');
+                        if (distParam) {
+                            dist = distParam;
+                        }
+                        path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist * 1000}`;
+                        fillCards(path);
+                    },
+                    (err) => {
+                        console.error(err);
+                        showError('Impossibile accedere alla posizione');
                     }
-                    path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist * 1000}`;
-                    fillCards(path);
-                },
-                (err) => {
-                    console.error(err);
-                    showError('Impossibile accedere alla posizione');
-                });
+                );
+            } else {
+                path = `/api/geosearch?lat=${pos.latitude}&lon=${pos.longitude}&dist=${dist * 1000}`;
+                fillCards(path);
+            }
         } else {
             showError('Il browser non supporta la geolocalizzazione');
         }

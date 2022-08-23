@@ -3,58 +3,60 @@
 
 <head>
     <%- include('./partials/head.ejs') %>
-        <title>Ricerca EV3NTO</title>
+    <title>Ricerca EV3NTO</title>
+    <script src="/js/fetchMyEvents.js" defer></script>
+    <% if(!q) { %>
+    <script src="/js/refetchOnSlider.js" defer></script>
+    <% } %>
 </head>
 
 <body class="bg-black text-white">
-    <%- include('./partials/header.ejs') %>
-        <main>
-            <div class="container-sm">
-
-                <h2 class="display-5 mt-3">
-                <% if (q) { %>
-                    Risultati ricerca per "<span id="query"><%-q%></span>"
-                </h2>
-                <% } else { %>
+<%- include('./partials/header.ejs') %>
+    <main>
+        <div class="container-sm">
+            <h2 class="display-5 mt-3">
+            <% if (q) { %>
+                Risultati ricerca per "<span id="query"><%-q%></span>"
+            </h2>
+            <% } else { %>
                 Nelle vicinanze</h2>
                 <form action="/ricerca/vicinanze" method="get" id="rangeform">
                     <label for="dist" class="form-label">Distanza massima: <span id="dist-val">15km</span></label>
                     <input type="range" class="form-range" min="1" max="100" id="dist" name="dist">
                 </form>
-                <% } %>
-                <div class="card text-center border-0 mb-2">
-                    <div class="card-body bg-dark">
-                        <button hidden class="btn btn-outline-light mb-1" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#old-events" aria-expanded="false" aria-controls="old-events" id="toggle-old">
-                            Eventi passati
-                        </button>
-                        <div class="collapse border-bottom border-secondary" id="old-events"></div>
-                        <div class="card mt-2 mb-2 border-0 bg-black mb-3 event-card position-relative">
-                            <div
-                                class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
-                                <strong>Caricamento...</strong>
-                                <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 position-relative">
-                                    <img src="" class="img-fluid d-block img-acc event-image opacity-0">
-                                    <div
-                                        class="d-flex align-items-center position-absolute top-50 start-50 translate-middle opacity-0 img-spinner">
-                                        <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
-                                    </div>
+            <% } %>
+            <div class="card text-center border-0 mb-2">
+                <div class="card-body bg-dark">
+                    <button hidden class="btn btn-outline-light mb-1" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#old-events" aria-expanded="false"
+                        aria-controls="old-events" id="toggle-old">
+                        Eventi passati
+                    </button>
+                    <div class="collapse border-bottom border-secondary" id="old-events"></div>
+                    <div class="card mt-2 mb-2 border-0 bg-black mb-3 event-card position-relative">
+                        <div
+                            class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
+                            <strong>Caricamento...</strong>
+                            <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 position-relative">
+                                <img src="" class="img-fluid d-block img-acc event-image opacity-0">
+                                <div
+                                    class="d-flex align-items-center position-absolute top-50 start-50 translate-middle opacity-0 img-spinner">
+                                    <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                                 </div>
-                                <div class="col-md-8 position-relative">
-                                    <div class="card-body">
-                                        <h3 class="card-title event-title display-6 fs-2"></h3>
-                                        <p class="card-text event-part"></p>
-                                        <small class="event-loc"></small><br>
-                                        <small class="event-date"></small><br>
-                                        <div
-                                            class="position-absolute bottom-0 start-50 translate-middle-x pb-3">
-                                            <a href="" class="btn btn-light event-btn det-btn mt-3 mb-2"
-                                                hidden>Dettagli</a>
-                                            <br><small class="event-org"></small>
-                                        </div>
+                            </div>
+                            <div class="col-md-8 position-relative">
+                                <div class="card-body">
+                                    <h3 class="card-title event-title display-6 fs-2"></h3>
+                                    <p class="card-text event-part"></p>
+                                    <small class="event-loc"></small><br>
+                                    <small class="event-date"></small><br>
+                                    <div class="position-absolute bottom-0 start-50 translate-middle-x pb-3">
+                                        <a href="" class="btn btn-light event-btn det-btn mt-3 mb-2"
+                                            hidden>Dettagli</a>
+                                        <br><small class="event-org"></small>
                                     </div>
                                 </div>
                             </div>
@@ -62,12 +64,9 @@
                     </div>
                 </div>
             </div>
-        </main>
-        <%- include('./partials/footer.ejs') %>
-            <script src="/js/fetchMyEvents.js"></script>
-            <% if(!q) { %>
-                <script src="/js/refetchOnSlider.js"></script>
-                <% } %>
+        </div>
+    </main>
+<%- include('./partials/footer.ejs') %>
 </body>
 
 </html>

@@ -137,6 +137,7 @@ async function partBtn() {
         // gestisce il caso in cui un altro utente prende l'ultimo posto, prima di un ricaricamento
         // della pagina. Mostra un toast di errore e disattiva il pulsante
         if (data.error) {
+            document.querySelector('#toast-text').innerText = 'Impossibile partecipare. Evento al completo';
             let t = document.querySelector('#toast');
             new bootstrap.Toast(t).show();  
             document.querySelector('#part-btn').setAttribute('disabled', '');
@@ -158,3 +159,11 @@ fillCard();
 if (subscrBtn) {
     partBtn();
 }
+
+document.querySelector('#copy-btn').addEventListener('click', () => {
+    let invcode = document.querySelector('#e-invcode').innerText;
+    navigator.clipboard.writeText(invcode);
+    document.querySelector('#toast-text').innerText = 'Codice di invito copiato';
+    let t = document.querySelector('#toast');
+    new bootstrap.Toast(t).show(); 
+})
