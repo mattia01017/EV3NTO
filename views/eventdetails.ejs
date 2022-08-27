@@ -2,6 +2,8 @@
 <html lang="it">
 <head>
     <%- include('./partials/head.ejs') %>
+    <link rel="stylesheet" href="leaflet.css">
+    <script src="leaflet.js" async></script>
     <script src="js/fetchEvent.js" async></script>
     <title>Dettagli EV3NTO</title>
 </head>
@@ -30,10 +32,11 @@
                                     <p><strong>Titolo:</strong> <span id="e-title"></span></p>
                                     <p><strong>Data:</strong> <span id="e-date"></span></p>
                                     <p><strong>Organizzatore:</strong> <span id="e-org"></span></p>
-                                    <p><strong>Luogo:</strong> <span id="e-loc"></span></p>
                                     <p><strong>Pubblico?</strong> <span id="e-priv"></span></p>
                                     <p><strong>Partecipanti:</strong> <span id="e-part"></span></p>
-                                    <p><strong>Descrizione:</strong><br><span id="e-desc"></span></p>
+                                    <p><strong>Descrizione:</strong> <span id="e-desc"></span></p>
+                                    <p><strong>Luogo:</strong> <span id="e-loc"></span></p>
+                                    <div id="map" class="mb-2 position-relative" style="width: 100%; height: 40vh"></div>
                                 </div>
                             </div>
                             <div class="float-end">

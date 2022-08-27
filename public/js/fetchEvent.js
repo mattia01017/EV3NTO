@@ -7,6 +7,17 @@ function getId() {
     return params.get('id');
 }
 
+async function createMap(lat, lon) {
+    let map = L.map('map', {
+        center: [lat,lon],
+        zoom: 15
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    L.marker([lat,lon]).addTo(map);
+}
+
 const eId = getId()
 
 // worker per scaricare e renderizzare l'immagine dell'evento
@@ -68,6 +79,7 @@ async function fillCard() {
             host: window.location.host,
             img: data.img
         });
+        createMap(data.loc_lat, data.loc_lon);
         document.querySelector('#card-content').classList.remove('opacity-0');
         document.querySelector('#e-title').innerText = data.title;
         let d = new Date(data.ddate);
@@ -83,7 +95,7 @@ async function fillCard() {
             npart.innerText += ' / ' + data.max_num_part;
         }
         document.querySelector('#e-invcode').innerText = data.id;
-        document.querySelector('#e-desc').innerText = data.descr;
+        document.querySelector('#e-desc').innerText = data.descr == ''? 'nessuna descrizione fornita' : data.descr;
         let delBtn = document.querySelector('#del-ev-btn');
         if (delBtn) {
             delBtn.setAttribute('href', 'profilo/miei?delete=' + eId);
