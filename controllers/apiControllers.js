@@ -36,7 +36,7 @@ const sendImg = async (req, res) => {
             res.json({ Errore: 'Immagine insesistente o non hai i permessi richiesti' });
         }
     } else {
-        res.sendFile(path.join(path.dirname(__dirname), 'public/assets/images/qm.png'));
+        res.sendFile(path.join(path.dirname(__dirname), 'public/assets/images/qm.webp'));
     }
 }
 

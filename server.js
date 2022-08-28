@@ -16,7 +16,6 @@ app.use(session({
 
 // risorse statiche
 app.use(express.static('public'));
-app.use(express.static('node_modules/leaflet/dist'))
 
 // middleware per gestione parametri POST
 app.use(bodyParser.urlencoded({ extended: false }));
