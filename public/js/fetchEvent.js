@@ -55,7 +55,7 @@ if (showPartBtn) {
             if (data.length > 0) {
                 data.forEach(user => {
                     let li = document.createElement('li');
-                    li.innerText = `${user.username} - ${user.email}`;
+                    li.innerText =  user.username? `${user.username} - ${user.email}` : 'Utente eliminato';
                     partList.append(li);
                 });
             } else {

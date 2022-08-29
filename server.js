@@ -62,6 +62,6 @@ const server = https.createServer(
     app
 );
 
-server.listen(process.env.PORT, async () => {
+server.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`);
 });

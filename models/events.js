@@ -105,12 +105,13 @@ const isPartecipant = async (eventId, user) => {
 // inserisce la partecipazione specificata
 const insertPartecipant = async (eventId, user) => {
     let text = `
-        INSERT INTO partecipations
+        INSERT INTO partecipations(user_email,p_event)
         VALUES ($2,$1)`;
     let values = [eventId, user];
     try {
         await pool.query(text, values);
     } catch (err) {
+        console.log(err);
         if (err.constraint === 'num_part_constraint') {
             return true
         }
@@ -174,9 +175,9 @@ const selectNearbyEvents = async (lat, lon, dist) => {
 // resisuisce i partecipanti dell'evento con id in argomento
 const selectPartecipants = async (eventId) => {
     let text = `
-        SELECT U.username, U.email
+        SELECT U.username, U.email, P.p_id
         FROM users as U
-        JOIN partecipations as P ON U.email = P.user_email
+        RIGHT JOIN partecipations as P ON U.email = P.user_email
         WHERE P.p_event=$1
         ORDER BY U.username ASC, U.email ASC`;
     let values = [eventId];
