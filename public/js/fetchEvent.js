@@ -8,14 +8,19 @@ function getId() {
 }
 
 async function createMap(lat, lon) {
-    let map = L.map('map', {
-        center: [lat,lon],
-        zoom: 15
-    });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    L.marker([lat,lon]).addTo(map);
+    if (lat,lon) {
+        let map = L.map('map', {
+            center: [lat,lon],
+            zoom: 15
+        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        L.marker([lat,lon]).addTo(map);
+    } else {
+        let map = document.querySelector('#map');
+        map.innerText = 'Mappa non disponibile';
+    }
 }
 
 const eId = getId()

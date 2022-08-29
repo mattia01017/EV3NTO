@@ -54,7 +54,9 @@ const addEventReq = async (req, res, next) => {
     num = (num == '' ? null : num);
 
     let vals = await geocoder.geocode({ q: location });
-    let { latitude, longitude } = vals[0];
+    if (vals[0]) {
+        var { latitude, longitude } = vals[0];
+    }
 
     let filename;
     if (req.file) {

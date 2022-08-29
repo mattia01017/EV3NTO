@@ -76,7 +76,7 @@ async function fillCards(path) {
             if (event.max_num_part) {
                 partecip.innerText += ' / ' + event.max_num_part;
             }
-            if (d < today) {
+            if (d.getTime() <= today.getTime() - 86400000) {
                 oldEvents.appendChild(ecard)
             } else {
                 mastercard.appendChild(ecard);
