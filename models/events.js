@@ -49,22 +49,6 @@ const deleteMyEvent = async (id, email) => {
     return res.rows[0] ? res.rows[0].img : null;
 }
 
-// restituisce true se il nome dato dell'immagine è di un evento pubblico,
-// appartenente all'utente dell'email specificata o se il codice di invito è corretto
-const selectImage = async (img) => {
-    let text = `
-        SELECT img 
-        FROM events
-        WHERE img=$1
-        LIMIT 1`;
-    let values = [img];
-    let res = await pool.query(text, values);
-    if (res.rowCount == 1) {
-        return true;
-    }
-    return false;
-}
-
 // restituisce le informazioni dell'evento con id specificato
 const selectEvent = async (eventId) => {
     let text = `
@@ -198,7 +182,6 @@ module.exports = {
     selectMyEvents,
     selectMyPartecip,
     deleteMyEvent,
-    selectImage,
     selectEvent,
     isOwner,
     isPartecipant,

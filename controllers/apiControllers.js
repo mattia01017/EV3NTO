@@ -30,11 +30,12 @@ const sendImg = async (req, res) => {
     let { imgpath } = req.params;
     let { email } = req.session;
     if (imgpath != 'null') {
-        if (await events.selectImage(imgpath, email)) {
-            res.sendFile(path.join(path.dirname(__dirname), 'uploads', imgpath));
-        } else {
-            res.json({ Errore: 'Immagine insesistente o non hai i permessi richiesti' });
-        }
+        res.sendFile(
+            path.join(path.dirname(__dirname), 'uploads', imgpath), 
+            () => {
+                res.json({ Errore: 'Immagine inesistente' });
+            }
+        );
     } else {
         res.sendFile(path.join(path.dirname(__dirname), 'public/assets/images/qm.webp'));
     }
