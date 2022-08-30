@@ -2,7 +2,6 @@ var ecard = document.querySelector('.event-card');
 var mastercard = document.querySelector('.card-body');
 var cleanMastercard = mastercard.cloneNode(true);
 var delbtn = document.querySelector('#del-btn');
-var dist = 15;
 
 // Mostra un messaggio di errore all'interno della card al posto della
 // lista eventi
@@ -54,7 +53,8 @@ async function fillCards(path) {
             });
             ecard.querySelector('.event-title').innerText = event.title;
             let d = new Date(event.ddate);
-            ecard.querySelector('.event-date').innerText = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+            ecard.querySelector('.event-date').innerText = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear() + 
+                ', ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
             ecard.querySelector('.event-loc').innerText = event.location_name;
             ecard.querySelector('.event-org').innerText = event.organizer;
             ecard.querySelector('.det-btn').setAttribute('href', '/evento?id=' + event.id);
@@ -76,7 +76,7 @@ async function fillCards(path) {
             if (event.max_num_part) {
                 partecip.innerText += ' / ' + event.max_num_part;
             }
-            if (d.getTime() <= today.getTime() - 86400000) {
+            if (d < today) {
                 oldEvents.appendChild(ecard)
             } else {
                 mastercard.appendChild(ecard);
@@ -119,6 +119,11 @@ switch (window.location.pathname) {
             // il valore salvato scade in un minuto
             let cachedGeoloc = sessionStorage.getItem('geoloc');
             let pos = cachedGeoloc? JSON.parse(cachedGeoloc) : null;
+            
+            let params = new URLSearchParams(window.location.search);
+            let distParam = params.get('dist');
+            console.log(distParam);
+            dist = distParam? distParam : 15;
             if (!pos || pos.expires <= new Date().getTime()) {
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
@@ -130,11 +135,6 @@ switch (window.location.pathname) {
                                 expires: new Date().getTime() + 60000
                             })
                         );
-                        let params = new URLSearchParams(window.location.search);
-                        let distParam = params.get('dist');
-                        if (distParam) {
-                            dist = distParam;
-                        }
                         path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist * 1000}`;
                         fillCards(path);
                     },

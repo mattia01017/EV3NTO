@@ -88,7 +88,8 @@ async function fillCard() {
         document.querySelector('#card-content').classList.remove('opacity-0');
         document.querySelector('#e-title').innerText = data.title;
         let d = new Date(data.ddate);
-        document.querySelector('#e-date').innerText = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+        document.querySelector('#e-date').innerText = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear() + 
+        ', ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
         document.querySelector('#e-org').innerText = data.username;
         document.querySelector('#e-loc').innerText = data.location_name;
         let priv = document.querySelector('#e-priv');
@@ -163,9 +164,9 @@ async function partBtn() {
             subscrBtn.classList.toggle('btn-success');
             subscrBtn.classList.toggle('btn-warning');
         }
-        document.querySelector('#e-part').innerText = data.numPart + ' / ' + maxNumPart;
+        document.querySelector('#e-part').innerText = data.numPart + (maxNumPart? ' / ' + maxNumPart : '');
         subscrBtn.innerText = isPart ? 'Rimuovi partecipazione' : 'Partecipa';
-        if (data.num_part == maxNumPart && !isPart) {
+        if (maxNumPart && data.num_part == maxNumPart && !isPart) {
             document.querySelector('#part-btn').setAttribute('disabled', '');
         }
     });

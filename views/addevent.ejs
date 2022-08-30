@@ -20,9 +20,9 @@
                                     <input required autocomplete="off" name="name" type="text" class="form-control bg-black text-white"
                                         id="name">
                                 </div>
-                                <label for="date" class="col-lg col-form-label">Data*</label>
+                                <label for="date" class="col-lg col-form-label">Data e ora*</label>
                                 <div class="col-lg mb-3">
-                                    <input required name="date" type="date" class="form-control bg-black text-white"
+                                    <input required name="date" type="datetime-local" class="form-control bg-black text-white"
                                         id="date">
                                 </div>
                             </div>
@@ -67,13 +67,16 @@
         </div>
     <% include('./partials/footer.ejs') %>
 </body>
-<!-- Limita la selezione di una data ai soli giorni futuri -->
-<script>    
+<script>
+// Limita la selezione a sole date future
+setInterval(() => {
     let d = new Date()
     document.getElementById('date')
         .setAttribute(
             'min', 
-            `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+            d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0') + ' ' + 
+            String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0')
         );
+}, 60000)
 </script>
 </html>
