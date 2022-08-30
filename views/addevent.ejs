@@ -3,6 +3,7 @@
 <head>
     <%- include('./partials/head.ejs') %>
     <title>Aggiungi EV3NTO</title>
+    <script src="/js/setTodayForm.js" defer></script>
 </head>
 <body class="text-white bg-black">
     <%- include('./partials/header.ejs') %>
@@ -33,7 +34,7 @@
                                 </div>
                                 <label for="image" class="col-lg col-form-label">Immagine</label>
                                 <div class="col-lg mb-3">
-                                    <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg"
+                                    <input type="file" name="image" accept="image/png,image/gif,image/jpeg,image/jpg"
                                         class="form-control bg-black text-white" id="image">
                                 </div>
                             </div>
@@ -67,16 +68,4 @@
         </div>
     <% include('./partials/footer.ejs') %>
 </body>
-<script>
-// Limita la selezione a sole date future
-setInterval(() => {
-    let d = new Date()
-    document.getElementById('date')
-        .setAttribute(
-            'min', 
-            d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0') + ' ' + 
-            String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0')
-        );
-}, 60000)
-</script>
 </html>
