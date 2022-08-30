@@ -1,0 +1,11 @@
+/* Immagini lista eventi */
+.img-acc {
+    width: 400px;
+	height: 300px;
+	object-fit: cover
+}
+
+/* card lista eventi */
+.event-card {
+	min-height: 280px
+}
