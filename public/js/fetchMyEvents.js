@@ -2,6 +2,7 @@ var ecard = document.querySelector('.event-card');
 var mastercard = document.querySelector('.card-body');
 var cleanMastercard = mastercard.cloneNode(true);
 var delbtn = document.querySelector('#del-btn');
+var now = new Date();
 
 // Mostra un messaggio di errore all'interno della card al posto della
 // lista eventi
@@ -39,7 +40,6 @@ async function fillCards(path) {
         document.querySelectorAll('.event-btn').forEach(el => {
             el.removeAttribute('hidden');
         });
-        let today = new Date();
         let oldEvents = document.querySelector('#old-events');
         data.forEach(event => {
             let nextcard = ecard.cloneNode(true);
@@ -76,7 +76,7 @@ async function fillCards(path) {
             if (event.max_num_part) {
                 partecip.innerText += ' / ' + event.max_num_part;
             }
-            if (d < today) {
+            if (d < now) {
                 oldEvents.appendChild(ecard)
             } else {
                 mastercard.appendChild(ecard);
@@ -124,7 +124,7 @@ switch (window.location.pathname) {
             let distParam = params.get('dist');
             console.log(distParam);
             dist = distParam? distParam : 15;
-            if (!pos || pos.expires <= new Date().getTime()) {
+            if (!pos || pos.expires <= now.getTime()) {
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
                         sessionStorage.setItem(
@@ -132,7 +132,7 @@ switch (window.location.pathname) {
                             JSON.stringify({
                                 latitude: pos.coords.latitude,
                                 longitude: pos.coords.longitude,
-                                expires: new Date().getTime() + 60000
+                                expires: now.getTime() + 60000
                             })
                         );
                         path = `/api/geosearch?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&dist=${dist * 1000}`;

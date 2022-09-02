@@ -1,12 +1,23 @@
 var isPart;
 var maxNumPart;
 
+// mostra un messaggio di errore che copre l'intera card dell'evento
+function showError(message) {
+    let warning = document.createElement('h3');
+    warning.innerText = message;
+    warning.classList.add('display-4', 'position-absolute', 'top-50', 'start-50', 'translate-middle', 'text-center');
+
+    let card = document.querySelector('.card');
+    card.append(warning);
+}
+
 // restituisce l'id dell'evento, specificato come parametro get
 function getId() {
     let params = new URLSearchParams(window.location.search);
     return params.get('id');
 }
 
+// mostra la mappa centrata verso il luogo dell'evento
 async function createMap(lat, lon) {
     if (lat,lon) {
         let map = L.map('map', {
@@ -121,12 +132,7 @@ async function fillCard() {
             }
         }
     } else {
-        let warning = document.createElement('h3');
-        warning.innerText = 'L\'evento non esiste o è stato cancellato';
-        warning.classList.add('display-4', 'position-absolute', 'top-50', 'start-50', 'translate-middle', 'text-center');
-
-        let card = document.querySelector('.card');
-        card.append(warning);
+        showError('L\'evento non esiste o è stato cancellato')
     }
 }
 
@@ -172,7 +178,12 @@ async function partBtn() {
     });
 }
 
-fillCard();
+if (eId != '') {
+    fillCard();
+} else {
+    document.querySelector('#spinner').remove();
+    showError('Specificare un codice di invito');
+}
 
 if (subscrBtn) {
     partBtn();
