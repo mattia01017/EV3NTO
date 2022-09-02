@@ -37,14 +37,16 @@ async function fillCards(path) {
     let res = await fetch(`https://${window.location.host}${path}`);
     let data = await res.json();
     if (data[0]) {
+        // mostra i pulsanti nella scheda evento
         document.querySelectorAll('.event-btn').forEach(el => {
             el.removeAttribute('hidden');
         });
         let oldEvents = document.querySelector('#old-events');
         data.forEach(event => {
+            // crea una nuova scheda evento in cui inserire le informazioni
             let nextcard = ecard.cloneNode(true);
             ecard.removeChild(ecard.querySelector('.d-flex'));
-
+            // richiede al worker di effettuare il rendering delle immagini
             ecard.querySelector('.event-image').id = 'img' + event.id;
             w.postMessage({
                 img: event.img,
@@ -60,6 +62,9 @@ async function fillCards(path) {
             ecard.querySelector('.det-btn').setAttribute('href', '/evento?id=' + event.id);
             ecard.querySelector('.img-spinner').classList.remove('opacity-0');
 
+            // se è presente il pulsante di eliminazione (l'utente è proprietario dell'evento)
+            // crea un evento per il pulsante di eliminazione che mostri il form di richiesta cancellazione,
+            // con l'URL corretto per cancellare l'evento nel pulsante di conferma
             if (delbtn) {
                 let modalShowBtn = ecard.querySelector('.del-modal-trig');
                 modalShowBtn.setAttribute('data-event-id', event.id);
@@ -76,6 +81,8 @@ async function fillCards(path) {
             if (event.max_num_part) {
                 partecip.innerText += ' / ' + event.max_num_part;
             }
+
+            // se l'evento è passato, viene inserito nella sezione a scomparsa
             if (d < now) {
                 oldEvents.appendChild(ecard)
             } else {
@@ -83,6 +90,7 @@ async function fillCards(path) {
             }
             ecard = nextcard;
         });
+        // se ci sono eventi passati, mostra il pulsante per mostrarli
         if (oldEvents.firstChild) {
             document.querySelector('#toggle-old').removeAttribute('hidden');
         }
@@ -119,11 +127,9 @@ switch (window.location.pathname) {
             // il valore salvato scade in un minuto
             let cachedGeoloc = sessionStorage.getItem('geoloc');
             let pos = cachedGeoloc? JSON.parse(cachedGeoloc) : null;
-            
-            let params = new URLSearchParams(window.location.search);
-            let distParam = params.get('dist');
-            console.log(distParam);
-            dist = distParam? distParam : 15;
+
+            // il valore della distanza è stabilito dallo slider
+            let dist = range.value;
             if (!pos || pos.expires <= now.getTime()) {
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {

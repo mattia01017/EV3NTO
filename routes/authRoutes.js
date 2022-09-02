@@ -8,22 +8,22 @@ const router = Router();
 // middleware per ridirezionare verso la pagina personale se già loggati
 router.use(authControllers.skipIfLogged);
 
-// mostra il form di autenticazione
+// form di autenticazione
 router.get('/login',
     authControllers.loadLogin
 );
 
-// processa le credenziali per l'autenticazione
+// riceve credenziali per l'autenticazione
 router.post('/login',
     authControllers.authenticate
 );
 
-// mostra il form di registrazione al sito
+// form di registrazione al sito
 router.get('/signin',
     authControllers.loadSignin
 );
 
-// processa le credenziali per la registrazione
+// riceve le credenziali per la registrazione
 router.post('/signin',
     authControllers.addUser
 );

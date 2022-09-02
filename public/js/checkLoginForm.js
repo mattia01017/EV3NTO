@@ -1,4 +1,5 @@
 let loginForm = document.querySelector('#login-form');
+var toast = new bootstrap.Toast(document.getElementById('toast'));
 
 // effettua una richiesta POST con le credenziali utente e attende una risposta del
 // server. Se il server risponde positivamente, torna alla pagina referrer, se esiste, altrimenti
@@ -6,13 +7,13 @@ let loginForm = document.querySelector('#login-form');
 loginForm.addEventListener('submit', e => {
     e.preventDefault();
     e.stopPropagation();
-    let data = {}
-
-    let formElems = [...loginForm.elements];
-    formElems.forEach(element => {
-        data[element.name] = element.value;
-    });
-
+    let {user, password} = loginForm.elements;
+    let data = {
+        'user': user.value,
+        'password': password.value
+    };
+    
+    // invia le credenziali in POST
     fetch(
         `https://${window.location.host}/account/login`,
         {
@@ -27,14 +28,15 @@ loginForm.addEventListener('submit', e => {
     .then((res) => {
         res.json()
         .then((data) => {
+            // se il server risponde positivamente alle credenziali
             if (data.ok) {
+                // torna alla pagina precedente
                 let referrer = sessionStorage.getItem('referrer');
                 sessionStorage.removeItem('referrer')
                 document.location.replace(referrer);
             } else {
                 // mostra il messaggio di credenziali errate
-                let toast = document.getElementById('toast');
-                new bootstrap.Toast(toast).show();
+                toast.show();
                 document.querySelector('#password').value = '';
             }
         });

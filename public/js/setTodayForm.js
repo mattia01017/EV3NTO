@@ -1,4 +1,4 @@
-// impedisce l'inserimento di data e ora precedenti a questo istante. Si aggiorna automaticamente ogni 30 secodni
+// impedisce l'inserimento di data e ora precedenti a questo istante
 function setToday() {
     let d = new Date()
     document.getElementById('date')
@@ -10,4 +10,6 @@ function setToday() {
 }
 
 setToday();
+
+// aggiorna l'istante attuale ogni 30 secondi
 setInterval(setToday, 30000);

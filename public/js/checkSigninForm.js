@@ -1,5 +1,6 @@
 let form = document.getElementById('signin-form');
 var toastText = document.getElementById('toast-text');
+var toast = new bootstrap.Toast(document.getElementById('toast'));
 var valid = true;
 
 // Previene la richiesta POST di registrazione al server e mostra
@@ -7,8 +8,7 @@ var valid = true;
 function stopAndToast(toastMessage) {
     valid = false;
     toastText.innerText = toastMessage;
-    let toast = document.getElementById('toast');
-    new bootstrap.Toast(toast).show();
+    toast.show();
 }
 
 // alla richiesta di invio dei dati nel form, controlla se i dati inseriti sono validi,
@@ -39,9 +39,9 @@ form.addEventListener('submit', async (e) => {
                 },
                 method: 'POST',
                 body: JSON.stringify({
-                    email: email.value,
-                    user: username.value,
-                    password: pwd.value
+                    'email': email.value,
+                    'user': username.value,
+                    'password': pwd.value
                 })
             }
         );

@@ -66,7 +66,7 @@ const registerPart = async (req, res) => {
     else if (remove) {
         await events.deletePartecipant(remove, req.session.email);
         let n = await events.selectNumPart(remove);
-        res.send({numPart: n});
+        res.send({ numPart: n });
     } else {
         res.sendStatus(400);
     }
@@ -91,15 +91,20 @@ const eventsByPos = async (req, res) => {
         let rows = await events.selectNearbyEvents(lat, lon, dist);
         res.json(rows);
     } else {
-        res.status(400).json({Errore: 'Specificare parametri "lat", "lon" e "dist"'});
+        res.status(400).json({ Errore: 'Specificare parametri "lat", "lon" e "dist"' });
     }
 }
 
-// invia i partecipanti dell'evento specificato tra i parametri GET
-const sendPartecipants = async (req,res) => {
-    let {id} = req.params;
-    let rows = await events.selectPartecipants(id);
-    res.json(rows);
+// invia i partecipanti dell'evento specificato tra i parametri GET solo se l'utente loggato
+// è il proprietario di quest'ultimo
+const sendPartecipants = async (req, res) => {
+    let { id } = req.params;
+    if (events.isOwner(id, req.session.email)) {
+        let rows = await events.selectPartecipants(id);
+        res.json(rows);
+    } else {
+        res.status(401).json({ Errore: 'Non possiedi questo evento' });
+    }
 }
 
 module.exports = {

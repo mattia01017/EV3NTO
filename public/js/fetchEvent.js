@@ -1,5 +1,6 @@
 var isPart;
 var maxNumPart;
+var toast = new bootstrap.Toast(document.querySelector('#toast'));
 
 // mostra un messaggio di errore che copre l'intera card dell'evento
 function showError(message) {
@@ -9,6 +10,12 @@ function showError(message) {
 
     let card = document.querySelector('.card');
     card.append(warning);
+}
+
+// mostra un toast con il messaggio specificato
+function showToast(message) {
+    document.querySelector('#toast-text').innerText = message;
+    toast.show(); 
 }
 
 // restituisce l'id dell'evento, specificato come parametro get
@@ -161,12 +168,13 @@ async function partBtn() {
         // gestisce il caso in cui un altro utente prende l'ultimo posto, prima di un ricaricamento
         // della pagina. Mostra un toast di errore e disattiva il pulsante
         if (data.error) {
-            document.querySelector('#toast-text').innerText = 'Impossibile partecipare. Evento al completo';
-            let t = document.querySelector('#toast');
-            new bootstrap.Toast(t).show();  
+            showToast('Impossibile partecipare. Evento al completo');
             document.querySelector('#part-btn').setAttribute('disabled', '');
         } else {
             isPart = !isPart;
+            showToast(
+                isPart? 'Partecipazione aggiunta' : 'Partecipazione rimossa'
+            );
             subscrBtn.classList.toggle('btn-success');
             subscrBtn.classList.toggle('btn-warning');
         }
@@ -192,7 +200,5 @@ if (subscrBtn) {
 document.querySelector('#copy-btn').addEventListener('click', () => {
     let invcode = document.querySelector('#e-invcode').innerText;
     navigator.clipboard.writeText(invcode);
-    document.querySelector('#toast-text').innerText = 'Codice di invito copiato';
-    let t = document.querySelector('#toast');
-    new bootstrap.Toast(t).show(); 
+    showToast('Codice di invito copiato')
 })
