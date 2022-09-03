@@ -35,7 +35,7 @@ const loadSignin = async (req, res) => {
     });
 }
 
-// Registra l'utente al sistema
+// Registra l'utente nel sistema
 const addUser = async (req, res) => {
     let { email, user, password } = req.body;
     if (email.includes('@') && password.length >= 3 && user != '') {

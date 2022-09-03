@@ -1,12 +1,10 @@
 let rangeform = document.querySelector('#rangeform');
 let range = document.querySelector('#dist');
-let rangeLabel = document.querySelector('#dist-val')
+let rangeLabel = document.querySelector('#dist-val');
 distParam = new URLSearchParams(window.location.search).get('dist');
 
 // posiziona lo slider rispetto al parametro GET
-if (distParam) {
-    dist = distParam;
-}
+var dist = distParam? distParam : '15';
 range.value = dist
 rangeLabel.innerText = dist + 'km';
 

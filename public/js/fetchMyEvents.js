@@ -128,8 +128,6 @@ switch (window.location.pathname) {
             let cachedGeoloc = sessionStorage.getItem('geoloc');
             let pos = cachedGeoloc? JSON.parse(cachedGeoloc) : null;
 
-            // il valore della distanza è stabilito dallo slider
-            let dist = range.value;
             if (!pos || pos.expires <= now.getTime()) {
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
