@@ -8,6 +8,4 @@ const pool = new Pool({
 });
 pool.connect();
 
-module.exports = {
-    pool
-};
+module.exports = pool;

@@ -1,6 +1,6 @@
 /* modello di gestione dei dati utente nel db */
 
-const { pool } = require("./db");
+const pool = require("./db");
 const fs = require('fs');
 
 // restituisce l'utente specificato se la password è corretta, null altrimenti

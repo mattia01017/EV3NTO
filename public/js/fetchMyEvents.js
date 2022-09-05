@@ -17,7 +17,7 @@ function showError(message) {
 
 // web worker per scaricare e renderizzare le immagini degli eventi
 var w = new Worker('/js/workers/imageFetcher.js');
-w.addEventListener('message', e => {
+w.addEventListener('message', async e => {
     let imgblob = e.data.blob;
     let imgel = document.getElementById('img' + e.data.id);
 

@@ -1,6 +1,6 @@
 /* modello di gestione dei dati degli eventi nel db */
 
-const { pool } = require("./db");
+const pool = require("./db");
 const { isPointWithinRadius } = require('geolib');
 
 // inserisce nel db l'evento con i valori specificati
@@ -112,7 +112,7 @@ const deletePartecipant = async (eventId, user) => {
     await pool.query(text, values)
 }
 
-// restituisce gli eventi contenenti nel titolo o nel luogo la stringa
+// restituisce gli eventi pubblici contenenti nel titolo o nel luogo la stringa
 // in argomento
 const selectEventsByName = async (q) => {
     let text = `

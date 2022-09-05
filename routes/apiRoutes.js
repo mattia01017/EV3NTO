@@ -44,6 +44,6 @@ router.get('/namesearch',
 // ricerca nelle vicinanze
 router.get('/geosearch',
     apiControllers.eventsByPos
-)
+);
 
 module.exports = router;
