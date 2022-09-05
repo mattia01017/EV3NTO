@@ -9,10 +9,9 @@ var now = new Date();
 function showError(message) {
     ecard.innerHTML = '';
     let notice = document.createElement('h3');
-    notice.classList.add('display-6');
     notice.innerText = message;
-    notice.classList.add('position-absolute', 'top-50', 'start-50', 'translate-middle');
-    ecard.parentNode.append(notice);
+    notice.classList.add('position-absolute', 'top-50', 'start-50', 'translate-middle', 'display-6');
+    ecard.append(notice);
 }
 
 // web worker per scaricare e renderizzare le immagini degli eventi
@@ -95,7 +94,7 @@ async function fillCards(path) {
             document.querySelector('#toggle-old').removeAttribute('hidden');
         }
     } else {
-        showError('Nessun evento presente');
+        showError('Nessun evento');
     }
 }
 

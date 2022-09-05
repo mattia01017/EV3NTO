@@ -78,7 +78,16 @@ if (showPartBtn) {
             if (data.length > 0) {
                 data.forEach(user => {
                     let li = document.createElement('li');
-                    li.innerText =  user.username? `${user.username} - ${user.email}` : 'Utente eliminato';
+                    if (user.username) {
+                        li.innerText = user.username + ' - ';
+                        let emailLink = document.createElement('a');
+                        emailLink.href = 'mailto:' + user.email;
+                        emailLink.innerText = user.email;
+                        emailLink.classList.add('link-dark');
+                        li.append(emailLink);
+                    } else {
+                        li.innerText = 'Utente eliminato'
+                    }
                     partList.append(li);
                 });
             } else {
@@ -105,10 +114,17 @@ async function fillCard() {
         createMap(data.loc_lat, data.loc_lon);
         document.querySelector('#card-content').classList.remove('opacity-0');
         document.querySelector('#e-title').innerText = data.title;
+
         let d = new Date(data.ddate);
         document.querySelector('#e-date').innerText = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear() + 
         ', ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
-        document.querySelector('#e-org').innerText = data.username;
+
+        let orgEl = document.querySelector('#e-org');
+        orgEl.innerText = data.username;
+        let emailEl = document.querySelector('#e-org-email');
+        emailEl.href = 'mailto:' + data.email;
+        emailEl.innerText = data.email;
+
         document.querySelector('#e-loc').innerText = data.location_name;
         let priv = document.querySelector('#e-priv');
         priv.innerText = data.priv ? 'No' : 'Sì';

@@ -53,7 +53,7 @@ const deleteMyEvent = async (id, email) => {
 const selectEvent = async (eventId) => {
     let text = `
         SELECT title, ddate, num_part, max_num_part, 
-            descr, priv, U.username, id, img, location_name, loc_lat, loc_lon
+            descr, priv, U.username, U.email, id, img, location_name, loc_lat, loc_lon
         FROM events as E
         JOIN users as U ON U.email = E.organizer
         WHERE E.id = $1`;

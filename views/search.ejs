@@ -35,35 +35,7 @@
                         Eventi passati
                     </button>
                     <div class="collapse border-bottom border-secondary" id="old-events"></div>
-                    <div class="card mt-2 mb-2 border-0 bg-black mb-3 event-card position-relative">
-                        <div
-                            class="d-flex align-items-center position-absolute top-50 start-50 translate-middle">
-                            <strong>Caricamento...</strong>
-                            <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 position-relative">
-                                <img src="" class="img-fluid d-block img-acc event-image opacity-0">
-                                <div
-                                    class="d-flex align-items-center position-absolute top-50 start-50 translate-middle opacity-0 img-spinner">
-                                    <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-8 position-relative">
-                                <div class="card-body">
-                                    <h3 class="card-title event-title display-6 fs-2"></h3>
-                                    <p class="card-text event-part"></p>
-                                    <small class="event-loc"></small><br>
-                                    <small class="event-date"></small><br>
-                                    <div class="position-relative start-50 translate-middle-x pb-3">
-                                        <a href="" class="btn btn-light event-btn det-btn mt-3 mb-2"
-                                            hidden>Dettagli</a>
-                                        <br><small class="event-org"></small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <%- include('./partials/eventcard.ejs') %>
                 </div>
             </div>
         </div>
