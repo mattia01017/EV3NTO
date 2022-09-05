@@ -28,7 +28,6 @@ const sendMyPartecip = async (req, res) => {
 // invia l'immagine di un evento se esiste
 const sendImg = async (req, res) => {
     let { imgpath } = req.params;
-    let { email } = req.session;
     if (imgpath != 'null') {
         res.sendFile(path.join(path.dirname(__dirname), 'uploads', imgpath), (err) => {
             if (err) {

@@ -106,9 +106,6 @@ dist
 # uploaded images
 uploads/
 
-# db tables
-tables.sql
-
 # SSL keys
 cert.pem
 key.pem
