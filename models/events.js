@@ -96,17 +96,17 @@ const insertPartecipant = async (eventId, user) => {
         SELECT I.id, I.email
         FROM input AS I
         NATURAL JOIN events AS E
-        WHERE E.ddate > NOW();`;
+        WHERE E.ddate > NOW() RETURNING TRUE;`;
     let values = [eventId, user];
     try {
-        await pool.query(text, values);
+        var res = await pool.query(text, values);
     } catch (err) {
         console.log(err);
         if (err.constraint === 'num_part_constraint') {
             return true
         }
     }
-    return false;
+    return res && res.rows[0]? false : true;
 }
 
 // rimuove la partecipazione specificata
@@ -115,9 +115,11 @@ const deletePartecipant = async (eventId, user) => {
         DELETE FROM partecipations
         USING events
         WHERE id = p_event
-            AND p_event=$1 AND user_email=$2 AND ddate > NOW()`;
+            AND p_event=$1 AND user_email=$2 AND ddate > NOW()
+        RETURNING TRUE`;
     let values = [eventId, user];
-    await pool.query(text, values)
+    let res = await pool.query(text, values);
+    return res.rows[0]? false : true;
 }
 
 // restituisce gli eventi pubblici contenenti nel titolo o nel luogo la stringa

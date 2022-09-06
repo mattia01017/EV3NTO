@@ -63,9 +63,12 @@ const registerPart = async (req, res) => {
         });
     }
     else if (remove) {
-        await events.deletePartecipant(remove, req.session.email);
+        let err = await events.deletePartecipant(remove, req.session.email);
         let n = await events.selectNumPart(remove);
-        res.send({ numPart: n });
+        res.send({ 
+            numPart: n,
+            error: err
+        });
     } else {
         res.sendStatus(400);
     }

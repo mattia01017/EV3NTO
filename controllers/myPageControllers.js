@@ -50,32 +50,36 @@ const profRedirect = async (req, res) => {
 // gestisce la richiesta di aggiunta evento
 const addEventReq = async (req, res, next) => {
     let { name, date, num, privacy, desc, location } = req.body;
-    privacy = (privacy == 'priv');
-    num = (num == '' ? null : num);
-
-    // effettua il geocoding del luogo inserito dall'utente
-    let vals = await geocoder.geocode({ q: location });
-    if (vals[0]) {
-        var { latitude, longitude } = vals[0];
+    if (date >= new Date()) {
+        privacy = (privacy == 'priv');
+        num = (num == '' ? null : num);
+    
+        // effettua il geocoding del luogo inserito dall'utente
+        let vals = await geocoder.geocode({ q: location });
+        if (vals[0]) {
+            var { latitude, longitude } = vals[0];
+        }
+    
+        // salva l'immagine dell'evento
+        let filename;
+        if (req.file) {
+            let { buffer, originalname } = req.file;
+            filename = originalname + new Date().getTime() + '.webp';
+            let filePath = path.join(path.dirname(__dirname) + '/uploads', filename);
+            fs.closeSync(fs.openSync(filePath, 'w'));
+    
+            // metodo per la compressione dell'immagine inviata dall'utente
+            await sharp(buffer)
+                .webp({ quality: 40 })
+                .toFile(filePath);
+        }
+    
+        await events.insertEvent(name, date, num, privacy, desc, filename, 
+        req.session.email, location, latitude, longitude);
+        next();
+    } else {
+        res.sendStatus(400);
     }
-
-    // salva l'immagine dell'evento
-    let filename;
-    if (req.file) {
-        let { buffer, originalname } = req.file;
-        filename = originalname + new Date().getTime() + '.webp';
-        let filePath = path.join(path.dirname(__dirname) + '/uploads', filename);
-        fs.closeSync(fs.openSync(filePath, 'w'));
-
-        // metodo per la compressione dell'immagine inviata dall'utente
-        await sharp(buffer)
-            .webp({ quality: 40 })
-            .toFile(filePath);
-    }
-
-    await events.insertEvent(name, date, num, privacy, desc, filename, 
-                             req.session.email, location, latitude, longitude);
-    next();
 }
 
 // elimina l'evento specificato nel query parameter

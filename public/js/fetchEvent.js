@@ -184,7 +184,7 @@ async function partBtn() {
         // gestisce il caso in cui un altro utente prende l'ultimo posto, prima di un ricaricamento
         // della pagina. Mostra un toast di errore e disattiva il pulsante
         if (data.error) {
-            showToast('Impossibile partecipare. Evento al completo');
+            showToast('Si è verificato un errore');
             document.querySelector('#part-btn').setAttribute('disabled', '');
         } else {
             isPart = !isPart;
