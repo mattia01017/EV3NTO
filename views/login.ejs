@@ -3,7 +3,6 @@
 <head>
   <meta name="description" content="Pagina di login di EV3NTO">
   <%- include('./partials/head.ejs') %>
-  <script src="/js/checkLoginForm.js" defer></script>
   <title>Accedi a EV3NTO</title>
 </head>
 <body class="text-white bg-black">
@@ -15,7 +14,7 @@
           <div class="mb-3 row">
             <label for="user" class="col-sm col-form-label">Email</label>
             <div class="col-sm">
-              <input required type="text" class="form-control bg-black text-white" id="user" name="user">
+              <input required type="email" class="form-control bg-black text-white" id="user" name="user">
             </div>
           </div>
           <div class="mb-3 row">
@@ -40,4 +39,5 @@
     </div>
     <%- include('./partials/footer.ejs') %>
 </body>
+<script src="/js/checkLoginForm.js"></script>
 </html>

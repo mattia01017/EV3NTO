@@ -89,8 +89,14 @@ const isPartecipant = async (eventId, user) => {
 // inserisce la partecipazione specificata
 const insertPartecipant = async (eventId, user) => {
     let text = `
-        INSERT INTO partecipations(user_email,p_event)
-        VALUES ($2,$1)`;
+        INSERT INTO partecipations(p_event, user_email)
+        WITH input AS (
+            SELECT $1 AS id, $2 AS email
+        )
+        SELECT I.id, I.email
+        FROM input AS I
+        NATURAL JOIN events AS E
+        WHERE E.ddate > NOW();`;
     let values = [eventId, user];
     try {
         await pool.query(text, values);
@@ -107,7 +113,9 @@ const insertPartecipant = async (eventId, user) => {
 const deletePartecipant = async (eventId, user) => {
     let text = `
         DELETE FROM partecipations
-        WHERE p_event=$1 AND user_email=$2`;
+        USING events
+        WHERE id = p_event
+            AND p_event=$1 AND user_email=$2 AND ddate > NOW()`;
     let values = [eventId, user];
     await pool.query(text, values)
 }
