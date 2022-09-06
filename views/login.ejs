@@ -4,13 +4,14 @@
   <meta name="description" content="Pagina di login di EV3NTO">
   <%- include('./partials/head.ejs') %>
   <title>Accedi a EV3NTO</title>
+  <script src="/js/checkLoginForm.js" defer></script>
 </head>
 <body class="text-white bg-black">
   <%- include('./partials/header.ejs') %>
     <div class="card border-0 mb-3 mt-5 start-50 translate-middle-x" style="max-width: 450px;">
       <h1 class="card-header bg-light text-black display-6">Accedi</h1>
       <div class="card-body bg-dark">
-        <form id="login-form" novalidate>
+        <form id="login-form" method="post" novalidate>
           <div class="mb-3 row">
             <label for="user" class="col-sm col-form-label">Email</label>
             <div class="col-sm">
@@ -39,5 +40,4 @@
     </div>
     <%- include('./partials/footer.ejs') %>
 </body>
-<script src="/js/checkLoginForm.js"></script>
 </html>

@@ -28,7 +28,7 @@ AFTER DELETE ON partecipations
 FOR EACH ROW
 EXECUTE PROCEDURE DECREMENT_NUM_PAR();
 
--- crea nuovo id evento l'id generato è già presente
+-- crea nuovo id evento se l'id generato è già presente
 CREATE OR REPLACE FUNCTION REPEAT_EVENT_INSERT() RETURNS TRIGGER AS
 $$  DECLARE
         new_id events.id%TYPE;
