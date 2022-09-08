@@ -62,6 +62,7 @@ const server = https.createServer(
     app
 );
 
-server.listen(process.env.PORT, () => {
-    console.log(`Listening on port ${process.env.PORT}`);
+let port = process.env.PORT || 8080;
+server.listen(port, () => {
+    console.log(`Listening on port ${port}`);
 });

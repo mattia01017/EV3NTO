@@ -50,7 +50,8 @@ const profRedirect = async (req, res) => {
 // gestisce la richiesta di aggiunta evento
 const addEventReq = async (req, res, next) => {
     let { name, date, num, privacy, desc, location } = req.body;
-    if (date >= new Date()) {
+    let now = new Date();
+    if (new Date(date) >= now) {
         privacy = (privacy == 'priv');
         num = (num == '' ? null : num);
     
@@ -64,7 +65,7 @@ const addEventReq = async (req, res, next) => {
         let filename;
         if (req.file) {
             let { buffer, originalname } = req.file;
-            filename = originalname + new Date().getTime() + '.webp';
+            filename = originalname + now.getTime() + '.webp';
             let filePath = path.join(path.dirname(__dirname) + '/uploads', filename);
             fs.closeSync(fs.openSync(filePath, 'w'));
     
