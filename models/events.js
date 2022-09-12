@@ -101,7 +101,6 @@ const insertPartecipant = async (eventId, user) => {
     try {
         var res = await pool.query(text, values);
     } catch (err) {
-        console.log(err);
         if (err.constraint === 'num_part_constraint') {
             return true
         }
