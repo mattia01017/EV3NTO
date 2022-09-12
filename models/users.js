@@ -33,16 +33,22 @@ const deleteUser = async (email) => {
     let text = 'SELECT img FROM events WHERE organizer=$1 AND img IS NOT NULL';
     let values = [email];
     let res = await pool.query(text,values);
-    res.rows.forEach(({img}) => {
+    res.rows.forEach(async ({img}) => {
         fs.unlink('uploads/' + img, err => {
             if (err) {
                 console.log(err);
             }
         });
     })
+    // elimina le iscrizioni a eventi futuri
+    text = `
+        DELETE FROM partecipations
+        USING events
+        WHERE p_event=id
+            AND user_email=$1 AND ddate > NOW()`;
+    await pool.query(text, values);
     // elimina l'utente
     text = 'DELETE FROM users WHERE email=$1';
-    values = [email];
     pool.query(text, values);
 }
 
